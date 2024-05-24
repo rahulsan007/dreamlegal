@@ -7,9 +7,9 @@ function HomeCta() {
   return (
     <div className="px-4 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10 font-clarity">
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <div className="h-[450px] md:h-[300px] col-span-1   ">
+        <div className="h-[450px] md:h-[350px] col-span-1   ">
           <div className=" px-4">
-            <div className="h-[450px] md:h-[310px] bg-primary2 rounded-xl px-8 py-10 flex flex-col gap-5 relative overflow-clip ">
+            <div className="h-[450px] md:h-[350px] bg-primary2 rounded-xl px-8 py-10 flex flex-col gap-5 relative overflow-clip ">
               <div className=" h-12 w-12 rounded-full bg-primary1 inline-flex justify-center items-center z-20">
                 <FaArrowUp className=" text-white text-[28px]" />
               </div>
@@ -29,9 +29,9 @@ function HomeCta() {
           </div>
         </div>
 
-        <div className="h-[450px] md:h-[300px] col-span-1   ">
+        <div className="h-[450px] md:h-[350px] col-span-1   ">
           <div className=" px-4">
-            <div className="h-[450px] md:h-[310px] bg-primary1 rounded-xl px-8 py-10 flex flex-col gap-5 relative overflow-clip ">
+            <div className="h-[450px] md:h-[350px] bg-primary1 rounded-xl px-8 py-10 flex flex-col gap-5 relative overflow-clip ">
               <div className=" h-12 w-12 rounded-full bg-white inline-flex justify-center items-center z-20">
                 <CiStar className=" text-primary1 text-[28px]" />
               </div>
