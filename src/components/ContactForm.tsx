@@ -10,7 +10,7 @@ function ContactForm() {
   return (
     <div>
       <form action="" className="bg-white px-5 py-6 space-y-6">
-        <div className="grid grid-cols-2 gap-4 font-clarity ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-clarity ">
           <div className="flex flex-col gap-2">
             <label
               htmlFor="name"
@@ -43,7 +43,7 @@ function ContactForm() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 font-clarity ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-clarity ">
           <div className="flex flex-col gap-2">
             <label
               htmlFor="phone"
@@ -76,7 +76,7 @@ function ContactForm() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 font-clarity ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-clarity ">
           <div className="flex flex-col gap-2 col-span-2">
             <label
               htmlFor="message"
@@ -103,28 +103,28 @@ function ContactForm() {
             <AiOutlineSend className=" text-xl" />
           </button>
 
-          <div className="flex gap-4 items-center">
-            <div className="text-primary1 p-3 rounded-full bg-primary2">
+          <div className="flex gap-4 items-center flex-wrap">
+            <div className="text-primary1 p-1 md:p-3 rounded-full bg-primary2">
               <Link href={"/"}>
-                <TiSocialFacebook className="text-2xl " />
+                <TiSocialFacebook className="md:text-2xl " />
               </Link>
             </div>
 
-            <div className="text-primary1 p-3 rounded-full bg-primary2">
+            <div className="text-primary1 p-1 md:p-3 rounded-full bg-primary2">
               <Link href={"/"}>
-                <FaLinkedinIn className="text-2xl " />
+                <FaLinkedinIn className="md:text-2xl " />
               </Link>
             </div>
 
-            <div className="text-primary1 p-3 rounded-full bg-primary2">
+            <div className="text-primary1 p-1 md:p-3 rounded-full bg-primary2">
               <Link href={"/"}>
-                <FaTwitter className="text-2xl " />
+                <FaTwitter className="md:text-2xl " />
               </Link>
             </div>
 
-            <div className="text-primary1 p-3 rounded-full bg-primary2">
+            <div className="text-primary1 p-1 md:p-3 rounded-full bg-primary2">
               <Link href={"/"}>
-                <RiInstagramFill className="text-2xl " />
+                <RiInstagramFill className="md:text-2xl " />
               </Link>
             </div>
           </div>
