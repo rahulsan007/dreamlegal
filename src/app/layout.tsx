@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ClarityCity } from "@/utils/customFont";
 import "./globals.css";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${ClarityCity.variable} `}>{children}</body>
+      <body className={`${ClarityCity.variable} `}>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

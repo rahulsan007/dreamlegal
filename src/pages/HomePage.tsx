@@ -10,14 +10,12 @@ import { Testomonial } from "@/components/animated-ui/Testimonial";
 function HomePage() {
   return (
     <div>
-      <Header />
       <HomeHero />
       <HomeProduct />
       <Testomonial />
       <CuratedCollection />
       <HomeCta />
       <HomeBlog />
-      <Footer />
     </div>
   );
 }
