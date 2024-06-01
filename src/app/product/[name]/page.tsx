@@ -7,6 +7,8 @@ import { FaArrowUp } from "react-icons/fa6";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { IoReturnUpBackOutline } from "react-icons/io5";
 import { MdOutlineInfo } from "react-icons/md";
+import { HiDotsVertical } from "react-icons/hi";
+
 import {
   Tooltip,
   TooltipContent,
@@ -20,6 +22,8 @@ import ProductPricingTable from "@/components/ProductPricingTable";
 import ProductService from "@/components/ProductService";
 import ProductReference from "@/components/ProductReference";
 import ProductReview from "@/components/ProductReview";
+import ProductMobileSidebar from "@/components/ProductMobileSidebar";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 function page() {
   return (
@@ -28,11 +32,27 @@ function page() {
         <IoReturnUpBackOutline className=" text-[22px] " />
         <span className=" text-sm font-bold">Browse all products</span>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className=" w-full md:col-span-1 md:h-fit md:sticky md:top-0">
+        <div className=" w-full md:col-span-1 md:h-fit md:sticky md:top-0 ">
           <ProductSidebar />
         </div>
+
         <div className=" col-span-2 overflow-y-scroll no-scrollbar ">
+          <div className="block md:hidden">
+            <div className="fixed right-0 top-1/2  z-50 ">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <button className=" bg-black text-white py-4 px-4 rounded-full text-xs">
+                    <HiDotsVertical />
+                  </button>
+                </SheetTrigger>
+                <SheetContent>
+                  <ProductMobileSidebar />
+                </SheetContent>
+              </Sheet>
+            </div>
+          </div>
           <div className=" border shadow-md rounded-3xl px-4 md:px-16 py-10">
             <div className="flex flex-col gap-5">
               <h1 className="font-bold text-xl md:text-3xl">Product Name</h1>

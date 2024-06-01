@@ -41,7 +41,7 @@ function ProductSidebar() {
         />
       </div>
 
-      <div className="my-4 md:my-8">
+      <div className="my-4 md:my-8 hidden md:block">
         <ul className="flex flex-col gap-4 px-2 py-6 rounded-2xl border">
           <li className="flex items-center gap-2 text-primary1 hover:bg-primary2/70 hover:cursor-pointer px-4     transition-all duration-200 rounded-full">
             <AiOutlineProduct className="text-xl" />
