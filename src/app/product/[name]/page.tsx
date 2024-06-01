@@ -19,6 +19,7 @@ import ProductFeature from "@/components/ProductFeature";
 import ProductPricingTable from "@/components/ProductPricingTable";
 import ProductService from "@/components/ProductService";
 import ProductReference from "@/components/ProductReference";
+import ProductReview from "@/components/ProductReview";
 
 function page() {
   return (
@@ -552,6 +553,8 @@ function page() {
                   </Tooltip>
                 </TooltipProvider>
               </div>
+              {/* Reviews */}
+              <ProductReview />
             </div>
           </div>
 
