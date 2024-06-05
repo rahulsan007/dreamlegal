@@ -32,11 +32,11 @@ export default function UserLayout({
       ActiveComponent = <UserDashboard />;
   }
   return (
-    <div className=" grid grid-cols-1 md:grid-cols-6">
-      <div className="col-span-1 border-r-2">
+    <div className=" grid grid-cols-1 md:grid-cols-5 px-4">
+      <div className="col-span-1  ">
         <UserProfile />
       </div>
-      <div className="col-span-5">
+      <div className="col-span-4">
         <ScrollArea className="h-screen  px-5 ">{children}</ScrollArea>
       </div>
     </div>

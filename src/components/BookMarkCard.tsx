@@ -32,12 +32,9 @@ function BookMarkCard() {
           </div>
         </div>
         <div className="col-span-1 mt-2">
-          <div className="flex flex-col md:flex-row  gap-4 md:items-center justify-center h-full ">
-            <Link href={"/"}>
-              <span className=" text-sm hover:text-primary1">Learn more</span>
-            </Link>
+          <div className=" md:items-center justify-center h-full ">
             <button className=" flex gap-2 rounded-full bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all  w-fit items-center hover:bg-gray-900 hover:gap-4">
-              Contact us
+              View Product
               <IoIosArrowRoundForward className=" text-xl" />
             </button>
           </div>

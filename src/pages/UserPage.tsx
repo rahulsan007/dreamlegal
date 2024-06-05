@@ -8,7 +8,7 @@ import SavedItems from "@/components/SavedItems";
 function UserPage() {
   return (
     <div className="">
-      <Tabs defaultValue="overview" className="w-full">
+      {/* <Tabs defaultValue="overview" className="w-full">
         <TabsList className="">
           <TabsTrigger asChild value="overview">
             <button className=" text-primary1 bg-primary2 px-4 py-2">
@@ -27,7 +27,8 @@ function UserPage() {
         <TabsContent value="saved">
           <SavedItems />
         </TabsContent>
-      </Tabs>
+      </Tabs> */}
+      <UserDashboard />
     </div>
   );
 }

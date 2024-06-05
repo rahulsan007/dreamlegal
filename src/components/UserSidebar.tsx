@@ -8,8 +8,8 @@ import { CiLogout } from "react-icons/ci";
 
 function UserSidebar({ setActiveTab, activeTab }: any) {
   return (
-    <div className=" hidden md:block font-clarity">
-      <div className="flex h-screen flex-col justify-between border-e bg-white">
+    <div className=" hidden md:block font-clarity ">
+      <div className="flex h-screen flex-col justify-between  bg-white">
         <div className="px-4 py-6">
           <ul className="mt-6 space-y-1">
             <li onClick={() => setActiveTab("dashboard")}>
