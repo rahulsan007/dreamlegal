@@ -6,7 +6,7 @@ import { HiOutlinePencil } from "react-icons/hi";
 
 function UserReviewCard() {
   return (
-    <div className=" my-2">
+    <div className=" py-5 border-b">
       <div className="flex gap-4">
         <Avatar>
           <AvatarImage src="https://assets-global.website-files.com/63bed0273cfe5e611e742359/63c82fd5f0b9d119f5e3d6c0_webtech-featured-image-aggregator-x-webflow-template.svg" />
