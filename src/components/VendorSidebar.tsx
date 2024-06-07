@@ -1,0 +1,127 @@
+"use client";
+import React, { useState } from "react";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { FaChevronDown } from "react-icons/fa6";
+import { AiOutlineTags } from "react-icons/ai";
+import { FaRegUserCircle } from "react-icons/fa";
+import { CiLogout } from "react-icons/ci";
+
+function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
+  const [Dashboard, setDashboard] = useState(true);
+  const [Products, setProducts] = useState(false);
+  const [Profile, setProfile] = useState(false);
+  const [Logout, setLogout] = useState(false);
+  const [Support, setSupport] = useState(false);
+  return (
+    <div className="bg-[#002C76] h-screen font-clarity px-4 py-6 flex flex-col">
+      <h2 className="text-white text-xl font-bold">DreamLegal</h2>
+      <div className="mt-10 flex flex-col flex-grow">
+        <span className="text-slate-300"> Menu</span>
+        <div className="flex flex-col flex-grow">
+          <ul className="space-y-2 flex-grow">
+            <li
+              onClick={() => setDashboard(!Dashboard)}
+              className={`flex justify-between text-sm items-center px-4 py-4 rounded-md transition-all duration-200 hover:cursor-pointer ${
+                Dashboard ? "text-white bg-[#034b8a]" : "text-slate-300"
+              }`}
+            >
+              <span className={`flex gap-2 items-center `}>
+                <LuLayoutDashboard className="text-xl" />
+                Dashboard
+              </span>
+              <FaChevronDown />
+            </li>
+            <li className="ml-10">
+              <ul className={`space-y-2 ${Dashboard ? "block" : "hidden"}`}>
+                <li
+                  onClick={() => onMenuItemClick("Dashboard")}
+                  className={`text-slate-300 hover:cursor-pointer ${
+                    selectedMenu === "Dashboard" ? "text-white" : ""
+                  }`}
+                >
+                  Analytics
+                </li>
+                <li
+                  onClick={() => onMenuItemClick("Reviews")}
+                  className={`text-slate-300 hover:cursor-pointer ${
+                    selectedMenu === "Reviews" ? "text-white" : ""
+                  } `}
+                >
+                  Reviews
+                </li>
+              </ul>
+            </li>
+
+            <li
+              onClick={() => setProducts(!Products)}
+              className={`flex justify-between text-sm items-center px-4 py-4 rounded-md transition-all duration-200 hover:cursor-pointer ${
+                Products ? "text-white bg-[#034b8a]" : "text-slate-300"
+              }`}
+            >
+              <span className={`flex gap-2 items-center `}>
+                <AiOutlineTags className="text-xl" />
+                Products
+              </span>
+              <FaChevronDown />
+            </li>
+            <li className="ml-10">
+              <ul className={`space-y-2 ${Products ? "block" : "hidden"}`}>
+                <li className="text-slate-300">Add Product</li>
+                <li className="text-slate-300">Edit Product</li>
+                <li className="text-slate-300">Product Analytics</li>
+              </ul>
+            </li>
+
+            <li
+              onClick={() => setProfile(!Profile)}
+              className={`flex justify-between text-sm items-center px-4 py-4 rounded-md transition-all duration-200 hover:cursor-pointer ${
+                Profile ? "text-white bg-[#034b8a]" : "text-slate-300"
+              }`}
+            >
+              <span className={`flex gap-2 items-center `}>
+                <FaRegUserCircle className="text-xl" />
+                Profile
+              </span>
+            </li>
+
+            <li
+              onClick={() => setLogout(!Logout)}
+              className={`flex justify-between text-sm items-center px-4 py-4 rounded-md transition-all duration-200 hover:cursor-pointer ${
+                Logout ? "text-white bg-[#034b8a]" : "text-slate-300"
+              }`}
+            >
+              <span className={`flex gap-2 items-center `}>
+                <CiLogout className="text-xl" />
+                Logout
+              </span>
+            </li>
+          </ul>
+          <div className="mt-auto text-white">
+            <ul className="space-y-2">
+              <li
+                onClick={() => setSupport(!Support)}
+                className={`flex justify-between text-sm items-center px-4 py-4 rounded-md transition-all duration-200 hover:cursor-pointer ${
+                  Support ? "text-white bg-[#034b8a]" : "text-slate-300"
+                }`}
+              >
+                <span className={`flex gap-2 items-center `}>
+                  <FaRegUserCircle className="text-xl" />
+                  Support
+                </span>
+                <FaChevronDown />
+              </li>
+              <li className="ml-10">
+                <ul className={`space-y-2 ${Support ? "block" : "hidden"}`}>
+                  <li className="text-slate-300">email@dreamlegal.com</li>
+                  <li className="text-slate-300">+915636363536</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default VendorSidebar;
