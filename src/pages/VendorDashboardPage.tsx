@@ -46,7 +46,10 @@ function VendorDashboardPage() {
                         </button>
                       </SheetTrigger>
                       <SheetContent className="bg-[#002C76] text-white ">
-                        <VendorSidebar />
+                        <VendorSidebar
+                          onMenuItemClick={handleMenuItemClick}
+                          selectedMenu={selectedMenu}
+                        />
                       </SheetContent>
                     </Sheet>
                     <div className=" font-bold text-xl ">Dreamlegal</div>
