@@ -59,9 +59,7 @@ function VendorDashboard() {
         <div className="col-span-12 lg:col-span-6">
           <ChartThree />
         </div>
-        <div className="col-span-12 lg:col-span-6">
-          <MapOne />
-        </div>
+        <div className="col-span-12 lg:col-span-6">{/* <MapOne /> */}</div>
       </div>
     </div>
   );

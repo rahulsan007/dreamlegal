@@ -5,10 +5,12 @@ import { FaChevronDown } from "react-icons/fa6";
 import { AiOutlineTags } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
+import { FaRegStar } from "react-icons/fa6";
 
 function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
   const [Dashboard, setDashboard] = useState(true);
   const [Products, setProducts] = useState(false);
+  const [Review, setReview] = useState(false);
   const [Profile, setProfile] = useState(false);
   const [Logout, setLogout] = useState(false);
   const [Support, setSupport] = useState(false);
@@ -27,7 +29,7 @@ function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
             >
               <span className={`flex gap-2 items-center `}>
                 <LuLayoutDashboard className="text-xl" />
-                Dashboard
+                Analytics
               </span>
               <FaChevronDown />
             </li>
@@ -39,15 +41,7 @@ function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
                     selectedMenu === "Dashboard" ? "text-white" : ""
                   }`}
                 >
-                  Analytics
-                </li>
-                <li
-                  onClick={() => onMenuItemClick("Reviews")}
-                  className={`text-slate-300 hover:cursor-pointer ${
-                    selectedMenu === "Reviews" ? "text-white" : ""
-                  } `}
-                >
-                  Reviews
+                  Product Analytics
                 </li>
               </ul>
             </li>
@@ -66,10 +60,35 @@ function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
             </li>
             <li className="ml-10">
               <ul className={`space-y-2 ${Products ? "block" : "hidden"}`}>
-                <li className="text-slate-300">Add Product</li>
-                <li className="text-slate-300">Edit Product</li>
-                <li className="text-slate-300">Product Analytics</li>
+                <li
+                  onClick={() => onMenuItemClick("AddProduct")}
+                  className={`text-slate-300 hover:cursor-pointer ${
+                    selectedMenu === "AddProduct" ? "text-white" : ""
+                  }`}
+                >
+                  Add Product
+                </li>
+                <li
+                  onClick={() => onMenuItemClick("allProducts")}
+                  className={`text-slate-300 hover:cursor-pointer ${
+                    selectedMenu === "allProducts" ? "text-white" : ""
+                  }`}
+                >
+                  All Products
+                </li>
               </ul>
+            </li>
+
+            <li
+              onClick={() => setReview(!Review)}
+              className={`flex justify-between text-sm items-center px-4 py-4 rounded-md transition-all duration-200 hover:cursor-pointer ${
+                Review ? "text-white bg-[#034b8a]" : "text-slate-300"
+              }`}
+            >
+              <span className={`flex gap-2 items-center `}>
+                <FaRegStar className="text-xl" />
+                Reviews
+              </span>
             </li>
 
             <li

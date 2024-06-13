@@ -14,6 +14,8 @@ import {
 import { RiMenu2Line } from "react-icons/ri";
 
 import React, { useState } from "react";
+import AddProduct from "@/components/AddProduct";
+import AllProducts from "@/components/ui/AllProducts";
 
 function VendorDashboardPage() {
   const [selectedMenu, setSelectedMenu] = useState("Dashboard");
@@ -61,6 +63,8 @@ function VendorDashboardPage() {
             </div>
             <div className=" px-5">
               {selectedMenu === "Dashboard" && <VendorDashborad />}
+              {selectedMenu === "AddProduct" && <AddProduct />}
+              {selectedMenu === "allProducts" && <AllProducts />}
             </div>{" "}
           </ScrollArea>
         </div>

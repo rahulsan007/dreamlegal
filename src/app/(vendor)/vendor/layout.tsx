@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClarityCity } from "@/utils/customFont";
 import "../../../app/globals.css";
+import { StepProvider } from "@/context/formContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${ClarityCity.variable} `}>{children}</body>
+      <body className={`${ClarityCity.variable} `}>
+        <StepProvider>{children}</StepProvider>
+      </body>
     </html>
   );
 }
