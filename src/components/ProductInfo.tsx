@@ -223,7 +223,7 @@ function ProductInfo() {
           />
         </div>
         <div className="mt-2">
-          <Label className="founders">Founders' names</Label>
+          <Label className="founders">Founders names</Label>
           <Input
             name="founders"
             type="text"
