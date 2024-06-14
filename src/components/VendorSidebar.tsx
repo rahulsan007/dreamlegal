@@ -14,6 +14,16 @@ function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
   const [Profile, setProfile] = useState(false);
   const [Logout, setLogout] = useState(false);
   const [Support, setSupport] = useState(false);
+
+  const handleReview = () => {
+    setReview(!Review);
+    onMenuItemClick("Review");
+  };
+
+  const handleProfile = () => {
+    setProfile(!Profile);
+    onMenuItemClick("Profile");
+  };
   return (
     <div className="bg-[#002C76] h-screen font-clarity px-4 py-6 flex flex-col">
       <h2 className="text-white text-xl font-bold">DreamLegal</h2>
@@ -80,7 +90,7 @@ function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
             </li>
 
             <li
-              onClick={() => setReview(!Review)}
+              onClick={handleReview}
               className={`flex justify-between text-sm items-center px-4 py-4 rounded-md transition-all duration-200 hover:cursor-pointer ${
                 Review ? "text-white bg-[#034b8a]" : "text-slate-300"
               }`}
@@ -92,7 +102,7 @@ function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
             </li>
 
             <li
-              onClick={() => setProfile(!Profile)}
+              onClick={handleProfile}
               className={`flex justify-between text-sm items-center px-4 py-4 rounded-md transition-all duration-200 hover:cursor-pointer ${
                 Profile ? "text-white bg-[#034b8a]" : "text-slate-300"
               }`}
