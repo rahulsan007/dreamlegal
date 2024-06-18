@@ -3,6 +3,7 @@ import VendorDashboardPage from "@/pages/VendorDashboardPage";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/components/Loading";
+import { Suspense } from "react";
 
 function Page() {
   const searchParams = useSearchParams();
@@ -32,9 +33,11 @@ function Page() {
   }
 
   return (
-    <div>
-      <VendorDashboardPage verified={verified} />
-    </div>
+    <Suspense>
+      <div>
+        <VendorDashboardPage verified={verified} />
+      </div>
+    </Suspense>
   );
 }
 
