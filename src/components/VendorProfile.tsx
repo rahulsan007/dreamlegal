@@ -67,35 +67,35 @@ function VendorProfile({
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (vendorId) {
-  //     const fetchProfile = async () => {
-  //       try {
-  //         const response = await fetch(`/api/company-info?id=${vendorId}`);
-  //         const data = await response.json();
-  //         setProfile(data.profile);
-  //       } catch (error) {
-  //         console.error("Error fetching profile:", error);
-  //       }
-  //     };
+  useEffect(() => {
+    if (vendorId) {
+      const fetchProfile = async () => {
+        try {
+          const response = await fetch(`/api/company-info?id=${vendorId}`);
+          const data = await response.json();
+          setProfile(data.profile);
+        } catch (error) {
+          console.error("Error fetching profile:", error);
+        }
+      };
 
-  //     fetchProfile();
-  //   } else {
-  //     const storedVendorId = localStorage.getItem("vendorId");
-  //     const fetchProfile = async () => {
-  //       try {
-  //         const response = await fetch(
-  //           `/api/company-info?id=${storedVendorId}`
-  //         );
-  //         const data = await response.json();
-  //         setProfile(data.profile);
-  //       } catch (error) {
-  //         console.error("Error fetching profile:", error);
-  //       }
-  //     };
-  //     fetchProfile();
-  //   }
-  // }, [vendorId]);
+      fetchProfile();
+    } else {
+      const storedVendorId = localStorage.getItem("vendorId");
+      const fetchProfile = async () => {
+        try {
+          const response = await fetch(
+            `/api/company-info?id=${storedVendorId}`
+          );
+          const data = await response.json();
+          setProfile(data.profile);
+        } catch (error) {
+          console.error("Error fetching profile:", error);
+        }
+      };
+      fetchProfile();
+    }
+  }, [vendorId]);
 
   useEffect(() => {
     if (profile) {
