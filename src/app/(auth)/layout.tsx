@@ -3,7 +3,6 @@ import { ClarityCity } from "@/utils/customFont";
 import "../../app/globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,11 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${ClarityCity.variable} `}>
-        <SessionProvider>
-          <Header />
-          {children}
-          <Footer />
-        </SessionProvider>
+        <Header />
+        {children}
+        <Footer />
       </body>
     </html>
   );

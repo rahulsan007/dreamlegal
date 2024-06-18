@@ -4,8 +4,15 @@ import UserDashboard from "@/components/UserDashboard";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SavedItems from "@/components/SavedItems";
+import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 function UserPage() {
+  const path = useParams();
+  const searchParams = useSearchParams();
+  const userId = path?.userid;
+  const otpVerify = searchParams?.get("verified");
+
   return (
     <div className="">
       {/* <Tabs defaultValue="overview" className="w-full">

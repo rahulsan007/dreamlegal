@@ -13,14 +13,54 @@ import {
 } from "@/components/ui/sheet";
 import { RiMenu2Line } from "react-icons/ri";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddProduct from "@/components/AddProduct";
 import AllProducts from "@/components/ui/AllProducts";
 import VendorReview from "@/components/VendorReview";
 import VendorProfile from "@/components/VendorProfile";
 
-function VendorDashboardPage() {
+function VendorDashboardPage({ verified }: { verified: boolean }) {
   const [selectedMenu, setSelectedMenu] = useState("Dashboard");
+  const [vendorId, setVendorId] = useState<string | null>(null);
+  const [profile, setProfile] = useState<any>(null);
+  useEffect(() => {
+    if (verified) {
+      setSelectedMenu("Profile");
+    } else {
+      setSelectedMenu("Dashboard");
+      setVendorId(localStorage.getItem("vendorId"));
+    }
+  }, [verified]);
+
+  useEffect(() => {
+    if (vendorId) {
+      const fetchProfile = async () => {
+        try {
+          const response = await fetch(`/api/company-info?id=${vendorId}`);
+          const data = await response.json();
+          setProfile(data.profile);
+        } catch (error) {
+          console.error("Error fetching profile:", error);
+        }
+      };
+
+      fetchProfile();
+    } else {
+      const storedVendorId = localStorage.getItem("vendorId");
+      const fetchProfile = async () => {
+        try {
+          const response = await fetch(
+            `/api/company-info?id=${storedVendorId}`
+          );
+          const data = await response.json();
+          setProfile(data.profile);
+        } catch (error) {
+          console.error("Error fetching profile:", error);
+        }
+      };
+      fetchProfile();
+    }
+  }, [vendorId]);
 
   const handleMenuItemClick = (menuName: string) => {
     setSelectedMenu(menuName);
@@ -68,7 +108,9 @@ function VendorDashboardPage() {
               {selectedMenu === "AddProduct" && <AddProduct />}
               {selectedMenu === "allProducts" && <AllProducts />}
               {selectedMenu === "Review" && <VendorReview />}
-              {selectedMenu === "Profile" && <VendorProfile />}
+              {selectedMenu === "Profile" && (
+                <VendorProfile verified={verified} getProfile={profile} />
+              )}
             </div>{" "}
           </ScrollArea>
         </div>
