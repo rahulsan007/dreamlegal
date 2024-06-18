@@ -1,44 +1,13 @@
-"use client";
-import VendorDashboardPage from "@/pages/VendorDashboardPage";
-import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import Loading from "@/components/Loading";
+import React from "react";
 import { Suspense } from "react";
+import VendorWrapper from "./_components/VendorWrapper";
 
-function Page() {
-  const searchParams = useSearchParams();
-  const [verified, setVerified] = useState(false);
-  const [vendorId, setVendorId] = useState("");
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (searchParams) {
-      const search = Boolean(searchParams.get("verified"));
-      setVerified(search);
-    }
-
-    const getVendorId = localStorage.getItem("vendorId");
-    if (!getVendorId) {
-      router.push("/sign-in");
-    } else {
-      setVendorId(getVendorId);
-    }
-
-    setLoading(false);
-  }, [searchParams, router]);
-
-  if (loading) {
-    return <Loading />;
-  }
-
+function page() {
   return (
-    <Suspense>
-      <div>
-        <VendorDashboardPage verified={verified} />
-      </div>
-    </Suspense>
+    <div>
+      <VendorWrapper />
+    </div>
   );
 }
 
-export default Page;
+export default page;
