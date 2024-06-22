@@ -21,7 +21,7 @@ import { Button } from "./ui/button";
 import { useStepContext } from "@/context/formContext";
 import { Textarea } from "./ui/textarea";
 import { IoIosInformation } from "react-icons/io";
-import { UploadImage } from "@/actions/UploadAction";
+// import { UploadImage } from "@/actions/UploadAction";
 import { UploadResponse } from "nodejs-s3-typescript/dist/cjs/types";
 import { Slider } from "./ui/slider";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
@@ -391,77 +391,77 @@ function ProductInfo() {
 
   const canSelectMoreLanguages = formValues.languages.length < 5;
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  // const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
 
-    const formData = new FormData();
-    formData.append("file", formValues.logo as File); // Assuming logo is the file input
-    formData.append("folderName", "logos");
-    try {
-      const userId = localStorage.getItem("vendorId");
+  //   const formData = new FormData();
+  //   formData.append("file", formValues.logo as File); // Assuming logo is the file input
+  //   formData.append("folderName", "logos");
+  //   try {
+  //     const userId = localStorage.getItem("vendorId");
 
-      setLoading(true);
-      if (!userId || userId === "") {
-        console.error("User ID is missing or empty");
-        // Handle the missing userId case, e.g., show a message to the user
-        toast("User ID is missing. Please log in again.");
-        return;
-      }
+  //     setLoading(true);
+  //     if (!userId || userId === "") {
+  //       console.error("User ID is missing or empty");
+  //       // Handle the missing userId case, e.g., show a message to the user
+  //       toast("User ID is missing. Please log in again.");
+  //       return;
+  //     }
 
-      if (!formValues.userId) {
-        console.error("User ID is missing or empty");
-        // Handle the missing userId case, e.g., show a message to the user
-        toast("User ID is missing. Please log in again.");
-        return;
-      }
+  //     if (!formValues.userId) {
+  //       console.error("User ID is missing or empty");
+  //       // Handle the missing userId case, e.g., show a message to the user
+  //       toast("User ID is missing. Please log in again.");
+  //       return;
+  //     }
 
-      const res = await UploadImage(formData);
-      console.log("Image uploaded:", res);
-      if (isUploadResponse(res)) {
-        const imageLocation = res.location;
+  //     const res = await UploadImage(formData);
+  //     console.log("Image uploaded:", res);
+  //     if (isUploadResponse(res)) {
+  //       const imageLocation = res.location;
 
-        setFormValues((prevFormValues) => ({
-          ...prevFormValues,
-          logoUrl: imageLocation || "",
-          userId: userId || "",
-        }));
-      }
+  //       setFormValues((prevFormValues) => ({
+  //         ...prevFormValues,
+  //         logoUrl: imageLocation || "",
+  //         userId: userId || "",
+  //       }));
+  //     }
 
-      const response = await fetch("/api/add-product", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValues),
-      });
+  //     const response = await fetch("/api/add-product", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(formValues),
+  //     });
 
-      if (response.ok) {
-        const data = await response.json();
+  //     if (response.ok) {
+  //       const data = await response.json();
 
-        // Handle success response
-        console.log("Product added successfully");
-        setFormValues((prevFormValues) => ({
-          ...prevFormValues,
-          id: data.productId,
-        }));
+  //       // Handle success response
+  //       console.log("Product added successfully");
+  //       setFormValues((prevFormValues) => ({
+  //         ...prevFormValues,
+  //         id: data.productId,
+  //       }));
 
-        nextStep();
-        // Reset the form or navigate to another page
-      } else {
-        // Handle error response
-        toast("Failed to add product");
-        console.error("Failed to add product");
-      }
-      setLoading(false);
-      toast("Product Information added.");
-    } catch (error) {
-      console.error("Image upload failed:", error);
-      // Handle error as needed
-    }
-    console.log(formValues);
-    // nextStep();
-    // You can send `formValues` to your server here
-  };
+  //       nextStep();
+  //       // Reset the form or navigate to another page
+  //     } else {
+  //       // Handle error response
+  //       toast("Failed to add product");
+  //       console.error("Failed to add product");
+  //     }
+  //     setLoading(false);
+  //     toast("Product Information added.");
+  //   } catch (error) {
+  //     console.error("Image upload failed:", error);
+  //     // Handle error as needed
+  //   }
+  //   console.log(formValues);
+  //   // nextStep();
+  //   // You can send `formValues` to your server here
+  // };
 
   const handleSliderChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
