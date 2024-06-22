@@ -305,7 +305,7 @@ function ProductInfo() {
     console.log(formValues.features);
   }, [formValues.features]);
 
-  const temp1 = () => {
+  const temp1 = (event: any) => {
     event.preventDefault();
     setTimeout(() => {
       nextStep();
