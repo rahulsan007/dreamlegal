@@ -306,6 +306,7 @@ function ProductInfo() {
   }, [formValues.features]);
 
   const temp1 = () => {
+    event.preventDefault();
     setTimeout(() => {
       nextStep();
     }, 2000); // 2000 milliseconds = 2 seconds
