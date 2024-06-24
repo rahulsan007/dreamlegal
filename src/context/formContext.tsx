@@ -5,6 +5,7 @@ interface ContextProps {
   step: number;
   nextStep: () => void;
   prevStep: () => void;
+  setStep: (step: number) => void;
 }
 
 const Context = createContext<ContextProps | undefined>(undefined);
@@ -33,7 +34,7 @@ export const StepProvider: React.FC<StepProviderProps> = ({ children }) => {
   };
 
   return (
-    <Context.Provider value={{ step, nextStep, prevStep }}>
+    <Context.Provider value={{ step, nextStep, prevStep, setStep }}>
       {children}
     </Context.Provider>
   );
