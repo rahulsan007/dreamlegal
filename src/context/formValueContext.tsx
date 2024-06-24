@@ -62,13 +62,13 @@ export interface FormValues {
   fileSize: string[];
   fileSizeUnit: string;
   fileSizeNote: string;
-  maintenance: string[];
+  maintenance: "";
   maintenanceNote: string;
-  reqForChange: string[];
+  reqForChange: "";
   reqForChangeNote: string;
-  trainingReq: string[];
+  trainingReq: "";
   trainingReqNote: string;
-  dataMigration: string[];
+  dataMigration: "";
   dataMigrationNote: string;
   Images: File[];
   ImageUrl: string[];
@@ -207,13 +207,13 @@ const initialFormValues: FormValues = {
   fileSizeUnit: "",
   fileSize: [],
   fileSizeNote: "",
-  maintenance: [],
+  maintenance: "",
   maintenanceNote: "",
-  reqForChange: [],
+  reqForChange: "",
   reqForChangeNote: "",
-  trainingReq: [],
+  trainingReq: "",
   trainingReqNote: "",
-  dataMigration: [],
+  dataMigration: "",
   dataMigrationNote: "",
   Images: [],
   ImageUrl: [],
@@ -353,13 +353,13 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
     fileSizeUnit: "",
     fileSize: [],
     fileSizeNote: "",
-    maintenance: [],
+    maintenance: "",
     maintenanceNote: "",
-    reqForChange: [],
+    reqForChange: "",
     reqForChangeNote: "",
-    trainingReq: [],
+    trainingReq: "",
     trainingReqNote: "",
-    dataMigration: [],
+    dataMigration: "",
     dataMigrationNote: "",
     Images: [],
     videoUrl: [],

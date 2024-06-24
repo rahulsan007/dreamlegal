@@ -1,6 +1,6 @@
 "use client";
 import { FormValues, useFormContext } from "@/context/formValueContext";
-import { ChangeEvent, useState, useTransition } from "react";
+import { ChangeEvent, useOptimistic, useState, useTransition } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -55,6 +55,16 @@ function Form9() {
     }
   };
 
+  const uploadFile = async (
+    file: File,
+    folderName: string
+  ): Promise<string> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("folderName", folderName);
+    const res = await UploadImage(formData);
+    return (res as UploadResponse).location;
+  };
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent default form submission
     setLoading(true);
@@ -912,97 +922,90 @@ function Form9() {
       return; // Stop submission if validation fails
     }
 
-    const uploadFile = async (
-      file: File,
-      folderName: string
-    ): Promise<string> => {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("folderName", folderName);
-      const res = await UploadImage(formData);
-      return (res as UploadResponse).location;
-    };
-
-    try {
-      toast({
-        title: "Submitting Form",
-        description:
-          "Please wait while we process your request. And uploading Images and files to server",
-        variant: "default",
-      });
-
-      let logoUrl = "";
-
-      if (formValues.logo) {
-        logoUrl = await uploadFile(formValues.logo as File, "logos");
-
-        console.log(logoUrl);
-      }
-      let updatedImages: string[] = [];
-      if (formValues.Images.length > 0) {
-        updatedImages = await Promise.all(
-          formValues.Images.map((image) => uploadFile(image as File, "images"))
-        );
-        console.log(`first` + `${updatedImages}`);
-      }
-      let updatedAttachments: string[] = [];
-      if (formValues.attachments.length > 0) {
-        updatedAttachments = await Promise.all(
-          formValues.attachments.map((attachment) =>
-            uploadFile(attachment as File, "attachments")
-          )
-        );
-        console.log(`first` + `${updatedAttachments}`);
-      }
-
-      const updatedFormValues = {
-        ...formValues,
-        userId: userId,
-        logoUrl: logoUrl || formValues.logoUrl,
-        ImageUrl:
-          updatedImages.length > 0 ? updatedImages : formValues.ImageUrl,
-        attachmentUrl:
-          updatedAttachments.length > 0
-            ? updatedAttachments
-            : formValues.attachmentUrl,
-      };
-      console.log(updatedFormValues);
-      setFormValues(updatedFormValues);
-
-      const response = await fetch("/api/add-product", {
-        method: "POST",
-        body: JSON.stringify(updatedFormValues),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-
-      // Handle success
-      console.log("Form submitted successfully", data);
-      if (data?.success === false) {
+    startTransition(async () => {
+      try {
         toast({
-          title: "Fail to create product",
-          description: "Fail to create product",
+          title: "Submitting Form",
+          description:
+            "Please wait while we process your request. And uploading Images and files to server",
+          variant: "default",
+        });
+
+        let logoUrl = "";
+
+        if (formValues.logo) {
+          logoUrl = await uploadFile(formValues.logo as File, "logos");
+
+          console.log(logoUrl);
+        }
+        let updatedImages: string[] = [];
+        if (formValues.Images.length > 0) {
+          updatedImages = await Promise.all(
+            formValues.Images.map((image) =>
+              uploadFile(image as File, "images")
+            )
+          );
+          console.log(`first` + `${updatedImages}`);
+        }
+        let updatedAttachments: string[] = [];
+        if (formValues.attachments.length > 0) {
+          updatedAttachments = await Promise.all(
+            formValues.attachments.map((attachment) =>
+              uploadFile(attachment as File, "attachments")
+            )
+          );
+          console.log(`first` + `${updatedAttachments}`);
+        }
+
+        const updatedFormValues = {
+          ...formValues,
+          userId: userId,
+          logoUrl: logoUrl || formValues.logoUrl,
+          ImageUrl:
+            updatedImages.length > 0 ? updatedImages : formValues.ImageUrl,
+          attachmentUrl:
+            updatedAttachments.length > 0
+              ? updatedAttachments
+              : formValues.attachmentUrl,
+        };
+        console.log(updatedFormValues);
+        setFormValues(updatedFormValues);
+
+        const response = await fetch("/api/add-product", {
+          method: "POST",
+          body: JSON.stringify(updatedFormValues),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        // Handle success
+        console.log("Form submitted successfully", data);
+        if (data?.success === false) {
+          toast({
+            title: "Fail to create product",
+            description: "Fail to create product",
+            variant: "destructive",
+          });
+          return;
+        } else {
+          toast({
+            title: "Form Submitted",
+            description: "Thank you for your submission!",
+            variant: "success",
+          });
+        }
+      } catch (error) {
+        console.error("Error submitting form", error);
+        toast({
+          title: "Fail to submit",
+          description: "Got some internal error",
           variant: "destructive",
         });
-        return;
-      } else {
-        toast({
-          title: "Form Submitted",
-          description: "Thank you for your submission!",
-          variant: "success",
-        });
       }
-    } catch (error) {
-      console.error("Error submitting form", error);
-      toast({
-        title: "Fail to submit",
-        description: "Got some internal error",
-        variant: "destructive",
-      });
-    }
+    });
 
     // If validation passes, proceed with submission
     console.log("submitted");
