@@ -20,6 +20,7 @@ const s3Config = {
 export const UploadImage = async (
   formData: FormData
 ): Promise<UploadResponse | string> => {
+  "use server";
   try {
     const file = formData.get("file") as File;
     const folderName = formData.get("folderName") as string;
