@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { MdAlternateEmail } from "react-icons/md";
 import { TiWorldOutline } from "react-icons/ti";

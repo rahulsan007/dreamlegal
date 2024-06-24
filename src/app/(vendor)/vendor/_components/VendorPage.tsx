@@ -1,6 +1,6 @@
 "use client";
 import VendorDashboardPage from "@/pages/VendorDashboardPage";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/components/Loading";
 import { Suspense } from "react";

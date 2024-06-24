@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Command as CommandPrimitive } from "cmdk";
 import { X as RemoveIcon, Check } from "lucide-react";
-import React, {
+import {
   KeyboardEvent,
   createContext,
   forwardRef,

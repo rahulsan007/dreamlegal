@@ -1,6 +1,6 @@
 "use client";
 import { FormValues, useFormContext } from "@/context/formValueContext";
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Switch } from "@headlessui/react";

@@ -1,6 +1,6 @@
 "use client";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CiLogout } from "react-icons/ci";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaStar } from "react-icons/fa6";

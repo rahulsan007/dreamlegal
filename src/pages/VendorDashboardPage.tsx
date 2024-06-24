@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import { RiMenu2Line } from "react-icons/ri";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AddProduct from "@/components/AddProduct";
 import AllProducts from "@/components/ui/AllProducts";
 import VendorReview from "@/components/VendorReview";

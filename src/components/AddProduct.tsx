@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoIosInformation } from "react-icons/io";
 import { ProductInformation } from "./ProductInformation";
 // Import additional step components

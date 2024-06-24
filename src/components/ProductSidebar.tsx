@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineProduct } from "react-icons/ai";
 import { MdOutlineBusinessCenter } from "react-icons/md";
 import { MdGridView } from "react-icons/md";

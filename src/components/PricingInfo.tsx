@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { useStepContext } from "@/context/formContext";
 import { Input } from "./ui/input";

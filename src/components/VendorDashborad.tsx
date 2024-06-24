@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CardDataStats from "./CardDataStat";
 import { FaRegEye } from "react-icons/fa6";
 import { RiUserFollowLine } from "react-icons/ri";

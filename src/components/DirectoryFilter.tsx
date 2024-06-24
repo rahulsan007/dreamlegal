@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoArrowForward } from "react-icons/io5";
 import { MdOutlineBusinessCenter } from "react-icons/md";
 import { ScrollArea } from "./ui/scroll-area";
