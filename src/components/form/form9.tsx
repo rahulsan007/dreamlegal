@@ -6,7 +6,6 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useStepContext } from "@/context/formContext";
 import { useToast } from "../ui/use-toast";
-import { UploadImage, UploadResponse } from "@/actions/UploadAction";
 
 function Form9() {
   const { formValues, setFormValues } = useFormContext();
@@ -55,15 +54,36 @@ function Form9() {
     }
   };
 
-  const uploadFile = async (
-    file: File,
-    folderName: string
-  ): Promise<string> => {
+  const uploadFile = async (file: File, folderName: string) => {
+    // Create the form data
     const formData = new FormData();
     formData.append("file", file);
     formData.append("folderName", folderName);
-    const res = await UploadImage(formData);
-    return (res as UploadResponse).location;
+
+    try {
+      // Send the POST request
+      const response = await fetch("/api/upload-file", {
+        method: "POST",
+        body: formData,
+      });
+
+      // Handle the response
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          const url = data.location;
+          console.log("Uploaded file location:", url);
+          return url;
+        } else {
+          console.error("Upload failed:", data.error);
+        }
+      } else {
+        console.error("Failed to upload file:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+    return null;
   };
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent default form submission
