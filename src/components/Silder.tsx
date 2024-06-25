@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 
