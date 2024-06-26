@@ -1,19 +1,57 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa6";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import FeaturedProduct from "./FeaturedProduct";
 import NormalProduct from "./NormalProduct";
 
 function HomeProduct() {
+  const [featureProduct, setFeatureProduct] = useState([]);
+  const [latestProduct, setLatestProduct] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("/api/get-all-products");
+        const data = await response.json();
+
+        if (data.success) {
+          const products = data.products;
+          const featured = products.filter(
+            (product: { featured: any }) => product.featured
+          );
+          const latest = products.filter(
+            (product: { featured: any }) => !product.featured
+          );
+
+          if (featured.length === 0 && latest.length > 0) {
+            featured.push(latest[0]);
+          }
+
+          setFeatureProduct(featured);
+          setLatestProduct(latest);
+        }
+      } catch (error) {
+        console.error("An error occurred while fetching the products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
   return (
     <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 font-clarity">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className=" col-span-2 overflow-y-scroll no-scrollbar">
           <h2 className="text-2xl md:text-3xl font-bold">Featured products</h2>
           <div className=" flex flex-col gap-4 mt-4 mb-4">
-            <FeaturedProduct />
-            <FeaturedProduct />
-            <FeaturedProduct />
+            {featureProduct.slice(0, 3).map((product: any) => (
+              <FeaturedProduct
+                key={product.id}
+                image={product.logourl}
+                title={product.name}
+                description={product.description}
+                category={product.category}
+              />
+            ))}
           </div>
           <div className=" w-full flex items-center justify-between mt-10 ">
             <h2 className=" text-2xl md:text-3xl font-bold">Latest products</h2>
@@ -22,11 +60,15 @@ function HomeProduct() {
             </button>
           </div>
           <div className=" flex flex-col gap-4 mt-4 mb-4">
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
+            {latestProduct.slice(0, 5).map((product: any) => (
+              <NormalProduct
+                key={product.id}
+                image={product.logourl}
+                title={product.name}
+                description={product.description}
+                category={product.category}
+              />
+            ))}
           </div>
 
           <div className=" w-full flex items-center justify-center mt-10 ">

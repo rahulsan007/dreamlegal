@@ -1,7 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 
-export default async function handler(request: Request) {
+export async function POST(request: Request) {
   const {
     id,
     userId,
@@ -46,6 +45,8 @@ export default async function handler(request: Request) {
     price2,
     price3,
     pricingParams,
+    Images,
+    attachments,
     Demo,
     DemoNote,
     support,
@@ -181,13 +182,13 @@ export default async function handler(request: Request) {
         trainingReqNote,
         dataMigration,
         dataMigrationNote,
-        Images: ImageUrl,
+        Images,
         videoUrl,
         youtubeUrl,
         linkedinUrl,
         twitterUrl,
         instagramUrl,
-        attachments: attachmentUrl,
+        attachments,
       },
     });
 

@@ -122,6 +122,7 @@ model Product {
   name                    String
   logoUrl                 String
   active                  String      @default("draft")
+  featured                Boolean     @default(false)
   category                String[]
   deployement             String[]
   mobileAvailable         String?

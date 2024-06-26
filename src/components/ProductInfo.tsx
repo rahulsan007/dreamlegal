@@ -16,7 +16,7 @@ import Form7 from "./form/form7";
 import Form8 from "./form/form8";
 import Form9 from "./form/form9";
 
-function ProductInfo() {
+function ProductInfo({ editing = false }: { editing: boolean }) {
   const { step, prevStep, nextStep, setStep } = useStepContext();
 
   const [loading, setLoading] = useState(false);
@@ -181,7 +181,7 @@ function ProductInfo() {
         </h2>
         {step === 9 && (
           <>
-            <Form9></Form9>
+            <Form9 editing={editing}></Form9>
           </>
         )}
       </div>
@@ -192,7 +192,7 @@ function ProductInfo() {
               <div className=" flex flex-col items-center">
                 <img src="/submitted.gif" alt="" />
                 <h2 className="text-gray-600 text-xl font-bold">
-                  Submitted Successfully!
+                  Please wait we are submitting form
                 </h2>
                 <p className="text-gray-500">
                   Thank you for your product submission. We will get back to you

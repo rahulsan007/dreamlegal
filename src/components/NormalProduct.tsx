@@ -3,31 +3,47 @@ import Link from "next/link";
 import React from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
-function NormalProduct() {
+function NormalProduct({ image, title, description, category }: any) {
   return (
     <div className="w-full px-10 py-7 bg-secondary1 rounded-xl border shadow-md">
       <div className="grid grid-cols-1 md:grid-cols-3">
         <div className="md:col-span-2 inline-flex flex-col md:flex-row gap-4">
-          <Image
-            src={`https://assets-global.website-files.com/63bed0273cfe5e611e742359/63c82fd5f0b9d119f5e3d6c0_webtech-featured-image-aggregator-x-webflow-template.svg`}
+          <img
+            src={image}
             width={80}
             height={80}
             alt="logo"
             className="rounded-full w-20 h-20 object-cover"
-          ></Image>
+          ></img>
           <div>
-            <h3 className=" font-bold text-base">Webtech</h3>
-            <p className=" text-sm text-slate-500 mt-2">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
-              ipsum dolor sit amet, consectetur.
-            </p>
+            <h3 className=" font-bold text-base">{title}</h3>
+            <p className=" text-sm text-slate-500 mt-2">{description}</p>
             <div className=" flex gap-3 items-center mt-3 ">
-              <div>
-                <p className=" bg-primary2 px-2 py-2 text-xs rounded-full text-primary1 font-bold">
-                  {" "}
-                  Development
-                </p>
-              </div>
+              {category.map(
+                (
+                  cat:
+                    | string
+                    | number
+                    | bigint
+                    | boolean
+                    | React.ReactElement<
+                        any,
+                        string | React.JSXElementConstructor<any>
+                      >
+                    | Iterable<React.ReactNode>
+                    | React.ReactPortal
+                    | Promise<React.AwaitedReactNode>
+                    | null
+                    | undefined,
+                  index: React.Key | null | undefined
+                ) => (
+                  <div key={index}>
+                    <p className="bg-primary2 px-2 py-2 text-xs rounded-full text-primary1 font-bold">
+                      {cat}
+                    </p>
+                  </div>
+                )
+              )}
             </div>
           </div>
         </div>
