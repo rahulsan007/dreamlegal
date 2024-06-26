@@ -23,7 +23,7 @@ function AddProduct() {
         <div className="grid grid-cols-1 md:grid-cols-4 mt-6">
           <div className="w-full col-span-3 shadow border px-5 py-6 rounded-lg">
             <div>
-              <ProductInfo />
+              <ProductInfo editing={false} />
 
               {/* Add more steps here */}
             </div>
