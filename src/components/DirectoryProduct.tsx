@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NormalProduct from "./NormalProduct";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa6";
@@ -26,6 +26,37 @@ const placeholders = [
 ];
 
 function DirectoryProduct() {
+  const [featureProduct, setFeatureProduct] = useState([]);
+  const [latestProduct, setLatestProduct] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("/api/get-all-products");
+        const data = await response.json();
+
+        if (data.success) {
+          const products = data.products;
+          const featured = products.filter(
+            (product: { featured: any }) => product.featured
+          );
+          const latest = products.filter(
+            (product: { featured: any }) => !product.featured
+          );
+
+          if (featured.length === 0 && latest.length > 0) {
+            featured.push(latest[0]);
+          }
+
+          setFeatureProduct(featured);
+          setLatestProduct(latest);
+        }
+      } catch (error) {
+        console.error("An error occurred while fetching the products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
   };
@@ -92,21 +123,15 @@ function DirectoryProduct() {
             </div>
           </div>
           <div className=" flex flex-col gap-4 mt-4 mb-4">
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
-            <NormalProduct />
+            {latestProduct.map((product: any) => (
+              <NormalProduct
+                key={product.id}
+                image={product.logourl}
+                title={product.name}
+                description={product.description}
+                category={product.category}
+              />
+            ))}
           </div>
 
           <div className=" w-full flex items-center justify-center mt-10 ">
