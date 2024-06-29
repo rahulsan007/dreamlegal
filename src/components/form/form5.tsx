@@ -716,7 +716,7 @@ function Form5() {
                       name="DocumentCreationAndTemplates"
                       type="checkbox"
                       value={item}
-                      checked={formValues.DocumentManagementAndTemplates.includes(
+                      checked={formValues.DocumentCreationAndTemplates.includes(
                         item
                       )}
                       onChange={handleChange}

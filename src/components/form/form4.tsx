@@ -94,11 +94,13 @@ function Form4() {
               </div>
             )}
 
-            {formValues.category.includes("Compliance and Risk Management") && (
+            {formValues.category.includes(
+              "Governance and Compliance and Risk Management"
+            ) && (
               <div className="mt-2">
                 <div className="mt-2">
                   <Label htmlFor="deployment">
-                    Compliance and Risk Management Software
+                    Governance and Compliance and Risk Management
                   </Label>
                   {[
                     "Coverage",

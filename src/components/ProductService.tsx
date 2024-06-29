@@ -1,55 +1,84 @@
-import { FaWalking } from "react-icons/fa";
-import { GrTestDesktop } from "react-icons/gr";
+import React from "react";
+import {
+  FaWalking,
+  FaRobot,
+  FaBookOpen,
+  FaUserTie,
+  FaUserGraduate,
+} from "react-icons/fa";
+import { GrTestDesktop, GrCertificate } from "react-icons/gr";
 import { RiMobileDownloadLine } from "react-icons/ri";
-import { MdOutlineOndemandVideo } from "react-icons/md";
+import {
+  MdOutlineOndemandVideo,
+  MdOutlineSupportAgent,
+  MdOutlineForum,
+} from "react-icons/md";
 import { IoIosCall } from "react-icons/io";
-import { MdOutlineSupportAgent } from "react-icons/md";
-import { FaRobot } from "react-icons/fa6";
-import { MdOutlineForum } from "react-icons/md";
-import { FaUserTie } from "react-icons/fa";
-import { IoTicketOutline } from "react-icons/io5";
 import { PiVideoConference } from "react-icons/pi";
-import { FaBookOpen } from "react-icons/fa";
-import { FaUserGraduate } from "react-icons/fa6";
-import { GrCertificate } from "react-icons/gr";
+import { IoTicketOutline } from "react-icons/io5";
 
-function ProductService() {
+interface Product {
+  Demo: string[];
+  DemoNote?: string;
+  support: string[];
+  supportNote?: string;
+  training: string[];
+  trainingNote?: string;
+}
+
+const icons: Record<string, Record<string, JSX.Element>> = {
+  Demo: {
+    "Self-demo": <GrTestDesktop className="w-8 h-8 text-primary1" />,
+    "Customised prototypes": (
+      <RiMobileDownloadLine className="w-8 h-8 text-primary1" />
+    ),
+    "Guided walkthrough": <FaWalking className="w-8 h-8 text-primary1" />,
+    "Video demos": <MdOutlineOndemandVideo className="w-8 h-8 text-primary1" />,
+  },
+  support: {
+    Phone: <IoIosCall className="w-8 h-8 text-primary1" />,
+    "Live chat": <MdOutlineSupportAgent className="w-8 h-8 text-primary1" />,
+    "Bot chat": <FaRobot className="w-8 h-8 text-primary1" />,
+    "Community forum": <MdOutlineForum className="w-8 h-8 text-primary1" />,
+    "Dedicated account manager": (
+      <FaUserTie className="w-8 h-8 text-primary1" />
+    ),
+    "Help ticket": <IoTicketOutline className="w-8 h-8 text-primary1" />,
+  },
+  training: {
+    "Video Tutorials": <PiVideoConference className="w-8 h-8 text-primary1" />,
+    "User Manuals": <FaBookOpen className="w-8 h-8 text-primary1" />,
+    "On-demand Training": <FaUserGraduate className="w-8 h-8 text-primary1" />,
+    "Certification program": (
+      <GrCertificate className="w-8 h-8 text-primary1" />
+    ),
+  },
+};
+
+function ProductService({ product }: { product: Product }) {
+  const renderSelectedItems = (type: "Demo" | "support" | "training") => {
+    const selectedItems = product[type];
+    return selectedItems.map((item) => (
+      <div key={item} className="max-w-md hover:cursor-pointer">
+        <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-lg bg-indigo-50">
+          {icons[type][item]}
+        </div>
+        <h6 className="mb-2 font-semibold leading-5">{item}</h6>
+      </div>
+    ));
+  };
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="max-w-xl pr-16 mx-auto mb-10">
           <h5 className="mb-6 text-lg font-bold leading-none">Demo</h5>
           <p className="mb-6 text-xs text-slate-500">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque rem aperiam, eaque ipsa quae. Sed ut unde
-            omnis iste natus.
+            {product?.DemoNote ? product?.DemoNote : "No specific Note"}
           </p>
         </div>
         <div className="grid gap-5 grid-cols-2 row-gap-5 md:grid-cols-2">
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <GrTestDesktop className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Self Demo </h6>
-          </div>
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <RiMobileDownloadLine className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Custom Prototype</h6>
-          </div>
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <FaWalking className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Walkthrough</h6>
-          </div>
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <MdOutlineOndemandVideo className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Video Demo</h6>
-          </div>
+          {renderSelectedItems("Demo")}
         </div>
       </div>
 
@@ -57,50 +86,11 @@ function ProductService() {
         <div className="max-w-xl pr-16 mx-auto mb-10">
           <h5 className="mb-6 text-lg font-bold leading-none">Supports</h5>
           <p className="mb-6 text-xs text-slate-500">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque rem aperiam, eaque ipsa quae. Sed ut unde
-            omnis iste natus.
+            {product?.supportNote ? product?.supportNote : "No specific Note"}
           </p>
         </div>
         <div className="grid gap-5 grid-cols-2 row-gap-5 md:grid-cols-3">
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <IoIosCall className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Phone Call </h6>
-          </div>
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <MdOutlineSupportAgent className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Live Chat</h6>
-          </div>
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <FaRobot className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Bot Chat</h6>
-          </div>
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <MdOutlineForum className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Coummunity Forum</h6>
-          </div>
-
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <FaUserTie className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Account Manager</h6>
-          </div>
-
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <IoTicketOutline className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Help ticket</h6>
-          </div>
+          {renderSelectedItems("support")}
         </div>
       </div>
 
@@ -108,36 +98,11 @@ function ProductService() {
         <div className="max-w-xl pr-16 mx-auto mb-10">
           <h5 className="mb-6 text-lg font-bold leading-none">Training</h5>
           <p className="mb-6 text-xs text-slate-500">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque rem aperiam, eaque ipsa quae. Sed ut unde
-            omnis iste natus.
+            {product?.trainingNote ? product?.trainingNote : "No specific Note"}
           </p>
         </div>
         <div className="grid gap-5 grid-cols-2 row-gap-5 md:grid-cols-2">
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <PiVideoConference className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Video Tutorial </h6>
-          </div>
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <FaBookOpen className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">User manual</h6>
-          </div>
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <FaUserGraduate className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">On Demand Training</h6>
-          </div>
-          <div className="max-w-md hover:cursor-pointer">
-            <div className="flex items-center justify-center w-16 h-16 mb-4   rounded-lg bg-indigo-50">
-              <GrCertificate className="w-8 h-8 text-primary1" />
-            </div>
-            <h6 className="mb-2 font-semibold leading-5">Certification</h6>
-          </div>
+          {renderSelectedItems("training")}
         </div>
       </div>
     </div>

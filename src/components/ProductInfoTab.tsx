@@ -6,8 +6,16 @@ import { CiMobile3 } from "react-icons/ci";
 import { SlCalender } from "react-icons/sl";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoLanguage } from "react-icons/io5";
+import {
+  ReactElement,
+  JSXElementConstructor,
+  ReactNode,
+  ReactPortal,
+  AwaitedReactNode,
+  Key,
+} from "react";
 
-function ProductInfoTab() {
+function ProductInfoTab({ product }: any) {
   return (
     <div>
       <div className="grid max-w-md gap-5 row-gap-10 sm:mx-auto lg:max-w-full lg:grid-cols-3 font-clarity">
@@ -20,27 +28,17 @@ function ProductInfoTab() {
           <div>
             <h6 className="mb-2 font-bold text-lg leading-5">Deployment</h6>
             <p className="mb-3 text-sm text-slate-500">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Deployment options available for different environments.
             </p>
             <ul className="mb-4 -ml-1 space-y-2">
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                SaaS
-              </li>{" "}
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                On-premise
-              </li>
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                Hybrid
-              </li>
+              {product.deployement.map((option: string, index: number) => (
+                <li key={index} className="flex items-start">
+                  <span className="mr-1">
+                    <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
+                  </span>
+                  {option}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -56,45 +54,32 @@ function ProductInfoTab() {
               Focus countries
             </h6>
             <p className="mb-3 text-sm text-slate-500">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Targeted regions for product deployment.
             </p>
             <ul className="mb-4 -ml-1 space-y-2">
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                Singapore
-              </li>{" "}
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                India
-              </li>
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                Bangladesh
-              </li>
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                Pakistan
-              </li>
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                Russia
-              </li>
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                More
-              </li>
+              {product.focusCountries.map(
+                (
+                  country:
+                    | string
+                    | number
+                    | bigint
+                    | boolean
+                    | ReactElement<any, string | JSXElementConstructor<any>>
+                    | Iterable<ReactNode>
+                    | ReactPortal
+                    | Promise<AwaitedReactNode>
+                    | null
+                    | undefined,
+                  index: Key | null | undefined
+                ) => (
+                  <li key={index} className="flex items-start">
+                    <span className="mr-1">
+                      <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
+                    </span>
+                    {country}
+                  </li>
+                )
+              )}
             </ul>
           </div>
         </div>
@@ -106,29 +91,19 @@ function ProductInfoTab() {
             </div>
           </div>
           <div>
-            <h6 className="mb-2 font-bold text-lg leading-5">Accessibility</h6>
+            <h6 className="mb-2 font-bold text-lg leading-5">
+              Mobile Accessibility
+            </h6>
             <p className="mb-3 text-sm text-slate-500">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Access the product on multiple platforms.
             </p>
             <ul className="mb-4 -ml-1 space-y-2">
               <li className="flex items-start">
                 <span className="mr-1">
                   <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
                 </span>
-                Mobile
+                {product.mobileAvailable}
               </li>{" "}
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                Desktop
-              </li>
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                Web
-              </li>
             </ul>
           </div>
         </div>
@@ -145,14 +120,14 @@ function ProductInfoTab() {
               Average adoption time
             </h6>
             <p className="mb-3 text-sm text-slate-500">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Typical duration to fully adopt the product.
             </p>
             <ul className="mb-4 -ml-1 space-y-2">
               <li className="flex items-start">
                 <span className="mr-1">
                   <FaCalendarAlt className="w-5 h-5 mt-px text-primary1" />
                 </span>
-                3 months
+                {product.avgTimeAdoption}
               </li>{" "}
             </ul>
           </div>
@@ -167,39 +142,18 @@ function ProductInfoTab() {
           <div>
             <h6 className="mb-2 font-bold text-lg leading-5">Language</h6>
             <p className="mb-3 text-sm text-slate-500">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Supported languages for the product.
             </p>
+
             <ul className="mb-4 -ml-1 space-y-2">
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                Hindi
-              </li>{" "}
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                Marathi
-              </li>
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                Gujrathi
-              </li>
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                English
-              </li>
-              <li className="flex items-start">
-                <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
-                </span>
-                More
-              </li>
+              {product.languages.map((language: string, index: number) => (
+                <li key={index} className="flex items-start">
+                  <span className="mr-1">
+                    <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
+                  </span>
+                  {language}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

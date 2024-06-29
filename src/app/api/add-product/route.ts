@@ -181,6 +181,7 @@ export async function POST(request: Request) {
       data: {
         userId,
         companyId: findCompanyId.id,
+        featured: false,
         name,
         logoUrl,
         category,

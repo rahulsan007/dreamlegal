@@ -7,11 +7,11 @@ import HomeHero from "@/components/HomeHero";
 import HomeProduct from "@/components/HomeProduct";
 import { Testomonial } from "@/components/animated-ui/Testimonial";
 
-function HomePage() {
+function HomePage({ data }: any) {
   return (
     <div>
       <HomeHero />
-      <HomeProduct />
+      <HomeProduct data={data} />
       <Testomonial />
       <CuratedCollection />
       <HomeCta />

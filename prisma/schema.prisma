@@ -30,6 +30,7 @@ model User {
   updatedAt   DateTime      @updatedAt
   companyInfo companyInfo[]
   Product     Product[]
+  Review      Review[]
 }
 
 model Account {
@@ -107,6 +108,7 @@ model companyInfo {
   founderVision             String
   regionServed              String?
   TeamSize                  String
+  overview                  String?
   Awards                    String?
   PointOfContactName        String
   PointOfContactPhone       String
@@ -182,4 +184,33 @@ model Product {
   updatedAt               DateTime    @updatedAt
   user                    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   company                 companyInfo @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  Review                  Review[]
+}
+
+model Review {
+  id               String   @id @default(cuid())
+  userId           String
+  productId        String
+  involvement      String
+  WhyBought        String
+  GoalBehind       String
+  otherProducts    String
+  oftenUsed        String
+  overallExperienc String
+  bestThing        String
+  worstThing       String
+  easeOfLearning   String
+  integration      String
+  support          String
+  roi              String
+  functionality    String
+  processStep      String
+  recommend        String
+  reference        String
+  attachement      String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }

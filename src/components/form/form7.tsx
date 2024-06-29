@@ -188,9 +188,9 @@ function Form7() {
                 <SelectValue placeholder="Storage Unit" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="days">KB</SelectItem>
-                <SelectItem value="months">MB</SelectItem>
-                <SelectItem value="years">GB</SelectItem>
+                <SelectItem value=" KB">KB</SelectItem>
+                <SelectItem value="MB">MB</SelectItem>
+                <SelectItem value="GB">GB</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -226,9 +226,9 @@ function Form7() {
                 <SelectValue placeholder="Storage Unit" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="days">KB</SelectItem>
-                <SelectItem value="months">MB</SelectItem>
-                <SelectItem value="years">GB</SelectItem>
+                <SelectItem value=" KB">KB</SelectItem>
+                <SelectItem value="MB">MB</SelectItem>
+                <SelectItem value="GB">GB</SelectItem>
               </SelectContent>
             </Select>
           </div>

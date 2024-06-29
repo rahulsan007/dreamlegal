@@ -97,6 +97,7 @@ export interface FormValues {
   ContractRepository: string[];
   ContractNegotiation: string[];
   LifecycleManagement: string[];
+  DocumentCreationAndTemplates: string[];
   ClauseLibrary: string[];
   FieldsCreation: string[];
   TrackingAndValidity: string[];
@@ -174,6 +175,7 @@ const initialFormValues: FormValues = {
   Ediscovery: [],
   IPManagement: [],
   LitigationManagement: [],
+  DocumentCreationAndTemplates: [],
   legalWorkflow: [],
   features: [],
   freeTrial: "",
@@ -319,6 +321,7 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
     Ediscovery: [],
     IPManagement: [],
     LitigationManagement: [],
+    DocumentCreationAndTemplates: [],
     legalWorkflow: [],
     features: [],
     freeTrial: "",

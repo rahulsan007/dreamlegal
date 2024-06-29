@@ -1,9 +1,10 @@
+"use client";
 import ProductCompareCard from "@/components/ProductCompareCard";
 import ProductInfoTab from "@/components/ProductInfoTab";
 import ProductSidebar from "@/components/ProductSidebar";
 import SliderElement from "@/components/Silder";
-import React from "react";
-import { FaArrowUp } from "react-icons/fa6";
+import React, { useEffect, useState } from "react";
+
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { IoReturnUpBackOutline } from "react-icons/io5";
 import { MdOutlineInfo } from "react-icons/md";
@@ -24,18 +25,32 @@ import ProductReference from "@/components/ProductReference";
 import ProductReview from "@/components/ProductReview";
 import ProductMobileSidebar from "@/components/ProductMobileSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import Link from "next/link";
 
-function page() {
+function PageComponent({ data }: any) {
+  const [product, setProduct] = useState(data.product);
+  const [company, setCompany] = useState(data.company);
+  const [error, setError] = useState(null);
+  const usps = product.usp ? product.usp.split(",") : [];
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
+  console.log(product);
+
   return (
     <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 font-clarity">
-      <div className=" flex gap-2  text-gray-900  my-4 transition-all duration-200 hover:cursor-pointer hover:translate-y-[-3px] hover:text-primary1 hover:gap-3 items-center ">
-        <IoReturnUpBackOutline className=" text-[22px] " />
-        <span className=" text-sm font-bold">Browse all products</span>
-      </div>
+      <Link href={`/directory`}>
+        <div className=" flex gap-2  text-gray-900  my-4 transition-all duration-200 hover:cursor-pointer hover:translate-y-[-3px] hover:text-primary1 hover:gap-3 items-center ">
+          <IoReturnUpBackOutline className=" text-[22px] " />
+          <span className=" text-sm font-bold">Browse all products</span>
+        </div>
+      </Link>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className=" w-full md:col-span-1 md:h-fit md:sticky md:top-0 ">
-          <ProductSidebar />
+          <ProductSidebar product={product} />
         </div>
 
         <div className=" col-span-2 overflow-y-scroll no-scrollbar ">
@@ -55,35 +70,47 @@ function page() {
           </div>
           <div className=" border shadow-md rounded-3xl px-4 md:px-16 py-10">
             <div className="flex flex-col gap-5">
-              <h1 className="font-bold text-xl md:text-3xl">Product Name</h1>
+              <h1 className="font-bold text-xl md:text-3xl">{product.name}</h1>
               <div className=" md:w-3/4">
                 <p className="text-sm text-slate-500">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit
-                  sagittis odio accumsan aliquet est sed tristique ipsum et
-                  ornare mauris.
+                  {`${product?.description.slice(0, 100)}...`}
                 </p>
               </div>
               <div className="flex justify-between items-center">
                 <div className=" inline-flex gap-3 flex-wrap">
-                  <div className="py-1 px-2.5 border border-slate-300 bg-slate-50 transition-all duration-200 hover:cursor-pointer text-slate-500 rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                    Business
-                  </div>
-
-                  <div className="py-1 px-2.5 border border-slate-300 bg-slate-50 transition-all duration-200 hover:cursor-pointer text-slate-500 rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                    Productivity
-                  </div>
-
-                  <div className="py-1 px-2.5 border border-slate-300 bg-slate-50 transition-all duration-200 hover:cursor-pointer text-slate-500 rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                    Communication
-                  </div>
-
-                  <div className="py-1 px-2.5 border border-slate-300 bg-slate-50 transition-all duration-200 hover:cursor-pointer text-slate-500 rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                    Management
-                  </div>
+                  {product?.category?.map(
+                    (
+                      cat:
+                        | string
+                        | number
+                        | bigint
+                        | boolean
+                        | React.ReactElement<
+                            any,
+                            string | React.JSXElementConstructor<any>
+                          >
+                        | Iterable<React.ReactNode>
+                        | React.ReactPortal
+                        | Promise<React.AwaitedReactNode>
+                        | null
+                        | undefined,
+                      index: React.Key | null | undefined
+                    ) => (
+                      <div
+                        key={index}
+                        className="py-1 px-2.5 border border-slate-300 bg-slate-50 transition-all duration-200 hover:cursor-pointer text-slate-500 rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1"
+                      >
+                        {cat}
+                      </div>
+                    )
+                  )}
                 </div>
                 <button className="  flex gap-2 rounded-full bg-black  text-white font-bold px-6 py-3 text-xs transition-all  w-fit items-center hover:bg-primary1 hover:gap-4">
-                  Visit
-                  <IoIosArrowRoundForward className=" text-xl" />
+                  <Link href={company.website}>
+                    {" "}
+                    Visit
+                    <IoIosArrowRoundForward className=" text-xl" />
+                  </Link>
                 </button>
               </div>
 
@@ -94,21 +121,23 @@ function page() {
                       Company Name
                     </p>
                     <p className="text-sm text-slate-500">
-                      Manupatra Technologies Pvt. Ltd.
+                      {company?.companyName}
                     </p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-900 font-bold">
                       Founded Date
                     </p>
-                    <p className="text-sm text-slate-500">2022</p>
+                    <p className="text-sm text-slate-500">
+                      {company.yearFounded}
+                    </p>
                   </div>
 
                   <div>
-                    <p className="text-sm text-gray-900 font-bold">
-                      Operation Status
+                    <p className="text-sm text-gray-900 font-bold">Region</p>
+                    <p className="text-sm text-slate-500">
+                      {company.regionServed}
                     </p>
-                    <p className="text-sm text-slate-500">Active</p>
                   </div>
                 </div>
 
@@ -117,20 +146,22 @@ function page() {
                     <p className="text-sm text-gray-900 font-bold">
                       Headquaters
                     </p>
-                    <p className="text-sm text-slate-500">New Delhi, India</p>
+                    <p className="text-sm text-slate-500">
+                      {company.headQuaters}
+                    </p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-900 font-bold">Founders</p>
                     <p className="text-sm text-slate-500">
-                      Elina Berglund, Raoul Scherwitzl
+                      {company.NameOfFounders}
                     </p>
                   </div>
 
                   <div>
                     <p className="text-sm text-gray-900 font-bold">
-                      Company Type{" "}
+                      Team size{" "}
                     </p>
-                    <p className="text-sm text-slate-500">for profit</p>
+                    <p className="text-sm text-slate-500">{company.TeamSize}</p>
                   </div>
                 </div>
 
@@ -143,7 +174,7 @@ function page() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-900 font-bold">Phone</p>
-                    <p className="text-sm text-slate-500">1234567890</p>
+                    <p className="text-sm text-slate-500">{company.contact}</p>
                   </div>
                 </div>
               </div>
@@ -151,62 +182,25 @@ function page() {
               <div className="w-full h-px bg-slate-200 my-4"></div>
               <div>
                 <SliderElement>
-                  <img
-                    src="https://assets-global.website-files.com/63bed0273cfe5e611e742359/63cabfaa40bbd89b13ba409e_product-gallery-one-aggregator-x-webflow-template-p-500.png"
-                    className=" w-full rounded-3xl"
-                    alt=""
-                  />
-
-                  <img
-                    src="https://assets-global.website-files.com/63bed0273cfe5e611e742359/63cabfaa40bbd89b13ba409e_product-gallery-one-aggregator-x-webflow-template-p-500.png"
-                    className=" w-full rounded-3xl"
-                    alt=""
-                  />
-
-                  <img
-                    src="https://assets-global.website-files.com/63bed0273cfe5e611e742359/63cabfaa40bbd89b13ba409e_product-gallery-one-aggregator-x-webflow-template-p-500.png"
-                    className=" w-full rounded-3xl"
-                    alt=""
-                  />
-
-                  <img
-                    src="https://assets-global.website-files.com/63bed0273cfe5e611e742359/63cabfaa40bbd89b13ba409e_product-gallery-one-aggregator-x-webflow-template-p-500.png"
-                    className=" w-full rounded-3xl"
-                    alt=""
-                  />
-
-                  <img
-                    src="https://assets-global.website-files.com/63bed0273cfe5e611e742359/63cabfaa40bbd89b13ba409e_product-gallery-one-aggregator-x-webflow-template-p-500.png"
-                    className=" w-full rounded-3xl"
-                    alt=""
-                  />
-
-                  <img
-                    src="https://assets-global.website-files.com/63bed0273cfe5e611e742359/63cabfaa40bbd89b13ba409e_product-gallery-one-aggregator-x-webflow-template-p-500.png"
-                    className=" w-full rounded-3xl"
-                    alt=""
-                  />
+                  {product?.Images?.map((image: string, index: number) => (
+                    <img
+                      key={index}
+                      src={image}
+                      className="w-full rounded-3xl"
+                      alt=""
+                    />
+                  ))}
                 </SliderElement>
 
                 <div className=" my-8 flex flex-col">
                   <h2 className="text-2xl font-bold">About the product</h2>
                   <p className="text-sm text-slate-500 my-2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    lobortis arcu enim urna adipiscing praesent velit viverra
-                    sit semper lorem eu cursus vel hendrerit elementum morbi
-                    curabitur etiam nibh justo, lorem aliquet donec sed sit mi
-                    dignissim at ante massa mattis.
-                    <br /> <br />
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    lobortis arcu enim urna adipiscing praesent velit viverra
-                    sit semper lorem eu cursus vel hendrerit elementum morbi
-                    curabitur etiam nibh justo, lorem aliquet donec sed sit mi
-                    dignissim at ante massa mattis.
+                    {product.description}
                   </p>
                 </div>
               </div>
 
-              <ProductInfoTab />
+              <ProductInfoTab product={product} />
 
               <div className="w-full h-px bg-slate-200 my-4"></div>
               {/* Overview */}
@@ -227,28 +221,13 @@ function page() {
                     </TooltipProvider>
                   </div>
                   <div>
-                    <ul className=" flex flex-col gap-4 py-3">
-                      <li className=" flex gap-3 items-center">
-                        <TbPointFilled className="text-primary1" />
-                        <p className=" text-gray-900">Unique selling points</p>
-                      </li>
-
-                      <li className=" flex gap-3 items-center">
-                        <TbPointFilled className="text-primary1" />
-                        <p className=" text-gray-900">Unique selling points</p>
-                      </li>
-                      <li className=" flex gap-3 items-center">
-                        <TbPointFilled className="text-primary1" />
-                        <p className=" text-gray-900">Unique selling points</p>
-                      </li>
-                      <li className=" flex gap-3 items-center">
-                        <TbPointFilled className="text-primary1" />
-                        <p className=" text-gray-900">Unique selling points</p>
-                      </li>
-                      <li className=" flex gap-3 items-center">
-                        <TbPointFilled className="text-primary1" />
-                        <p className=" text-gray-900">Unique selling points</p>
-                      </li>
+                    <ul className="flex flex-col gap-4 py-3">
+                      {usps.map((usp: string, index: number) => (
+                        <li key={index} className="flex gap-3 items-center">
+                          <TbPointFilled className="text-primary1" />
+                          <p className="text-gray-900">{usp.trim()}</p>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
@@ -271,11 +250,7 @@ function page() {
                       </TooltipProvider>
                     </div>
                     <p className=" text-sm text-slate-500">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Beatae debitis sapiente provident! Beatae animi
-                      repellendus perferendis sit nam, sapiente tempore illum
-                      omnis, assumenda, dolorum iusto nobis porro quod a
-                      impedit?
+                      {company.overview}
                     </p>
                   </div>
 
@@ -296,11 +271,7 @@ function page() {
                       </TooltipProvider>
                     </div>
                     <p className=" text-sm text-slate-500">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Beatae debitis sapiente provident! Beatae animi
-                      repellendus perferendis sit nam, sapiente tempore illum
-                      omnis, assumenda, dolorum iusto nobis porro quod a
-                      impedit?
+                      {company.founderVision}
                     </p>
                   </div>
                 </div>
@@ -310,7 +281,7 @@ function page() {
 
               {/* Segments */}
 
-              <div className="flex flex-col md:flex-row flex-wrap justify-between ">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <div className="flex  gap-2 items-center">
                     <h2 className=" text-lg font-bold text-gray-900">
@@ -329,15 +300,14 @@ function page() {
                   </div>
                   <div className="flex justify-between items-center">
                     <div className=" inline-flex gap-3 flex-wrap">
-                      <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                        Law firms
-                      </div>
-                      <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                        Enterprises
-                      </div>
-                      <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                        Startups
-                      </div>
+                      {product.userCategory.map((segment: string) => (
+                        <div
+                          key={segment}
+                          className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1"
+                        >
+                          {segment}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -358,17 +328,16 @@ function page() {
                       </Tooltip>
                     </TooltipProvider>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <div className=" inline-flex gap-3 flex-wrap">
-                      <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                        Law firms
-                      </div>
-                      <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                        Enterprises
-                      </div>
-                      <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                        Startups
-                      </div>
+                  <div className="ml-auto flex justify-between items-center">
+                    <div className="inline-flex gap-3 flex-wrap">
+                      {product.industry.map((segment: string) => (
+                        <div
+                          key={segment}
+                          className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1"
+                        >
+                          {segment}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -391,15 +360,14 @@ function page() {
                   </div>
                   <div className="flex justify-between items-center">
                     <div className=" inline-flex gap-3 flex-wrap">
-                      <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                        Law firms
-                      </div>
-                      <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                        Enterprises
-                      </div>
-                      <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                        Startups
-                      </div>
+                      {product.practiceAreas.map((segment: string) => (
+                        <div
+                          key={segment}
+                          className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1"
+                        >
+                          {segment}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -423,7 +391,7 @@ function page() {
                 </TooltipProvider>
               </div>
 
-              <ProcessLifecycle />
+              <ProcessLifecycle product={product} />
 
               <div className="w-full h-px bg-slate-200 my-4"></div>
               {/* Features */}
@@ -442,7 +410,7 @@ function page() {
                 </TooltipProvider>
               </div>
 
-              <ProductFeature />
+              <ProductFeature features={product.features} />
 
               <div className="w-full h-px bg-slate-200 my-4"></div>
 
@@ -462,63 +430,62 @@ function page() {
 
               <div className=" flex flex-col md:flex-row justify-between">
                 <div>
-                  <p className="text-sm text-gray-900 font-bold">Type</p>
-                  <p className="text-sm text-slate-500">Free Trial.</p>
+                  <p className="text-sm text-gray-900 font-bold">Free trail</p>
+                  <p className="text-sm text-slate-500">{product.freeTrial}</p>
                 </div>
 
                 <div>
                   <p className="text-sm text-gray-900 font-bold">Time period</p>
-                  <p className="text-sm text-slate-500">3 months.</p>
+                  <p className="text-sm text-slate-500">{product.timePeriod}</p>
                 </div>
 
                 <div>
                   <p className="text-sm text-gray-900 font-bold">
-                    Pricing type
+                    Free version
                   </p>
-                  <p className="text-sm text-slate-500">Custom.</p>
+                  <p className="text-sm text-slate-500">
+                    {product.freeVersion}
+                  </p>
                 </div>
               </div>
 
-              <div>
-                <div className="flex  gap-2 items-center">
-                  <h2 className="  font-bold text-gray-900">
-                    Pricing parameter
-                  </h2>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <MdOutlineInfo className="text-slate-500 text-sm" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Overview of company,products in short</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
-                <div className="flex justify-between items-center">
-                  <div className=" inline-flex gap-3 flex-wrap">
-                    <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                      Number of documents
-                    </div>
-                    <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                      Urgency
-                    </div>
-                    <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                      Document type
-                    </div>
-
-                    <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                      Customer Support
-                    </div>
-
-                    <div className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1">
-                      Number of pages
+              {product.pricingParams.length > 0 ? (
+                <div>
+                  <div className="flex  gap-2 items-center">
+                    <h2 className="  font-bold text-gray-900">
+                      Pricing parameter
+                    </h2>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <MdOutlineInfo className="text-slate-500 text-sm" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Overview of company,products in short</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className=" inline-flex gap-3 flex-wrap">
+                      {product.pricingParams.map((parameter: string) => (
+                        <div
+                          key={parameter}
+                          className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1"
+                        >
+                          {parameter}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
 
-              <ProductPricingTable />
+              <ProductPricingTable
+                nameofPlan={product.nameofPlan}
+                validity={product.validity}
+                price={product.price}
+              />
 
               <div className="w-full h-px bg-slate-200 my-4"></div>
               {/* Support */}
@@ -538,7 +505,7 @@ function page() {
                 </TooltipProvider>
               </div>
 
-              <ProductService />
+              <ProductService product={product} />
 
               <div className="w-full h-px bg-slate-200 my-4"></div>
 
@@ -556,7 +523,7 @@ function page() {
                 </TooltipProvider>
               </div>
 
-              <ProductReference embedId="rokGy0huYEA" />
+              <ProductReference product={product} />
 
               <div className="w-full h-px bg-slate-200 my-4"></div>
 
@@ -594,4 +561,4 @@ function page() {
   );
 }
 
-export default page;
+export default PageComponent;

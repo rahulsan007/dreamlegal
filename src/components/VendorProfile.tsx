@@ -28,6 +28,7 @@ import {
 } from "./ui/select";
 import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
+import { Textarea } from "./ui/textarea";
 
 interface Profile {
   companyName: string;
@@ -43,6 +44,7 @@ interface Profile {
   PointOfContactName: string;
   PointOfContactPhone: string;
   PointOfContactDesignation: string;
+  overview: string;
 }
 function VendorProfile({
   verified,
@@ -110,6 +112,7 @@ function VendorProfile({
         regionServed: profile.regionServed,
         TeamSize: profile.TeamSize,
         Awards: profile.Awards,
+        overview: profile.overview,
         PointOfContactName: profile.PointOfContactName,
         PointOfContactPhone: profile.PointOfContactPhone,
         PointOfContactDesignation: profile.PointOfContactDesignation,
@@ -128,6 +131,7 @@ function VendorProfile({
     regionServed: "",
     TeamSize: "",
     Awards: "",
+    overview: "",
     PointOfContactName: "",
     PointOfContactPhone: "",
     PointOfContactDesignation: "",
@@ -249,6 +253,13 @@ function VendorProfile({
                           <p className=" text-sm text-slate-500">Website</p>
                           <p className=" text-sm text-gray-900">
                             {profile.website}
+                          </p>
+                        </li>
+                        <li className="grid grid-cols-2 pr-5">
+                          {/* <MdAlternateEmail className="text-primary1" /> */}
+                          <p className=" text-sm text-slate-500">Overview</p>
+                          <p className=" text-sm text-gray-900">
+                            {profile.overview}
                           </p>
                         </li>
 
@@ -479,6 +490,15 @@ function VendorProfile({
                     />
                   </div>
                   <div>
+                    <Label htmlFor="overview">Overview</Label>
+                    <Textarea
+                      id="overview"
+                      value={formData.overview}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div>
                     <Label htmlFor="regionServed">Region Served</Label>
                     <Input
                       id="regionServed"
@@ -591,6 +611,15 @@ function VendorProfile({
                     <Input
                       id="website"
                       value={formData.website}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="overview">Overview</Label>
+                    <Textarea
+                      id="overview"
+                      value={formData.overview}
                       onChange={handleChange}
                       required
                     />

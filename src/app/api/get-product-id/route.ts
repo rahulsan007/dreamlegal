@@ -9,12 +9,30 @@ export async function POST(request: Request) {
       },
     });
 
-    if (product) {
+    const CompanyInfo = await prisma.companyInfo.findFirst({
+      where: {
+        id: product?.companyId,
+      },
+    });
+
+    const userInfo = await prisma.user.findFirst({
+      where: {
+        id: product?.userId,
+      },
+      select: {
+        name: true,
+        email: true,
+        image: true,
+      },
+    });
+    if (product && CompanyInfo) {
       return Response.json(
         {
           msg: "Product fetched successfully",
           success: true,
           product,
+          company: CompanyInfo,
+          user: userInfo,
         },
         {
           status: 200,

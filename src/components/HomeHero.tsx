@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Search from "./animated-ui/Search";
 import FilterCategory from "./animated-ui/FilterCategory";
+import { useRouter } from "next/navigation";
 
 const placeholders = [
   "Lawyer CRM",
@@ -11,11 +12,14 @@ const placeholders = [
 ];
 
 function HomeHero() {
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState("");
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setSearchTerm(e.target.value);
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    router.push("/directory");
     console.log("submitted");
   };
 

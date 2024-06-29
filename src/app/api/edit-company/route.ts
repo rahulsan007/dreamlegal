@@ -3,7 +3,6 @@ import prisma from "@/lib/prisma";
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json();
     const {
       vendorId,
       companyName,
@@ -19,11 +18,22 @@ export async function POST(request: Request) {
       PointOfContactName,
       PointOfContactPhone,
       PointOfContactDesignation,
-    } = data;
+      overview,
+    } = await request.json();
+
+    const findCompanyId = await prisma.companyInfo.findFirst({
+      where: {
+        userId: vendorId,
+      },
+    });
+
+    if (!findCompanyId) {
+      return Response.json({ success: false, msg: "User not found" });
+    }
 
     // Update the company info
     const updatedProfile = await prisma.companyInfo.update({
-      where: { id: vendorId },
+      where: { id: findCompanyId.id },
       data: {
         companyName,
         website,
@@ -38,13 +48,14 @@ export async function POST(request: Request) {
         PointOfContactName,
         PointOfContactPhone,
         PointOfContactDesignation,
+        overview,
       },
     });
 
-    return NextResponse.json({ success: true, profile: updatedProfile });
+    return Response.json({ success: true, profile: updatedProfile });
   } catch (error) {
     console.error("Error updating profile:", error);
-    return NextResponse.json({
+    return Response.json({
       success: false,
       msg: "Error updating profile.",
     });

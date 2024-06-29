@@ -11,7 +11,7 @@ import { MdOutlineContactSupport } from "react-icons/md";
 import { VscReferences } from "react-icons/vsc";
 import { FaRegStar } from "react-icons/fa";
 
-function ProductSidebar() {
+function ProductSidebar({ product }: any) {
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ function ProductSidebar() {
     <div className="font-clarity md:w-[300px]">
       <div>
         <img
-          src="https://assets-global.website-files.com/63bed0273cfe5e611e742359/63c82fe038b315197d0623d9_startuper-featured-image-aggregator-x-webflow-template.svg"
+          src={product.logoUrl}
           alt=""
           className={`rounded-3xl w-[150px] h-[150px] md:w-[300px] md:h-[300px] md:sticky md:top-0 ${
             isSticky ? "sticky-img sticky" : "sticky-img"
