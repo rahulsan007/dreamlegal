@@ -238,37 +238,32 @@ const CheckboxDemo = ({ product }: any) => {
     }
   };
 
-  const handleFeatureRatingChange = (category: any, newValue: null) => {
-    if (newValue !== null) {
-      setFeatureRatings((prevRatings: any[]) =>
-        prevRatings.map((rating: { category: any }) =>
-          rating.category === category
-            ? { ...rating, rating: newValue }
-            : rating
-        )
-      );
-      console.log("Updated feature ratings:", featureRatings);
-    }
+  const handleFeatureRatingChange = (
+    category: any,
+    newValue: number | null
+  ) => {
+    setFeatureRatings((prevRatings: any[]) =>
+      prevRatings.map((rating: { category: any }) =>
+        rating.category === category
+          ? { ...rating, rating: newValue || 0 }
+          : rating
+      )
+    );
+    console.log("Updated feature ratings:", featureRatings);
   };
 
-  // Handle change for process lifecycle ratings
   const handleProcessLifecycleRatingChange = (
     category: any,
-    newValue: null
+    newValue: number | null
   ) => {
-    if (newValue !== null) {
-      setProcessLifecycleRatings((prevRatings: any[]) =>
-        prevRatings.map((rating: { category: any }) =>
-          rating.category === category
-            ? { ...rating, rating: newValue }
-            : rating
-        )
-      );
-      console.log(
-        "Updated process lifecycle ratings:",
-        processLifecycleRatings
-      );
-    }
+    setProcessLifecycleRatings((prevRatings: any[]) =>
+      prevRatings.map((rating: { category: any }) =>
+        rating.category === category
+          ? { ...rating, rating: newValue || 0 }
+          : rating
+      )
+    );
+    console.log("Updated process lifecycle ratings:", processLifecycleRatings);
   };
 
   return (
