@@ -7,8 +7,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ReviewCard from "./ReviewCard";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import AddReviewForm from "./AddReviewForm";
 
-function AllReview({ type = "user" }: any) {
+function AllReview({ type = "user", product }: any) {
   return (
     <div className=" font-clarity mt-5">
       <div className="flex flex-col md:flex-row items-center justify-between">
@@ -26,17 +35,24 @@ function AllReview({ type = "user" }: any) {
           </Select>
         </div>
       </div>
+
       <div className="flex flex-col md:flex-row items-center gap-5">
-        <input
-          type="text"
-          className=" border border-slate-300 rounded-lg py-2 px-4 w-full my-4"
-          placeholder="Search for reviews..."
-        />
         {type === "user" ? (
-          <button className=" bg-primary1 text-white py-4 px-4 rounded-lg text-xs md:w-[200px]">
-            Add Review
+          <Dialog>
+            <DialogTrigger className="mt-6 ml-auto">
+              <button className=" ml-auto bg-primary1 text-white py-4 px-4 rounded-lg text-xs md:w-[200px]">
+                Add Review
+              </button>
+            </DialogTrigger>
+            <DialogContent className="w-full">
+              <AddReviewForm product={product} />
+            </DialogContent>
+          </Dialog>
+        ) : (
+          <button className=" ml-auto bg-primary1 text-white py-4 px-4 rounded-lg text-xs md:w-[200px]">
+            Login to Review
           </button>
-        ) : null}
+        )}
       </div>
       <ReviewCard />
       <ReviewCard />

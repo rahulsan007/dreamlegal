@@ -2,11 +2,11 @@ import React from "react";
 import ProductAllReviewProgressbar from "./ProductAllReviewProgressbar";
 import AllReview from "./AllReview";
 
-function ProductReview() {
+function ProductReview({ product }: any) {
   return (
     <div>
       <ProductAllReviewProgressbar />
-      <AllReview />
+      <AllReview product={product} />
     </div>
   );
 }

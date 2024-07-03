@@ -3,7 +3,8 @@ import Image from "next/image";
 
 async function getData() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/get-all-products`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/get-all-products`,
+    { cache: "no-store" }
   );
 
   if (!response.ok) {

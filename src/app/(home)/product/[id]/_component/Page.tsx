@@ -541,7 +541,7 @@ function PageComponent({ data }: any) {
                 </TooltipProvider>
               </div>
               {/* Reviews */}
-              <ProductReview />
+              <ProductReview product={product} />
             </div>
           </div>
 
