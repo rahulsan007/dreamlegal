@@ -31,9 +31,24 @@ import Link from "next/link";
 function PageComponent({ data }: any) {
   useEffect(() => {
     const addAnalytics = async () => {
+      const userId = localStorage.getItem('userId')
+      const loginsViews = userId ? 1 : 0
+      const userAgent = navigator.userAgent;
+      let desktopViews = 0;
+      let mobileViews = 0;
+      let tabletViews = 0;
+
+      if (/Mobi|Android/i.test(userAgent)) {
+        mobileViews = 1;
+      } else if (/Tablet|iPad/i.test(userAgent)) {
+        tabletViews = 1;
+      } else {
+        desktopViews = 1;
+      }
       
       try {
         const response = await fetch('/api/add-analytics', {
+      
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -41,14 +56,11 @@ function PageComponent({ data }: any) {
           body: JSON.stringify({
             userId: data.product.userId,
             productId: data.product.id,
-            shares: "0",
-            followers: "0",
-            views: data.views,
-            loginsViews: data.loginsViews,
-            leads: data.leads,
-            desktopViews: data.desktopViews,
-            mobileViews: data.mobileViews,
-            tabletViews: data.tabletViews,
+            views: 1,
+            loginsViews: loginsViews ,
+            desktopViews: desktopViews,
+            mobileViews: mobileViews,
+            tabletViews: tabletViews,
             country: data.country,
           }),
         });

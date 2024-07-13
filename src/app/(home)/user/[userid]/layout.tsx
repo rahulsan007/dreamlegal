@@ -13,6 +13,10 @@ export default function UserLayout({
   children: React.ReactNode;
 }>) {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const userId = localStorage.getItem("userId");
+  if(!userId){
+    return null
+  }
 
   let ActiveComponent;
   switch (activeTab) {
@@ -23,7 +27,7 @@ export default function UserLayout({
       ActiveComponent = <SavedItems />;
       break;
     case "profile":
-      ActiveComponent = <UserProfile />;
+      ActiveComponent = <UserProfile userId={userId} />;
       break;
     case "addReview":
       ActiveComponent = <AddReview />;
