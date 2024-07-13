@@ -27,7 +27,46 @@ import ProductMobileSidebar from "@/components/ProductMobileSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
 
+
 function PageComponent({ data }: any) {
+  useEffect(() => {
+    const addAnalytics = async () => {
+      
+      try {
+        const response = await fetch('/api/add-analytics', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: data.product.userId,
+            productId: data.product.id,
+            shares: "0",
+            followers: "0",
+            views: data.views,
+            loginsViews: data.loginsViews,
+            leads: data.leads,
+            desktopViews: data.desktopViews,
+            mobileViews: data.mobileViews,
+            tabletViews: data.tabletViews,
+            country: data.country,
+          }),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to add analytics');
+        }
+  
+        const result = await response.json();
+        console.log('Analytics added:', result);
+      } catch (error) {
+        console.error('Error adding analytics:', error);
+        
+      }
+    };
+  
+    addAnalytics();
+  }, [data]);
   const [product, setProduct] = useState(data.product);
   const [company, setCompany] = useState(data.company);
   const [error, setError] = useState(null);

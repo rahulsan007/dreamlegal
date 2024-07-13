@@ -234,7 +234,7 @@ model Review {
 model Analytics {
   id        String   @id @default(cuid())
   userId    String
-  productId String
+  productId String @unique
   shares    Int?
   followers Int?
   views     Int?
