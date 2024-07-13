@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { MdAlternateEmail } from "react-icons/md";
 import { TiWorldOutline } from "react-icons/ti";
@@ -13,10 +13,58 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 
-function UserProfile() {
+function UserProfile({ userId }: { userId: string }) {
+  interface Account {
+    name: string;
+    image: string;
+    email: string;
+  }
+
+  interface profile {
+    Contact: string;
+    Location: string;
+    Address: string;
+    Designation: string;
+    CompanyType: string;
+    CompanyAddress: string;
+    CompanyEmail: string;
+  }
+
   const [details, setDetails] = useState(true);
   const [CompDetails, setCompDetails] = useState(true);
   const [Account, setAccount] = useState(false);
+  const [profile, setProfile] = useState<profile | null>(null);
+  const [AccountDetails, setAccountDetails] = useState<Account | null>();
+  const [Image, setImage] = useState(
+    "https://cdn-icons-png.flaticon.com/512/4715/4715330.png"
+  );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    const fetchProfile = async (userId: string) => {
+      try {
+        const response = await fetch("/api/get-user?userId=" + userId);
+        const data = await response.json();
+
+        if (data.success) {
+          setProfile(data.profile);
+          setAccountDetails(data.account);
+          setImage(
+            data.account.image ||
+              "https://cdn-icons-png.flaticon.com/512/4715/4715330.png"
+          );
+        } else {
+          setError(data.msg);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile(userId);
+  }, [userId]);
   return (
     <>
       <div
@@ -31,15 +79,17 @@ function UserProfile() {
           <IoIosArrowDown />
         </div>
       </div>
-      <div className="font-clarity border rounded-md shadow hidden md:block">
+      <div className="font-clarity border rounded-md shadow hidden md:block  ">
         <div className=" py-6 px-6 ">
           <div className="flex flex-col justify-center items-center">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src={Image} />
+              <AvatarFallback>DI</AvatarFallback>
             </Avatar>
-            <h3 className=" text-lg font-bold text-gray-900">Rahul Santra</h3>
-            <p className=" text-sm text-slate-500">@rahulsantra</p>
+
+            <h3 className=" text-lg font-bold text-gray-900">
+              {AccountDetails?.name || "Default Name"}
+            </h3>
           </div>
           <div className="py-5">
             <div className=" flex justify-between items-center">
@@ -55,36 +105,36 @@ function UserProfile() {
                 Edit{" "}
               </button>
             </div>
-            <div>
+            <div className="w-fit">
               <ul
                 className={`mt-2 space-y-2 transition-all duration-200 ${
                   !details ? "hidden" : ""
                 }`}
               >
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
                   {/* <MdAlternateEmail className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Email</p>
-                  <p className=" text-sm text-gray-900">l5k7H@example.com</p>
-                </li>
-
-                <li className="grid grid-cols-2 pr-5">
-                  {/* <TiWorldOutline className="text-primary1" /> */}
-                  <p className=" text-sm text-slate-500">Location</p>
-                  <p className=" text-sm text-gray-900">Mumbai, India</p>
-                </li>
-
-                <li className="grid grid-cols-2 pr-5">
-                  {/* <GoOrganization className="text-primary1" /> */}
-                  <p className=" text-sm text-slate-500">Address</p>
                   <p className=" text-sm text-gray-900">
-                    Solitaire space, sec 6 Panvel
+                    {AccountDetails?.email}
                   </p>
                 </li>
 
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
+                  {/* <TiWorldOutline className="text-primary1" /> */}
+                  <p className=" text-sm text-slate-500">Location</p>
+                  <p className=" text-sm text-gray-900">{profile?.Location}</p>
+                </li>
+
+                <li className="grid grid-cols-1 pr-5">
+                  {/* <GoOrganization className="text-primary1" /> */}
+                  <p className=" text-sm text-slate-500">Address</p>
+                  <p className=" text-sm text-gray-900">{profile?.Address}</p>
+                </li>
+
+                <li className="grid grid-cols-1 pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Contact</p>
-                  <p className=" text-sm text-gray-900">9876543210</p>
+                  <p className=" text-sm text-gray-900">{profile?.Contact}</p>
                 </li>
 
                 <li className="hover:cursor-pointer pr-5">
@@ -116,30 +166,36 @@ function UserProfile() {
                   !CompDetails ? "hidden" : ""
                 }`}
               >
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
                   {/* <MdAlternateEmail className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Designation</p>
-                  <p className=" text-sm text-gray-900">Senior Advocate</p>
-                </li>
-
-                <li className="grid grid-cols-2 pr-5">
-                  {/* <TiWorldOutline className="text-primary1" /> */}
-                  <p className=" text-sm text-slate-500">Type</p>
-                  <p className=" text-sm text-gray-900">Law Firm</p>
-                </li>
-
-                <li className="grid grid-cols-2 pr-5">
-                  {/* <GoOrganization className="text-primary1" /> */}
-                  <p className=" text-sm text-slate-500">Address</p>
                   <p className=" text-sm text-gray-900">
-                    Solitaire space, sec 6 Panvel
+                    {profile?.Designation}
                   </p>
                 </li>
 
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
+                  {/* <TiWorldOutline className="text-primary1" /> */}
+                  <p className=" text-sm text-slate-500">Type</p>
+                  <p className=" text-sm text-gray-900">
+                    {profile?.CompanyType}
+                  </p>
+                </li>
+
+                <li className="grid grid-cols-1 pr-5">
+                  {/* <GoOrganization className="text-primary1" /> */}
+                  <p className=" text-sm text-slate-500">Address</p>
+                  <p className=" text-sm text-gray-900">
+                    {profile?.CompanyAddress}
+                  </p>
+                </li>
+
+                <li className="grid grid-cols-1 pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500"> Email</p>
-                  <p className=" text-sm text-gray-900">5k0f6@example.com</p>
+                  <p className=" text-sm text-gray-900">
+                    {profile?.CompanyEmail}
+                  </p>
                 </li>
 
                 <li>
@@ -194,19 +250,19 @@ function UserProfile() {
                   !details ? "hidden" : ""
                 }`}
               >
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
                   {/* <MdAlternateEmail className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Email</p>
                   <p className=" text-sm text-gray-900">l5k7H@example.com</p>
                 </li>
 
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
                   {/* <TiWorldOutline className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Location</p>
                   <p className=" text-sm text-gray-900">Mumbai, India</p>
                 </li>
 
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Address</p>
                   <p className=" text-sm text-gray-900">
@@ -214,7 +270,7 @@ function UserProfile() {
                   </p>
                 </li>
 
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Contact</p>
                   <p className=" text-sm text-gray-900">9876543210</p>
@@ -238,7 +294,7 @@ function UserProfile() {
                 <MdOutlineKeyboardArrowDown />
                 Company Details
               </h3>
-              <button className="text-primary1 text-sm grid grid-cols-2 pr-5">
+              <button className="text-primary1 text-sm grid grid-cols-1 pr-5">
                 <HiOutlinePencil />
                 Edit{" "}
               </button>
@@ -249,19 +305,19 @@ function UserProfile() {
                   !CompDetails ? "hidden" : ""
                 }`}
               >
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
                   {/* <MdAlternateEmail className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Designation</p>
                   <p className=" text-sm text-gray-900">Senior Advocate</p>
                 </li>
 
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
                   {/* <TiWorldOutline className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Type</p>
                   <p className=" text-sm text-gray-900">Law Firm</p>
                 </li>
 
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Address</p>
                   <p className=" text-sm text-gray-900">
@@ -269,7 +325,7 @@ function UserProfile() {
                   </p>
                 </li>
 
-                <li className="grid grid-cols-2 pr-5">
+                <li className="grid grid-cols-1 pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500"> Email</p>
                   <p className=" text-sm text-gray-900">5k0f6@example.com</p>

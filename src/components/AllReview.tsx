@@ -16,6 +16,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import AddReviewForm from "./AddReviewForm";
+import Link from "next/link";
 
 function AllReview({ type = "user", product }: any) {
   return (
@@ -38,16 +39,29 @@ function AllReview({ type = "user", product }: any) {
 
       <div className="flex flex-col md:flex-row items-center gap-5">
         {type === "user" ? (
-          <Dialog>
-            <DialogTrigger className="mt-6 ml-auto">
-              <button className=" ml-auto bg-primary1 text-white py-4 px-4 rounded-lg text-xs md:w-[200px]">
-                Add Review
-              </button>
-            </DialogTrigger>
-            <DialogContent className="w-full">
-              <AddReviewForm product={product} />
-            </DialogContent>
-          </Dialog>
+          // <Dialog>
+          //   <DialogTrigger className="mt-6 ml-auto">
+          //     <button className=" ml-auto bg-primary1 text-white py-4 px-4 rounded-lg text-xs md:w-[200px]">
+          //       Add Review
+          //     </button>
+          //   </DialogTrigger>
+          //   <DialogContent className="w-full">
+          //     <AddReviewForm product={product} />
+          //   </DialogContent>
+          // </Dialog>
+          <Link
+            className="ml-auto mt-4"
+            href={{
+              pathname: `/review`,
+              query: {
+                id: product.id,
+              },
+            }}
+          >
+            <button className="  bg-primary1 text-white py-4 px-4 rounded-lg text-xs md:w-[200px]">
+              Add Review
+            </button>
+          </Link>
         ) : (
           <button className=" ml-auto bg-primary1 text-white py-4 px-4 rounded-lg text-xs md:w-[200px]">
             Login to Review

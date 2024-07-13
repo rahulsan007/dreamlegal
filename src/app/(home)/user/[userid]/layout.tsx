@@ -31,14 +31,5 @@ export default function UserLayout({
     default:
       ActiveComponent = <UserDashboard />;
   }
-  return (
-    <div className=" grid grid-cols-1 md:grid-cols-5 px-4">
-      <div className="col-span-1  ">
-        <UserProfile />
-      </div>
-      <div className="col-span-4">
-        <ScrollArea className="h-screen  px-5 ">{children}</ScrollArea>
-      </div>
-    </div>
-  );
+  return <main>{children}</main>;
 }

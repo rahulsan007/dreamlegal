@@ -6,6 +6,7 @@ import { AiOutlineTags } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 import { FaRegStar } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
   const [Dashboard, setDashboard] = useState(true);
@@ -14,6 +15,7 @@ function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
   const [Profile, setProfile] = useState(false);
   const [Logout, setLogout] = useState(false);
   const [Support, setSupport] = useState(false);
+  const router = useRouter();
 
   const handleReview = () => {
     setReview(!Review);
@@ -23,6 +25,11 @@ function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
   const handleProfile = () => {
     setProfile(!Profile);
     onMenuItemClick("Profile");
+  };
+
+  const handlelogout = () => {
+    localStorage.removeItem("vendorId");
+    router.push("/");
   };
   return (
     <div className="bg-[#002C76] h-screen font-clarity px-4 py-6 flex flex-col">
@@ -114,7 +121,7 @@ function VendorSidebar({ onMenuItemClick, selectedMenu }: any) {
             </li>
 
             <li
-              onClick={() => setLogout(!Logout)}
+              onClick={handlelogout}
               className={`flex justify-between text-sm items-center px-4 py-4 rounded-md transition-all duration-200 hover:cursor-pointer ${
                 Logout ? "text-white bg-[#034b8a]" : "text-slate-300"
               }`}

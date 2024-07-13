@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function UserSignin() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -94,6 +96,16 @@ function UserSignin() {
           Continue with Google
         </Button>
       </form>
+
+      <p className="text-center">
+        Don't have an account?{" "}
+        <a
+          className="text-primary1 hover:pointer hover:underline"
+          onClick={() => router.push("/sign-up")}
+        >
+          Create one
+        </a>
+      </p>
     </div>
   );
 }

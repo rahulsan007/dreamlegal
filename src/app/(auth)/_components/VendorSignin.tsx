@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function VendorSignin() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -43,7 +45,7 @@ function VendorSignin() {
         }
 
         // Redirect to the home page or any other desired page
-        window.location.href = "/";
+        router.push("/vendor");
       } else {
         // Handle sign-in error
         console.error("Failed to sign in:", response.statusText);
@@ -84,6 +86,16 @@ function VendorSignin() {
           Login
         </Button>
       </form>
+
+      <p className="text-center">
+        Don't have an account?{" "}
+        <a
+          className="text-primary1 hover:pointer hover:underline"
+          onClick={() => router.push("/sign-up")}
+        >
+          Create one
+        </a>
+      </p>
     </div>
   );
 }

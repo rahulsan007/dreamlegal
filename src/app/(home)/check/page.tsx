@@ -22,6 +22,8 @@ const CheckPage = () => {
           const data = await response.json();
           if (data.success && data.user) {
             localStorage.setItem("userId", data.user.id);
+            localStorage.setItem("userEmail", data.user.email);
+
             router.push(`/user/${data.user.id}?verified=true`);
           } else {
             // Handle user not found scenario

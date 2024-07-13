@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -8,12 +9,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import Rating from "@mui/material/Rating";
 
-import RatingScale from "./ratingSacle";
-import { ScrollArea } from "./ui/scroll-area";
-import { Input } from "./ui/input";
-import { useRouter } from "next/navigation";
 
-const CheckboxDemo = ({ product }: any) => {
+
+import { useRouter } from "next/navigation";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
+
+const CheckboxDemo = ({ product ,review}: any) => {
   const [selectedInvolvements, setSelectedInvolvements] = useState<string[]>(
     []
   );
@@ -117,7 +119,7 @@ const CheckboxDemo = ({ product }: any) => {
         attachement: attachmentUrl,
       };
 
-      const response = await fetch("/api/add-review", {
+      const response = await fetch("/api/edit-review", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

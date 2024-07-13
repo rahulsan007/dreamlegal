@@ -31,6 +31,21 @@ model User {
   companyInfo companyInfo[]
   Product     Product[]
   Review      Review[]
+  userAccount userAccount[]
+}
+
+model userAccount {
+  id             String  @id @default(cuid())
+  userId         String
+  Contact        String?
+  Location       String?
+  Address        String?
+  Designation    String?
+  CompanyType    String?
+  CompanyAddress String?
+  CompanyEmail   String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
@@ -191,26 +206,45 @@ model Review {
   id               String   @id @default(cuid())
   userId           String
   productId        String
-  involvement      String
-  WhyBought        String
-  GoalBehind       String
+  involvement      String[]
+  WhyBought        String[]
+  GoalBehind       String[]
   otherProducts    String
   oftenUsed        String
   overallExperienc String
   bestThing        String
   worstThing       String
-  easeOfLearning   String
-  integration      String
-  support          String
-  roi              String
-  functionality    String
-  processStep      String
-  recommend        String
+  easeOfLearning   Int
+  integration      Int
+  support          Int
+  roi              Int
+  functionality    Json
+  processStep      Json
+  recommend        Int
   reference        String
-  attachement      String
+  attachement      String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+
+model Analytics {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  shares    Int?
+  followers Int?
+  views     Int?
+  loginsViews    Int?
+  leads          Int?
+  desktopViews   Int?
+  mobileViews    Int?
+  tabletViews    Int?
+  country Json?
+
+  createdAt DateTime @default(now())
+
 }

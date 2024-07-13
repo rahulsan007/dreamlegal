@@ -16,6 +16,7 @@ function UserSignup() {
     confirmPassword: "",
   });
   const [otp, setOtp] = useState("");
+  const [terms, setTerms] = useState(false);
 
   const router = useRouter();
 
@@ -78,6 +79,8 @@ function UserSignup() {
         const data = await response.json();
         console.log("OTP verified successfully");
         setotpStep(true);
+        localStorage.setItem("userId", data.user.id);
+        localStorage.setItem("userEmail", data.user.email);
         alert("OTP verified successfully");
         router.push(`/user/${data.user.id}?verified=true`);
       } else {
@@ -112,66 +115,94 @@ function UserSignup() {
           </form>
         </div>
       ) : (
-        <form onSubmit={handleSubmit}>
-          <h1 className="text-lg font-bold">Create Account</h1>
-          <div>
-            <Label htmlFor="name">Name</Label>
-            <Input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Enter your name"
-            />
-          </div>
+        <div>
+          <form onSubmit={handleSubmit}>
+            <h1 className="text-lg font-bold">Create Account</h1>
+            <div>
+              <Label htmlFor="name">Name</Label>
+              <Input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your name"
+              />
+            </div>
 
-          <div>
-            <Label htmlFor="email">Email</Label>
-            <Input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-            />
-          </div>
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+              />
+            </div>
 
-          <div>
-            <Label htmlFor="password">Password</Label>
-            <Input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Enter your Password"
-            />
-          </div>
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your Password"
+              />
+            </div>
 
-          <div>
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
-            <Input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Enter your Password Again"
-            />
-          </div>
+            <div>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Enter your Password Again"
+              />
+            </div>
 
-          <Button className="w-full bg-primary1 my-4" type="submit">
-            Create Account
-          </Button>
+            <div className="flex gap-3 items-center my-3">
+              <Input
+                type="checkbox"
+                name="terms"
+                id="terms"
+                className="w-2 h-5"
+                onChange={() => setTerms(!terms)}
+              />{" "}
+              <p>I agree to the Terms and Conditions</p>
+            </div>
 
-          <hr />
+            <Button
+              className="w-full bg-primary1 my-4"
+              disabled={!terms}
+              type="submit"
+            >
+              Create Account
+            </Button>
 
-          <Button
-            onClick={() => signIn("google", { callbackUrl: "/check" })}
-            className="w-full bg-white gap-4 text-black border hover:text-white my-4"
-          >
-            <FcGoogle />
-            Continue with Google
-          </Button>
-        </form>
+            <hr />
+
+            <Button
+              onClick={() => signIn("google", { callbackUrl: "/check" })}
+              disabled={!terms}
+              className="w-full bg-white gap-4 text-black border hover:text-white my-4"
+            >
+              <FcGoogle />
+              Continue with Google
+            </Button>
+          </form>
+
+          <p className="text-center">
+            Already have an account?{" "}
+            <a
+              className="text-primary1 hover:pointer hover:underline"
+              onClick={() => router.push("/sign-in")}
+            >
+              Login
+            </a>
+          </p>
+        </div>
       )}
     </div>
   );

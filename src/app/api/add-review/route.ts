@@ -24,27 +24,7 @@ export async function POST(request: Request) {
       attachement,
     } = await request.json();
 
-    if (
-      !userId ||
-      !productId ||
-      !involvement ||
-      !WhyBought ||
-      !GoalBehind ||
-      !otherProducts ||
-      !oftenUsed ||
-      !overallExperienc ||
-      !bestThing ||
-      !worstThing ||
-      !easeOfLearning ||
-      !integration ||
-      !support ||
-      !roi ||
-      !functionality ||
-      !processStep ||
-      !recommend ||
-      !reference ||
-      !attachement
-    ) {
+    if (!userId || !productId) {
       return Response.json(
         {
           success: false,

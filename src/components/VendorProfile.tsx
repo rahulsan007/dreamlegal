@@ -6,7 +6,9 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { FaStar } from "react-icons/fa6";
 import { HiOutlinePencil } from "react-icons/hi";
 import { IoIosArrowDown } from "react-icons/io";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { MdEdit, MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { TbListDetails } from "react-icons/tb";
+
 import {
   Dialog,
   DialogContent,
@@ -29,6 +31,7 @@ import {
 import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
+import { useRouter } from "next/navigation";
 
 interface Profile {
   companyName: string;
@@ -61,7 +64,7 @@ function VendorProfile({
   const [vendorId, setVendorId] = useState<string | null>(null);
   const [profile, setProfile] = useState<Profile | null>(getProfile);
   const [isEditing, setIsEditing] = useState(false);
-
+  const router = useRouter();
   useEffect(() => {
     const storedVendorId = localStorage.getItem("vendorId");
     if (storedVendorId) {
@@ -165,9 +168,11 @@ function VendorProfile({
         // Redirect to a success page or handle success
       } else {
         console.error("Error:", result.msg);
+        setOpen(false);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      setOpen(false);
     }
   };
 
@@ -196,11 +201,14 @@ function VendorProfile({
 
         // Optionally, reset the form data to the updated profile data
         setFormData(result.profile);
+        setIsEditing(false);
       } else {
         console.error("Error:", result.msg);
+        setOpen(false);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      setOpen(false);
     }
   };
 
@@ -208,9 +216,13 @@ function VendorProfile({
     setFormData({ ...formData, TeamSize: value });
   };
 
+  const handlelogout = () => {
+    localStorage.removeItem("vendorId");
+    router.push("/");
+  };
   return (
     <>
-      {profile ? (
+      {profile && open === false && isEditing === false ? (
         <div className=" grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <>
@@ -392,7 +404,10 @@ function VendorProfile({
 
                         <li></li>
                         <li>
-                          <button className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary1 text-sm font-medium text-white items-center">
+                          <button
+                            onClick={handlelogout}
+                            className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary1 text-sm font-medium text-white items-center"
+                          >
                             <CiLogout />
                             Logout
                           </button>
@@ -407,352 +422,407 @@ function VendorProfile({
         </div>
       ) : null}
 
-      {/* New user popup */}
-      <div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className=" h-[500px] font-clarity ">
-            <ScrollArea className="h-[450px]">
-              <DialogHeader>
-                <DialogTitle>Welcome to Dreamlegal</DialogTitle>
-              </DialogHeader>
-              <hr className="my-4" />
-              <div>
-                <form onSubmit={handleSubmit}>
-                  <h3 className=" text-lg font-bold text-gray-900">
-                    Company Details
-                  </h3>
-                  <div className="px-4 py-2 bg-red-100 rounded-full w-fit">
-                    <span className=" text-red-600 italic text-sm ">
-                      * All fields are required
-                    </span>
-                  </div>
-                  <div>
-                    <Label htmlFor="companyName">Company Name</Label>
-                    <Input
-                      id="companyName"
-                      value={formData.companyName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="website">Website</Label>
-                    <Input
-                      id="website"
-                      value={formData.website}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="yearFounded">Year Founded</Label>
-                    <Input
-                      id="yearFounded"
-                      value={formData.yearFounded}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="headQuaters">Headquarters</Label>
-                    <Input
-                      id="headQuaters"
-                      value={formData.headQuaters}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="NameOfFounders">Name Of Founders</Label>
-                    <Input
-                      id="NameOfFounders"
-                      value={formData.NameOfFounders}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="contact">Contact</Label>
-                    <Input
-                      id="contact"
-                      value={formData.contact}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="founderVision">Founder Vision</Label>
-                    <Input
-                      id="founderVision"
-                      value={formData.founderVision}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="overview">Overview</Label>
-                    <Textarea
-                      id="overview"
-                      value={formData.overview}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="regionServed">Region Served</Label>
-                    <Input
-                      id="regionServed"
-                      value={formData.regionServed}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="TeamSize">Team Size</label>
-                    <Select onValueChange={handleSelectChange} required>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select Team Size" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Team Size</SelectLabel>
-                          <SelectItem value="1">1</SelectItem>
-                          <SelectItem value="1-20">1-20</SelectItem>
-                          <SelectItem value="20-50">20-50</SelectItem>
-                          <SelectItem value="50-200">50-200</SelectItem>
-                          <SelectItem value="200-500">200-500</SelectItem>
-                          <SelectItem value="500+">500+</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label htmlFor="Awards">Awards</Label>
-                    <Input
-                      id="Awards"
-                      value={formData.Awards}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <hr className="my-4" />
-                  <h3 className="text-lg font-bold text-gray-900">
-                    Point Of Contact
-                  </h3>
-                  <div>
-                    <Label htmlFor="PointOfContactName">
-                      Point Of Contact Name
-                    </Label>
-                    <Input
-                      id="PointOfContactName"
-                      value={formData.PointOfContactName}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="PointOfContactPhone">
-                      Point Of Contact Phone
-                    </Label>
-                    <Input
-                      id="PointOfContactPhone"
-                      value={formData.PointOfContactPhone}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="PointOfContactDesignation">
-                      Point Of Contact Designation
-                    </Label>
-                    <Input
-                      id="PointOfContactDesignation"
-                      value={formData.PointOfContactDesignation}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <Button type="submit" className="my-4">
-                    Save
-                  </Button>
-                </form>
-              </div>
-            </ScrollArea>
-          </DialogContent>
-        </Dialog>
-      </div>
-
-      <div>
-        <Dialog open={isEditing} onOpenChange={setIsEditing}>
-          <DialogContent className=" h-[500px] font-clarity ">
-            <ScrollArea className="h-[450px]">
-              <DialogHeader>
-                <DialogTitle>Editing</DialogTitle>
-              </DialogHeader>
-              <hr className="my-4" />
-              <div>
-                <form onSubmit={handleEditSubmit}>
-                  <h3 className=" text-lg font-bold text-gray-900">
-                    Company Details
-                  </h3>
-                  <div className="px-4 py-2 bg-red-100 rounded-full w-fit">
-                    <span className=" text-red-600 italic text-sm ">
-                      * All fields are required
-                    </span>
-                  </div>
-                  <div>
-                    <Label htmlFor="companyName">Company Name</Label>
-                    <Input
-                      id="companyName"
-                      value={formData.companyName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="website">Website</Label>
-                    <Input
-                      id="website"
-                      value={formData.website}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="overview">Overview</Label>
-                    <Textarea
-                      id="overview"
-                      value={formData.overview}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="yearFounded">Year Founded</Label>
-                    <Input
-                      id="yearFounded"
-                      value={formData.yearFounded}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="headQuaters">Headquarters</Label>
-                    <Input
-                      id="headQuaters"
-                      value={formData.headQuaters}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="NameOfFounders">Name Of Founders</Label>
-                    <Input
-                      id="NameOfFounders"
-                      value={formData.NameOfFounders}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="contact">Contact</Label>
-                    <Input
-                      id="contact"
-                      value={formData.contact}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="founderVision">Founder Vision</Label>
-                    <Input
-                      id="founderVision"
-                      value={formData.founderVision}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="regionServed">Region Served</Label>
-                    <Input
-                      id="regionServed"
-                      value={formData.regionServed}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="TeamSize">Team Size</label>
-                    <Select onValueChange={handleSelectChange} required>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select Team Size" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Team Size</SelectLabel>
-                          <SelectItem value="1">1</SelectItem>
-                          <SelectItem value="1-20">1-20</SelectItem>
-                          <SelectItem value="20-50">20-50</SelectItem>
-                          <SelectItem value="50-200">50-200</SelectItem>
-                          <SelectItem value="200-500">200-500</SelectItem>
-                          <SelectItem value="500+">500+</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label htmlFor="Awards">Awards</Label>
-                    <Input
-                      id="Awards"
-                      value={formData.Awards}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <hr className="my-4" />
-                  <h3 className="text-lg font-bold text-gray-900">
-                    Point Of Contact
-                  </h3>
-                  <div>
-                    <Label htmlFor="PointOfContactName">
-                      Point Of Contact Name
-                    </Label>
-                    <Input
-                      id="PointOfContactName"
-                      value={formData.PointOfContactName}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="PointOfContactPhone">
-                      Point Of Contact Phone
-                    </Label>
-                    <Input
-                      id="PointOfContactPhone"
-                      value={formData.PointOfContactPhone}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="PointOfContactDesignation">
-                      Point Of Contact Designation
-                    </Label>
-                    <Input
-                      id="PointOfContactDesignation"
-                      value={formData.PointOfContactDesignation}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    onClick={handleEditSubmit}
-                    className="my-4"
+      {open ? (
+        <>
+          <div className="font-clarity">
+            <h2 className=" text-lg font-bold flex gap-4 items-center">
+              <span className="text-primary1 text-xl">
+                <TbListDetails />
+              </span>
+              Complete your Vendor Profile
+            </h2>
+            <span className=" text-sm text-gray-500">
+              Please fill the following details to Complete your Vendor Profile
+            </span>
+            <div className=" px-5 py-4  rounded-md border shadow-sm w-full md:w-2/3">
+              <form onSubmit={handleSubmit} className=" w-full px-4 ">
+                <div className=" mt-4">
+                  <Label className=" text-slate-600" htmlFor="companyName">
+                    Company Name <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="companyName"
+                    value={formData.companyName}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="website">
+                    Website
+                  </Label>
+                  <Input
+                    id="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="yearFounded">
+                    Year Founded
+                  </Label>
+                  <Input
+                    id="yearFounded"
+                    value={formData.yearFounded}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="headQuaters">
+                    Headquarters
+                  </Label>
+                  <Input
+                    id="headQuaters"
+                    value={formData.headQuaters}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="NameOfFounders">
+                    Name Of Founders
+                  </Label>
+                  <Input
+                    id="NameOfFounders"
+                    value={formData.NameOfFounders}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="contact">
+                    Contact
+                  </Label>
+                  <Input
+                    id="contact"
+                    value={formData.contact}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="founderVision">
+                    Founder Vision
+                  </Label>
+                  <Input
+                    id="founderVision"
+                    value={formData.founderVision}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="overview">
+                    Overview
+                  </Label>
+                  <Textarea
+                    id="overview"
+                    value={formData.overview}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="regionServed">
+                    Region Served
+                  </Label>
+                  <Input
+                    id="regionServed"
+                    value={formData.regionServed}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="TeamSize">
+                    Team Size
+                  </Label>
+                  <Select onValueChange={handleSelectChange} required>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Team Size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Team Size</SelectLabel>
+                        <SelectItem value="1">1</SelectItem>
+                        <SelectItem value="1-20">1-20</SelectItem>
+                        <SelectItem value="20-50">20-50</SelectItem>
+                        <SelectItem value="50-200">50-200</SelectItem>
+                        <SelectItem value="200-500">200-500</SelectItem>
+                        <SelectItem value="500+">500+</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="Awards">
+                    Awards
+                  </Label>
+                  <Input
+                    id="Awards"
+                    value={formData.Awards}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <hr className="my-4" />
+                <h3 className="text-lg font-bold text-gray-900">
+                  Point Of Contact
+                </h3>
+                <div>
+                  <Label
+                    className=" text-slate-600"
+                    htmlFor="PointOfContactName"
                   >
-                    Save Edit
-                  </button>
-                </form>
-              </div>
-            </ScrollArea>
-          </DialogContent>
-        </Dialog>
-      </div>
+                    Point Of Contact Name
+                  </Label>
+                  <Input
+                    id="PointOfContactName"
+                    value={formData.PointOfContactName}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <Label
+                    className=" text-slate-600"
+                    htmlFor="PointOfContactPhone"
+                  >
+                    Point Of Contact Phone
+                  </Label>
+                  <Input
+                    id="PointOfContactPhone"
+                    value={formData.PointOfContactPhone}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <Label
+                    className=" text-slate-600"
+                    htmlFor="PointOfContactDesignation"
+                  >
+                    Point Of Contact Designation
+                  </Label>
+                  <Input
+                    id="PointOfContactDesignation"
+                    value={formData.PointOfContactDesignation}
+                    onChange={handleChange}
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="my-4 w-2/3 rounded-lg bg-primary1"
+                >
+                  Save
+                </Button>
+              </form>
+            </div>
+          </div>
+        </>
+      ) : null}
+
+      {isEditing && (
+        <>
+          <div className=" font-clarity">
+            <h2 className=" text-lg font-bold flex gap-4 items-center mb-4">
+              <span className="text-primary1 text-xl">
+                <MdEdit />
+              </span>
+              Edit Profile
+            </h2>
+            <div className=" px-5 py-4  rounded-md border shadow-sm w-full md:w-2/3">
+              <form className="px-4" onSubmit={handleEditSubmit}>
+                <h3 className=" font-bold text-gray-700 mt-2">
+                  Edit Company Details
+                </h3>
+
+                <div>
+                  <Label className=" text-slate-600" htmlFor="companyName">
+                    Company Name
+                  </Label>
+                  <Input
+                    id="companyName"
+                    value={formData.companyName}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="website">
+                    Website
+                  </Label>
+                  <Input
+                    id="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="overview">
+                    Overview
+                  </Label>
+                  <Textarea
+                    id="overview"
+                    value={formData.overview}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="yearFounded">
+                    Year Founded
+                  </Label>
+                  <Input
+                    id="yearFounded"
+                    value={formData.yearFounded}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="headQuaters">
+                    Headquarters
+                  </Label>
+                  <Input
+                    id="headQuaters"
+                    value={formData.headQuaters}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="NameOfFounders">
+                    Name Of Founders
+                  </Label>
+                  <Input
+                    id="NameOfFounders"
+                    value={formData.NameOfFounders}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="contact">
+                    Contact
+                  </Label>
+                  <Input
+                    id="contact"
+                    value={formData.contact}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="founderVision">
+                    Founder Vision
+                  </Label>
+                  <Input
+                    id="founderVision"
+                    value={formData.founderVision}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="regionServed">
+                    Region Served
+                  </Label>
+                  <Input
+                    id="regionServed"
+                    value={formData.regionServed}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="TeamSize">
+                    Team Size
+                  </Label>
+                  <Select onValueChange={handleSelectChange} required>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Team Size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Team Size</SelectLabel>
+                        <SelectItem value="1">1</SelectItem>
+                        <SelectItem value="1-20">1-20</SelectItem>
+                        <SelectItem value="20-50">20-50</SelectItem>
+                        <SelectItem value="50-200">50-200</SelectItem>
+                        <SelectItem value="200-500">200-500</SelectItem>
+                        <SelectItem value="500+">500+</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className=" text-slate-600" htmlFor="Awards">
+                    Awards
+                  </Label>
+                  <Input
+                    id="Awards"
+                    value={formData.Awards}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <hr className="my-4" />
+                <h3 className=" font-bold text-gray-700 mt-4">
+                  Point Of Contact
+                </h3>
+                <div>
+                  <Label
+                    className=" text-slate-600"
+                    htmlFor="PointOfContactName"
+                  >
+                    Point Of Contact Name
+                  </Label>
+                  <Input
+                    id="PointOfContactName"
+                    value={formData.PointOfContactName}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <Label
+                    className=" text-slate-600"
+                    htmlFor="PointOfContactPhone"
+                  >
+                    Point Of Contact Phone
+                  </Label>
+                  <Input
+                    id="PointOfContactPhone"
+                    value={formData.PointOfContactPhone}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <Label
+                    className=" text-slate-600"
+                    htmlFor="PointOfContactDesignation"
+                  >
+                    Point Of Contact Designation
+                  </Label>
+                  <Input
+                    id="PointOfContactDesignation"
+                    value={formData.PointOfContactDesignation}
+                    onChange={handleChange}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  onClick={handleEditSubmit}
+                  className="my-4 bg-primary1 w-2/3 text-white rounded-lg py-2 px-4"
+                >
+                  Save Edit
+                </button>
+              </form>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
