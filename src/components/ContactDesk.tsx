@@ -12,10 +12,7 @@ function ContactDesk() {
                 <h2 className="max-w-lg mb-6   text-3xl font-bold leading-none  text-gray-900 sm:text-4xl md:mx-auto">
                   Contact us directly
                 </h2>
-                <p className="text-sm  md:px-20 text-slate-500 ">
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque rem aperiam, eaque ipsa quae.
-                </p>
+              
               </div>
             </div>
           </div>
@@ -33,15 +30,14 @@ function ContactDesk() {
                   <div className="flex items-center justify-center w-10 h-10 mb-4 mr-2 rounded-full bg-primary2 lg:mb-0">
                     <img src="/supporticon.svg" alt="" />
                   </div>
-                  <h6 className="font-bold leading-5 text-xl">Support</h6>
+                  <h6 className="font-bold leading-5 text-xl">User Support</h6>
                 </div>
                 <p className="mb-2 mt-4 text-sm text-slate-500">
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque rem aperiam.
+                Explore how we ensure exceptional user support. Reach out for assistance today!
                 </p>
                 <div className="flex items-center gap-3 transition-all duration-200 group-hover:gap-5">
                   <p className="text-sm font-bold text-gray-900">
-                    support@example.com
+                    support@dreamlegal.in
                   </p>
                   <IoIosArrowRoundForward className="text-xl text-primary1" />
                 </div>
@@ -62,13 +58,12 @@ function ContactDesk() {
                   </h6>
                 </div>
                 <p className="mb-2 mt-4 text-sm text-slate-500">
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque rem aperiam.
+                Discover rewarding career opportunities with us. Join our team and grow professionally!
                 </p>
 
                 <div className="flex items-center gap-3 transition-all duration-200 group-hover:gap-5">
                   <p className="text-sm font-bold text-gray-900">
-                    career@example.com
+                    career@dreamlegal.in
                   </p>
                   <IoIosArrowRoundForward className="text-xl text-primary1" />
                 </div>
@@ -89,12 +84,11 @@ function ContactDesk() {
                   </h6>
                 </div>
                 <p className="mb-2 mt-4 text-sm text-slate-500">
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque rem aperiam.
+                Learn about our dedicated vendor support services. Connect with us to discuss partnerships and support.
                 </p>
                 <div className="flex items-center gap-3 transition-all duration-200 group-hover:gap-5">
                   <p className="text-sm font-bold text-gray-900">
-                    vendor@example.com
+                    vendor@dreamlegal.in
                   </p>
                   <IoIosArrowRoundForward className="text-xl text-primary1" />
                 </div>

@@ -9,28 +9,24 @@ function ContactFaq() {
             <h2 className="max-w-lg mb-6   text-3xl font-bold leading-none  text-gray-900 sm:text-4xl md:mx-auto">
               Frequently asked questions
             </h2>
-            <p className="text-sm  md:px-20 text-slate-500 ">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque rem aperiam, eaque ipsa quae.
-            </p>
+           
           </div>
         </div>
         <div className="space-y-5">
-          <Item title="The quick, brown fox jumps over a lazy dog?">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque rem aperiam, eaque ipsa quae.
+          <Item title="What is DreamLegal directory?">
+          DreamLegal directory is a comprehensive online resource that lists various legal technology tools and solutions available for lawyers, law firms, legal departments and other legal professionals.
           </Item>
-          <Item title="The first mate and his Skipper too will do?">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque rem aperiam, eaque ipsa quae.
+          <Item title="What features are available in the directory?">
+          Our directory offers comprehensive listings, detailed profiles, comparison  of tools, search and filter options, user reviews, expert insights, vendor information and alerts.
           </Item>
-          <Item title="Is the Space Pope reptilian!?">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque rem aperiam, eaque ipsa quae.
+          <Item title="Is this directory free to use?">
+          Yes, this directory is free for users to view information, compare, download resources and use filters. Some functionalities may require signing in.
           </Item>
-          <Item title="How much money you got on you?">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque rem aperiam, eaque ipsa quae.
+          <Item title="Do you also provide legal tech consultation?">
+          Yes, DreamLegal helps with selection, onboarding, management and even training of employees post legal tech implementation. Kindly contact us in case you need any of the above services.
+          </Item>
+          <Item title="How can vendors list their product?">
+          Vendors can contact us via our website's contact form or email at vendor@dreamlegal.in to submit their product for listing
           </Item>
         </div>
       </div>

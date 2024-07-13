@@ -11,8 +11,7 @@ function ContactHero() {
               Get in touch
             </h1>
             <p className="text-sm text-slate-500">
-              Lorem ipsum dolor consectetur adipiscing elit dolor amet
-              pellentesque aliquet porta.
+            Your inquiries are important to us. Please use the form here or contact us directly through phone or email.
             </p>
 
             <h2 className="text-xl font-bold mt-5">Contact information</h2>
@@ -25,7 +24,7 @@ function ContactHero() {
                 <div className="inline-flex flex-col">
                   <h3 className="text-xs text-slate-500">Send us an email</h3>
                   <span className="text-sm font-bold text-gray-900">
-                    0kIqA@example.com
+                  contact@dreamlegal.in
                   </span>
                 </div>
               </div>
@@ -37,7 +36,7 @@ function ContactHero() {
                 <div className="inline-flex flex-col">
                   <h3 className="text-xs text-slate-500">Give us a call</h3>
                   <span className="text-sm font-bold text-gray-900">
-                    +91 123 456 789
+                  +91-93401-74001
                   </span>
                 </div>
               </div>

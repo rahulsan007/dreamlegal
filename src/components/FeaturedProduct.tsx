@@ -6,7 +6,7 @@ import { TiStarFullOutline } from "react-icons/ti";
 
 function FeaturedProduct({ id, image, title, description, category }: any) {
   return (
-    <div className="w-full px-10 py-7 bg-secondary1 rounded-xl border border-secondary2">
+    <div className="w-full px-10 py-7 bg-gray-50 rounded-xl border border-gray-200">
       <div className="grid grid-cols-1 md:grid-cols-3">
         <div className="md:col-span-2 inline-flex flex-col md:flex-row gap-4">
           <img
@@ -17,12 +17,14 @@ function FeaturedProduct({ id, image, title, description, category }: any) {
             className="rounded-full w-20 h-20 object-cover"
           ></img>
           <div>
-            <h3 className=" font-bold text-base">{title}</h3>
+            <h3 className=" flex gap-3 font-bold text-base">{title}
+            <span className=" bg-primary1 rounded-full px-1 py-1 inline-flex items-center gap-1">
+                <TiStarFullOutline className="text-sm text-white" />
+              </span>
+            </h3>
             <p className=" text-sm text-slate-500 mt-2">{description}</p>
             <div className=" flex gap-3 items-center mt-3 ">
-              <div className=" bg-tertiary3 rounded-full px-1 py-1 inline-flex items-center gap-1">
-                <TiStarFullOutline className="text-lg text-white" />
-              </div>
+              
               <div>
                 {category.map(
                   (
@@ -54,14 +56,14 @@ function FeaturedProduct({ id, image, title, description, category }: any) {
           </div>
         </div>
         <div className="col-span-1 mt-2">
-          <div className="flex flex-col md:flex-row gap-4 md:items-center justify-center h-full ">
-            <Link href={`/product/${id}`}>
-              <span className=" text-sm hover:text-primary1">Learn more</span>
-            </Link>
-            <button className=" flex gap-2 rounded-full bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all  w-fit items-center hover:bg-gray-900 hover:gap-4">
-              Contact us
+          <div className="flex  h-full items-center ">
+            
+            <Link href={`/product/${id}`} className="ml-auto ">
+            <button className=" ml-auto flex gap-2 rounded-full  bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all  items-center hover:bg-primary2 hover:text-primary1 hover:gap-4">
+              View
               <IoIosArrowRoundForward className=" text-xl" />
             </button>
+            </Link>
           </div>
         </div>
       </div>

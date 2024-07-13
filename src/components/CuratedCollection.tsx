@@ -5,21 +5,21 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 function CuratedCollection() {
   const curratedCollection = [
     {
-      title: "App for Lawyers",
+      title: "Solution for Lawyers",
       description:
-        "Lorem ipsum dolor sit amet consectetur adipiscing elit duis blandit viverra.",
+        "Browse tools and solutions for modern practice and clientele growth.",
       image: "/app1.png",
     },
     {
-      title: "App for Law Firms",
+      title: "Solution for Law Firms",
       description:
-        "Lorem ipsum dolor sit amet consectetur adipiscing elit duis blandit viverra.",
+        "Browse tools and solutions for operational growth and workflow management.",
       image: "/app2.png",
     },
     {
-      title: "App for Enterprise",
+      title: "Solution for Enterprises",
       description:
-        "Lorem ipsum dolor sit amet consectetur adipiscing elit duis blandit viverra.",
+        " Browse tools and solutions for legal management and legal cost efficiency.",
       image: "/app3.png",
     },
   ];

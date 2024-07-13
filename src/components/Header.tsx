@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { TiStarFullOutline } from "react-icons/ti";
 import { HiMenuAlt4 } from "react-icons/hi";
+import { FaUser } from "react-icons/fa6";
+import { RiLoginCircleLine } from "react-icons/ri";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -67,14 +69,13 @@ export const Header = () => {
         </div>
         <ul className="flex items-center hidden space-x-8 lg:flex">
           <li>
-            <button className=" font-bold text-xs  text-gray-900 transition-all duration-300 hover:text-white hover:bg-primary1 rounded-full border border-black hover:border-primary1 px-5 py-3 hover:scale-95 hover:-translate-y-1">
-              Post a free Product
+            <button className="inline-flex items-center justify-center gap-2 font-bold text-xs  text-gray-900 transition-all duration-300 hover:text-white hover:bg-primary1 rounded-full border border-black hover:border-primary1 px-5 py-3 hover:scale-95 hover:-translate-y-1">
+            <RiLoginCircleLine className=" text-base" />  User signup
             </button>
           </li>
           <li>
-            <button className="inline-flex items-center justify-center gap-2 font-bold text-xs bg-primary1  text-white transition-all duration-300 hover:text-white hover:bg-gray-900 rounded-full border border-primary1 hover:border-gray-900 px-5 py-3  hover:-translate-y-1">
-              <TiStarFullOutline className=" text-base" /> Post a featured
-              product
+            <button className="inline-flex items-center justify-center gap-2 font-bold text-xs bg-primary1  text-white transition-all duration-300 hover:text-primary1 hover:bg-primary2 rounded-full border   px-5 py-3  hover:-translate-y-1">
+              <FaUser className=" text-base" /> User Login
             </button>
           </li>
         </ul>

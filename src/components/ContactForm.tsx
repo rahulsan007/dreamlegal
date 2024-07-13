@@ -5,6 +5,7 @@ import { FaTwitter } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import { FaLinkedinIn } from "react-icons/fa";
 import Link from "next/link";
+import { FaWhatsapp } from "react-icons/fa6";
 
 function ContactForm() {
   return (
@@ -64,14 +65,14 @@ function ContactForm() {
               htmlFor="location"
               className="text-xs font-bold text-gray-900 ml-2"
             >
-              Location
+              Organization
             </label>
             <input
               type="text"
               className="rounded-full border text-sm border-slate-200 px-5 py-4 shadow-sm w-full"
-              placeholder="ex. Mumbai, Delhi"
-              name="location"
-              id="location"
+              placeholder="ex. Microsoft"
+              name="organization"
+              id="organization"
             />
           </div>
         </div>
@@ -104,28 +105,28 @@ function ContactForm() {
           </button>
 
           <div className="flex gap-4 items-center flex-wrap">
-            <div className="text-primary1 p-1 md:p-3 rounded-full bg-primary2">
-              <Link href={"/"}>
-                <TiSocialFacebook className="md:text-2xl " />
-              </Link>
-            </div>
 
-            <div className="text-primary1 p-1 md:p-3 rounded-full bg-primary2">
-              <Link href={"/"}>
+          <div className="text-primary1 p-1 md:p-3 rounded-full bg-primary2">
+              <a href="https://www.linkedin.com/company/dreamlegal">
                 <FaLinkedinIn className="md:text-2xl " />
-              </Link>
+              </a>
             </div>
 
-            <div className="text-primary1 p-1 md:p-3 rounded-full bg-primary2">
-              <Link href={"/"}>
-                <FaTwitter className="md:text-2xl " />
-              </Link>
+
+          <div className="text-primary1 p-1 md:p-3 rounded-full bg-primary2">
+              <a href="https://wa.link/jqy0vt">
+                <FaWhatsapp className="md:text-2xl " />
+              </a>
             </div>
 
+           
+
+           
+
             <div className="text-primary1 p-1 md:p-3 rounded-full bg-primary2">
-              <Link href={"/"}>
+              <a href=" https://www.instagram.com/dreamlegal_?igsh=MTZ3dnloNjdydmYzcQ==">
                 <RiInstagramFill className="md:text-2xl " />
-              </Link>
+              </a>
             </div>
           </div>
         </div>

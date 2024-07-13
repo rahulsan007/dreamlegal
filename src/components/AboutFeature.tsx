@@ -8,8 +8,7 @@ function AboutFeature() {
             The values that drives everything we do
           </h2>
           <p className="text-sm text-slate-700 md:px-14 ">
-            Lorem ipsum dolor sit amet consectetur adipiscing elit dolor amet
-            lorem pellentesque aliquet porta viverra tortor et.
+          Our vision is to unlock these six core values in the life of <br /> legal professionals through technology.
           </p>
         </div>
         <div className="grid  gap-8  sm:grid-cols-1 lg:grid-cols-3 px-5 md:px-20">
@@ -18,10 +17,9 @@ function AboutFeature() {
               <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-primary2 ">
                 <img src="/about1.svg" alt="" />
               </div>
-              <h6 className="mb-5 text-xl font-bold ">Openess</h6>
+              <h6 className="mb-5 text-xl font-bold ">Integration</h6>
               <p className="mb-5 text-sm text-slate-500 leading-6">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit
-                condimentum tempus nisi interdum euismod etiam faucibus.
+              Inculcate technology into your workflow, ensuring smooth operation.
               </p>
             </div>
           </div>
@@ -31,10 +29,9 @@ function AboutFeature() {
               <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-primary2 ">
                 <img src="/about2.svg" alt="" />
               </div>
-              <h6 className="mb-5 text-xl font-bold ">Openess</h6>
+              <h6 className="mb-5 text-xl font-bold ">Value for Investment</h6>
               <p className="mb-5 text-sm text-slate-500 leading-6">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit
-                condimentum tempus nisi interdum euismod etiam faucibus.
+              Tangible returns on investment, that deliver functionality and ROI.
               </p>
             </div>
           </div>
@@ -44,10 +41,9 @@ function AboutFeature() {
               <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-primary2 ">
                 <img src="/about3.svg" alt="" />
               </div>
-              <h6 className="mb-5 text-xl font-bold ">Openess</h6>
+              <h6 className="mb-5 text-xl font-bold ">Innovation</h6>
               <p className="mb-5 text-sm text-slate-500 leading-6">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit
-                condimentum tempus nisi interdum euismod etiam faucibus.
+              Push the boundaries of traditional legal practice, unlocking new possibilities.
               </p>
             </div>
           </div>
@@ -57,10 +53,9 @@ function AboutFeature() {
               <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-primary2 ">
                 <img src="/about4.svg" alt="" />
               </div>
-              <h6 className="mb-5 text-xl font-bold ">Openess</h6>
+              <h6 className="mb-5 text-xl font-bold ">Collaboration</h6>
               <p className="mb-5 text-sm text-slate-500 leading-6">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit
-                condimentum tempus nisi interdum euismod etiam faucibus.
+              Foster teamwork and connectivity, enabling effortless communication.
               </p>
             </div>
           </div>
@@ -70,10 +65,9 @@ function AboutFeature() {
               <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-primary2 ">
                 <img src="/about5.svg" alt="" />
               </div>
-              <h6 className="mb-5 text-xl font-bold ">Openess</h6>
+              <h6 className="mb-5 text-xl font-bold ">Efficiency</h6>
               <p className="mb-5 text-sm text-slate-500 leading-6">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit
-                condimentum tempus nisi interdum euismod etiam faucibus.
+              Maximise productivity, freeing up valuable time to focus on what truly matters.
               </p>
             </div>
           </div>
@@ -83,10 +77,9 @@ function AboutFeature() {
               <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-primary2 ">
                 <img src="/about6.svg" alt="" />
               </div>
-              <h6 className="mb-5 text-xl font-bold ">Openess</h6>
+              <h6 className="mb-5 text-xl font-bold ">Impact</h6>
               <p className="mb-5 text-sm text-slate-500 leading-6">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit
-                condimentum tempus nisi interdum euismod etiam faucibus.
+              Driving meaningful change in how you serve clients and achieve results.
               </p>
             </div>
           </div>

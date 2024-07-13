@@ -15,35 +15,43 @@ import { MdArrowForward } from "react-icons/md";
 
 const categories = [
   {
-    name: "Law firm",
+    name: "Law firms",
     href: "#",
     img: "/lawfirmicon.svg",
     description: "Lorem, saepe officia tempore officiis et.",
   },
+  
   {
-    name: "Enterprise",
+    name: "Enterprises",
     href: "#",
     img: "/enterpriceicon.svg",
     description: "Lorem, saepe officia tempore officiis et.",
   },
+ {
+   name: "Individual Practitioners",
+   href: "#",
+   img: "/prac.svg",
+   description: "Lorem, saepe officia tempore officiis et.",
+ },
   {
-    name: "Startup",
+    name: "Startups",
     href: "#",
     img: "/startupicon.svg",
     description: "Lorem, saepe officia tempore officiis et.",
   },
   {
-    name: "Government  Department",
+    name: "Government  Departments",
     href: "#",
     img: "/govdepticon.svg",
     description: "Lorem, saepe officia tempore officiis et.",
   },
   {
-    name: "Other",
+    name: "Judiciary",
     href: "#",
-    img: "/inhouselegalicon.svg",
+    img: "/judge1.svg",
     description: "Lorem, saepe officia tempore officiis et.",
   },
+
 ];
 
 function FilterCategory() {
@@ -59,7 +67,7 @@ function FilterCategory() {
                 height={20}
                 alt="icon"
               ></Image>
-              <span>Filter by category</span>
+              <span>What describes you?</span>
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="flex flex-col gap-3 px-2 md:p-6 bg-white w-full md:w-[400px] rounded-lg shadow-md ">

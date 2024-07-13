@@ -10,8 +10,7 @@ function HomeBlog() {
             <div className=" ">
               <h2 className=" text-3xl font-bold ">Article & resources</h2>
               <p className=" text-sm text-slate-500 ">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit duis
-                blandit viverra feugiat sit quis tristique.
+              Explore legal tech articles, surveys, reports, events and case studies.
               </p>
               <div className=" w-full  mt-5 ">
                 <button className=" flex gap-2 rounded-full bg-white text-gray-900 border border-gray-700 font-bold px-6 py-3 text-xs transition-all  w-fit items-center hover:bg-primary1 hover:text-white hover:border-white">

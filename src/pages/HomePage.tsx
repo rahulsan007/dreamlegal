@@ -14,7 +14,7 @@ function HomePage({ data }: any) {
       <HomeProduct data={data} />
       <Testomonial />
       <CuratedCollection />
-      <HomeCta />
+      {/* <HomeCta /> */}
       <HomeBlog />
     </div>
   );

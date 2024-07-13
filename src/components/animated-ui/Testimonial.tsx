@@ -7,11 +7,10 @@ export function Testomonial() {
   return (
     <div className=" rounded-md flex flex-col  bg-[#f8f8fb]  items-center justify-center relative overflow-hidden py-20">
       <h2 className="  text-3xl md:text-[39px] text-center font-bold ">
-        The DreamLegal network
+        The DreamLegal Network
       </h2>
       <p className=" text-sm text-[#46526a] text-center md:w-[400px] font-semibold  mb-10 mt-4 ">
-        Lorem ipsum dolor sit amet consectetur adipiscing elit dolor amet lorem
-        pellentesque aliquet porta viverra tortor et.
+      The most engaging community of legal innovators who drive efficiency, optimization and growth.
       </p>
       <InfiniteMovingCards
         items={testimonials}

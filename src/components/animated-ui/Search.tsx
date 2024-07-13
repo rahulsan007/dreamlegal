@@ -193,7 +193,7 @@ function Search({
       <button
         disabled={!value}
         type="submit"
-        className="absolute font-clarity right-2 top-1/2 z-50 -translate-y-1/2 h-10 px-5  rounded-full disabled:bg-gray-100 disabled:text-gray-200 bg-primary1   transition duration-200 text-white text-xs font-semibold "
+        className="absolute font-clarity right-2 top-1/2 z-50 -translate-y-1/2 h-10 px-5  rounded-full disabled:bg-gray-100 disabled:text-gray-700 bg-primary1   transition duration-200 text-white text-xs font-semibold "
       >
         Search
       </button>
@@ -219,7 +219,7 @@ function Search({
                 duration: 0.3,
                 ease: "linear",
               }}
-              className="dark:text-zinc-500 text-sm sm:text-base font-normal text-neutral-500 pl-4 sm:pl-12 text-left w-[calc(100%-2rem)] truncate"
+              className="dark:text-zinc-500 text-sm sm:text-base font-normal text-neutral-500 pl-2  text-left w-[calc(100%-2rem)] truncate"
             >
               {placeholders[currentPlaceholder]}
             </motion.p>

@@ -5,10 +5,10 @@ import FilterCategory from "./animated-ui/FilterCategory";
 import { useRouter } from "next/navigation";
 
 const placeholders = [
-  "Lawyer CRM",
-  "Document Management System",
-  "Invoice Generator",
-  "Assessment Platform",
+  "Contract Management",
+  "Case Management",
+  "Compliance Management",
+  
 ];
 
 function HomeHero() {
@@ -34,16 +34,14 @@ function HomeHero() {
               <div className=" grid grid-cols-10">
                 <div className="col-span-3"></div>
                 <div className="col-span-4 flex flex-col  gap-4">
-                  <h2 className="text-4xl font-bold text-center">
-                    Discover the next SaaS product today.
+                  <h2 className="text-[33px] font-bold text-center"> 
+                    Discover technology  tailored for legal professionals
                   </h2>
                   <p className=" text-sm text-[#46526a] text-center ">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit etiam
-                    nisl tellus dolor egestas quis laoreet fames odio habitasse
-                    orci.
+                  Optimize legal process and operations- Find, compare and evaluate the best technology for your unique legal needs.
                   </p>
                   <div className=" inline-flex items-center  justify-between w-full">
-                    <div className="flex-initial w-[65%]">
+                    <div className="flex-initial w-[62%]">
                       <Search
                         placeholders={placeholders}
                         onChange={handleChange}
