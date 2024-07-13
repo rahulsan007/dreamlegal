@@ -109,7 +109,7 @@ function HomeProduct({ data }: any) {
              
 
               {category.map((item: any) => (
-                <button className=" flex gap-2 w-full rounded-full transition-all duration-200 bg-primary2 border border-primary1 text-primary1 font-bold px-6 py-3 text-xs  items-center justify-center hover:bg-primary2 hover:text-primary1 hover:gap-4">
+                <button key={item.name}  className=" flex gap-2 w-full rounded-full transition-all duration-200 bg-primary2 border border-primary1 text-primary1 font-bold px-6 py-3 text-xs  items-center justify-center hover:bg-primary2 hover:text-primary1 hover:gap-4">
                   {item.name}
                   <IoIosArrowRoundForward className=" text-xl" />
                 </button>
