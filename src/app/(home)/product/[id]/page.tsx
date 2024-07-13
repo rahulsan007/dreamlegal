@@ -2,13 +2,16 @@ import PageComponent from "./_component/Page";
 async function getData(id: string) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/get-product-id`,
+    
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id }),
-    }
+
+    },
+    
   );
 
   if (!response.ok) {

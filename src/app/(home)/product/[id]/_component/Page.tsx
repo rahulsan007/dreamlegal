@@ -6,8 +6,8 @@ import SliderElement from "@/components/Silder";
 import React, { useEffect, useState } from "react";
 
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { IoReturnUpBackOutline } from "react-icons/io5";
-import { MdOutlineInfo } from "react-icons/md";
+import { IoLinkSharp, IoReturnUpBackOutline } from "react-icons/io5";
+import { MdOutlineBookmarkBorder, MdOutlineInfo } from "react-icons/md";
 import { HiDotsVertical } from "react-icons/hi";
 
 import {
@@ -27,6 +27,9 @@ import ProductMobileSidebar from "@/components/ProductMobileSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
 import useGeoLocation from "react-ipgeolocation";
+import { GoShareAndroid } from "react-icons/go";
+import { FiPrinter } from "react-icons/fi";
+import ReactApexChart from "react-apexcharts";
 
 const countryNames: { [key: string]: string } = {
   US: "United States of America",
@@ -97,7 +100,7 @@ const countryNames: { [key: string]: string } = {
   CM: "Cameroon",
   SN: "Senegal",
   CI: "Ivory Coast",
-  
+
   NE: "Niger",
   BF: "Burkina Faso",
   ML: "Mali",
@@ -133,61 +136,61 @@ const countryNames: { [key: string]: string } = {
   YT: "Mayotte",
 };
 
-
 function PageComponent({ data }: any) {
   const location = useGeoLocation();
   const countryName = countryNames[location.country] || "Unknown Country";
-  const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null; // Check if window is defined
+  const userId =
+    typeof window !== "undefined" ? localStorage.getItem("userId") : null; // Check if window is defined
 
-  useEffect(() => {
-    const addAnalytics = async () => {
-      const loginsViews = userId ? 1 : 0
-      const userAgent = navigator.userAgent;
-      let desktopViews = 0;
-      let mobileViews = 0;
-      let tabletViews = 0;
+  // useEffect(() => {
+  //   const addAnalytics = async () => {
+  //     const loginsViews = userId ? 1 : 0
+  //     const userAgent = navigator.userAgent;
+  //     let desktopViews = 0;
+  //     let mobileViews = 0;
+  //     let tabletViews = 0;
 
-      if (/Mobi|Android/i.test(userAgent)) {
-        mobileViews = 1;
-      } else if (/Tablet|iPad/i.test(userAgent)) {
-        tabletViews = 1;
-      } else {
-        desktopViews = 1;
-      }
-      
-      try {
-        const response = await fetch('/api/add-analytics', {
-      
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: data.product.userId,
-            productId: data.product.id,
-            views: 1,
-            loginsViews: loginsViews ,
-            desktopViews: desktopViews,
-            mobileViews: mobileViews,
-            tabletViews: tabletViews,
-            country: countryName,
-          }),
-        });
-  
-        if (!response.ok) {
-          throw new Error('Failed to add analytics');
-        }
-  
-        const result = await response.json();
-        console.log('Analytics added:', result);
-      } catch (error) {
-        console.error('Error adding analytics:', error);
-        
-      }
-    };
-  
-    addAnalytics();
-  }, [data,countryName,userId]);
+  //     if (/Mobi|Android/i.test(userAgent)) {
+  //       mobileViews = 1;
+  //     } else if (/Tablet|iPad/i.test(userAgent)) {
+  //       tabletViews = 1;
+  //     } else {
+  //       desktopViews = 1;
+  //     }
+
+  //     try {
+  //       const response = await fetch('/api/add-analytics', {
+
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({
+  //           userId: data.product.userId,
+  //           productId: data.product.id,
+  //           views: 1,
+  //           loginsViews: loginsViews ,
+  //           desktopViews: desktopViews,
+  //           mobileViews: mobileViews,
+  //           tabletViews: tabletViews,
+  //           country: countryName,
+  //         }),
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error('Failed to add analytics');
+  //       }
+
+  //       const result = await response.json();
+  //       console.log('Analytics added:', result);
+  //     } catch (error) {
+  //       console.error('Error adding analytics:', error);
+
+  //     }
+  //   };
+
+  //   addAnalytics();
+  // }, [data,countryName,userId]);
   const [product, setProduct] = useState(data.product);
   const [company, setCompany] = useState(data.company);
   const [error, setError] = useState(null);
@@ -198,6 +201,7 @@ function PageComponent({ data }: any) {
   }
 
   console.log(product);
+  console.log(company);
 
   return (
     <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 font-clarity">
@@ -208,12 +212,12 @@ function PageComponent({ data }: any) {
         </div>
       </Link>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className=" w-full md:col-span-1 md:h-fit md:sticky md:top-0 ">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-20">
+        <div className=" w-full md:col-span-1 md:h-fit md:sticky md:top-0  ">
           <ProductSidebar product={product} />
         </div>
 
-        <div className=" col-span-2 overflow-y-scroll no-scrollbar ">
+        <div className=" md:col-span-3 overflow-y-scroll no-scrollbar ">
           <div className="block md:hidden">
             <div className="fixed right-0 top-1/2  z-50 ">
               <Sheet>
@@ -230,11 +234,31 @@ function PageComponent({ data }: any) {
           </div>
           <div className=" border shadow-md rounded-3xl px-4 md:px-16 py-10">
             <div className="flex flex-col gap-5">
-              <h1 className="font-bold text-xl md:text-3xl">{product.name}</h1>
-              <div className=" md:w-3/4">
-                <p className="text-sm text-slate-500">
-                  {`${product?.description.slice(0, 100)}...`}
-                </p>
+              <div className="flex flex-col md:flex-row  md:items-center">
+                <h1 className="font-bold text-xl md:text-3xl">
+                  {product.name}
+                </h1>
+                <div className="flex gap-3 md:ml-auto">
+                  <div className="text-xl text-primary1 p-2 rounded-full border border-primary1">
+                    <MdOutlineBookmarkBorder />
+                  </div>
+                  <div className="text-xl text-primary1 p-2 rounded-full border border-primary1">
+                    <GoShareAndroid />
+                  </div>
+                  <div className="text-xl text-primary1 p-2 rounded-full border border-primary1">
+                    <FiPrinter />
+                  </div>
+                  <div className="text-xl text-primary1 p-2 rounded-full border border-primary1">
+                    <IoLinkSharp />
+                  </div>
+                </div>
+              </div>
+              <div className="flex ">
+                <div className=" md:w-3/4">
+                  <p className="text-sm text-slate-500">
+                    {`${product?.description}`}
+                  </p>
+                </div>
               </div>
               <div className="flex justify-between items-center">
                 <div className=" inline-flex gap-3 flex-wrap">
@@ -258,20 +282,20 @@ function PageComponent({ data }: any) {
                     ) => (
                       <div
                         key={index}
-                        className="py-1 px-2.5 border border-slate-300 bg-slate-50 transition-all duration-200 hover:cursor-pointer text-slate-500 rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1"
+                        className="py-1 px-2.5 border  transition-all duration-200 hover:cursor-pointer  rounded-full text-xs bg-primary2 border-primary1 text-primary1"
                       >
                         {cat}
                       </div>
                     )
                   )}
                 </div>
-                <button className="  flex gap-2 rounded-full bg-black  text-white font-bold px-6 py-3 text-xs transition-all  w-fit items-center hover:bg-primary1 hover:gap-4">
+                {/* <button className="  flex gap-2 rounded-full bg-black  text-white font-bold px-6 py-3 text-xs transition-all  w-fit items-center hover:bg-primary1 hover:gap-4">
                   <Link href={company.website}>
                     {" "}
                     Visit
                     <IoIosArrowRoundForward className=" text-xl" />
                   </Link>
-                </button>
+                </button> */}
               </div>
 
               <div className="flex flex-col md:flex-row justify-between">
@@ -341,17 +365,6 @@ function PageComponent({ data }: any) {
 
               <div className="w-full h-px bg-slate-200 my-4"></div>
               <div>
-                <SliderElement>
-                  {product?.Images?.map((image: string, index: number) => (
-                    <img
-                      key={index}
-                      src={image}
-                      className="w-full rounded-3xl"
-                      alt=""
-                    />
-                  ))}
-                </SliderElement>
-
                 <div className=" my-8 flex flex-col">
                   <h2 className="text-2xl font-bold">About the product</h2>
                   <p className="text-sm text-slate-500 my-2">
@@ -365,7 +378,7 @@ function PageComponent({ data }: any) {
               <div className="w-full h-px bg-slate-200 my-4"></div>
               {/* Overview */}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-4">
                 <div>
                   <div className="flex  gap-2 items-center">
                     <h2 className=" text-lg font-bold text-gray-900">USP</h2>
@@ -381,14 +394,15 @@ function PageComponent({ data }: any) {
                     </TooltipProvider>
                   </div>
                   <div>
-                    <ul className="flex flex-col gap-4 py-3">
+                    <p className="text-gray-500 text-[15px] ">{product.usp}</p>
+                    {/* <ul className="flex flex-col gap-4 py-3">
                       {usps.map((usp: string, index: number) => (
                         <li key={index} className="flex gap-3 items-center">
                           <TbPointFilled className="text-primary1" />
                           <p className="text-gray-900">{usp.trim()}</p>
                         </li>
                       ))}
-                    </ul>
+                    </ul> */}
                   </div>
                 </div>
 
@@ -441,93 +455,231 @@ function PageComponent({ data }: any) {
 
               {/* Segments */}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <div className="flex  gap-2 items-center">
-                    <h2 className=" text-lg font-bold text-gray-900">
-                      Customer segments
-                    </h2>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <MdOutlineInfo className="text-slate-500 text-sm" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Overview of company,products in short</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+              <div className="flex flex-col gap-4 w-full">
+                <div className="flex flex-col md:flex-row w-full gap-4">
+                  <div className="flex-1">
+                    <div className="flex gap-2 items-center">
+                      <h2 className="text-lg font-bold text-gray-900">
+                        Customer segments
+                      </h2>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <MdOutlineInfo className="text-slate-500 text-sm" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Overview of company, products in short</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div className="inline-flex gap-3 flex-wrap">
+                        {product.userCategory.map((segment: string) => (
+                          <div
+                            key={segment}
+                            className="py-1 px-2.5 border  transition-all duration-200 hover:cursor-pointer  rounded-full text-xs bg-primary2 border-primary1 text-primary1"
+                          >
+                            {segment}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <div className=" inline-flex gap-3 flex-wrap">
-                      {product.userCategory.map((segment: string) => (
-                        <div
-                          key={segment}
-                          className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1"
-                        >
-                          {segment}
-                        </div>
-                      ))}
+                  <div className="flex-1 mt-4 md:mt-0">
+                    <h2 className="text-sm font-bold text-gray-700">
+                      Distribution
+                    </h2>
+                    <div id="chart" style={{ maxWidth: "90%", margin: "0 auto" }}>
+                      <ReactApexChart
+                        options={{
+                          chart: {
+                            type: "pie",
+                          },
+                          labels: product.userCategory,
+                          legend: {
+                            position: "bottom",
+                          },
+                          responsive: [
+                            {
+                              breakpoint: 480,
+                              options: {
+                                chart: {
+                                  width: 100, // Change width to 100px for mobile
+                                },
+                              },
+                            },
+                            {
+                              breakpoint: 1024,
+                              options: {
+                                chart: {
+                                  width: 200, // Keep width as 400px for desktop
+                                },
+                              },
+                            },
+                          ],
+                        }}
+                        series={product.userCategoryPercentage.map(
+                          (percentage: string) => parseFloat(percentage)
+                        )}
+                        type="pie"
+                        width={300}
+                      />
                     </div>
                   </div>
                 </div>
 
-                <div>
-                  <div className="flex  gap-2 items-center">
-                    <h2 className=" text-lg font-bold text-gray-900">
-                      Indusries
-                    </h2>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <MdOutlineInfo className="text-slate-500 text-sm" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Overview of company,products in short</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                <div className="flex flex-col md:flex-row w-full gap-4">
+                  <div className="flex-1">
+                    <div className="flex gap-2 items-center">
+                      <h2 className="text-lg font-bold text-gray-900">
+                        Industries
+                      </h2>
+
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <MdOutlineInfo className="text-slate-500 text-sm" />
+                          </TooltipTrigger>
+
+                          <TooltipContent>
+                            <p>Overview of company, products in short</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div className="inline-flex gap-3 flex-wrap">
+                        {product.industry.map((segment: string) => (
+                          <div
+                            key={segment}
+                            className="py-1 px-2.5 border  transition-all duration-200 hover:cursor-pointer  rounded-full text-xs bg-primary2 border-primary1 text-primary1"
+                          >
+                            {segment}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <div className="ml-auto flex justify-between items-center">
-                    <div className="inline-flex gap-3 flex-wrap">
-                      {product.industry.map((segment: string) => (
-                        <div
-                          key={segment}
-                          className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1"
-                        >
-                          {segment}
-                        </div>
-                      ))}
+
+                  <div className="flex-1 mt-4 md:mt-0">
+                    <h2 className="text-sm font-bold text-gray-700">
+                      Distribution
+                    </h2>
+                    <div id="chart" style={{ maxWidth: "90%", margin: "0 auto" }}>
+                      <ReactApexChart
+                        options={{
+                          chart: {
+                            type: "pie",
+                          },
+
+                          labels: product.industry,
+                          legend: {
+                            position: "bottom",
+                          },
+                          responsive: [
+                            {
+                              breakpoint: 480,
+                              options: {
+                                chart: {
+                                  width: 100, // Change width to 100px for mobile
+                                },
+                              },
+                            },
+                            {
+                              breakpoint: 1024,
+                              options: {
+                                chart: {
+                                  width: 200, // Keep width as 400px for desktop
+                                },
+                              },
+                            },
+                          ],
+                        }}
+                        series={product.industryPercentage.map(
+                          (percentage: string) => parseFloat(percentage)
+                        )}
+                        type="pie"
+                        width={300}
+                      />
                     </div>
                   </div>
                 </div>
 
-                <div className=" md:mt-4">
-                  <div className="flex  gap-2 items-center">
-                    <h2 className=" text-lg font-bold text-gray-900">
-                      Practice Area
-                    </h2>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <MdOutlineInfo className="text-slate-500 text-sm" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Overview of company,products in short</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                <div className="flex flex-col md:flex-row w-full gap-4">
+                  <div className="flex-1">
+                    <div className="flex gap-2 items-center">
+                      <h2 className="text-lg font-bold text-gray-900">
+                        Practice Area
+                      </h2>
+
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <MdOutlineInfo className="text-slate-500 text-sm" />
+                          </TooltipTrigger>
+
+                          <TooltipContent>
+                            <p>Overview of company, products in short</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <div className="inline-flex gap-3 flex-wrap">
+                        {product.practiceAreas.map((segment: string) => (
+                          <div
+                            key={segment}
+                            className="py-1 px-2.5 border  transition-all duration-200 hover:cursor-pointer  rounded-full text-xs bg-primary2 border-primary1 text-primary1"
+                          >
+                            {segment}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <div className=" inline-flex gap-3 flex-wrap">
-                      {product.practiceAreas.map((segment: string) => (
-                        <div
-                          key={segment}
-                          className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1"
-                        >
-                          {segment}
-                        </div>
-                      ))}
+
+                  <div className="flex-1 mt-4 md:mt-0">
+                    <h2 className="text-sm font-bold text-gray-700">
+                      Distribution
+                    </h2>
+
+                    <div id="chart" style={{ maxWidth: "90%", margin: "0 auto" }}>
+                      <ReactApexChart
+                        options={{
+                          chart: {
+                            type: "pie",
+                          },
+                          labels: product.practiceAreas,
+                          legend: {
+                            position: "bottom",
+                          },
+                          responsive: [
+                            {
+                              breakpoint: 480,
+                              options: {
+                                chart: {
+                                  width: 100, // Change width to 100px for mobile
+                                },
+                              },
+                            },
+                            {
+                              breakpoint: 1024,
+                              options: {
+                                chart: {
+                                  width: 200, // Keep width as 400px for desktop
+                                },
+                              },
+                            },
+                          ],
+                        }}
+                        series={product.practiceAreasPercentage.map(
+                          (percentage: string) => parseFloat(percentage)
+                        )}
+                        type="pie"
+                        width={300}
+                      />
                     </div>
                   </div>
                 </div>
@@ -570,7 +722,7 @@ function PageComponent({ data }: any) {
                 </TooltipProvider>
               </div>
 
-              <ProductFeature features={product.features} />
+              <ProductFeature features={product.features} productId={product.id} />
 
               <div className="w-full h-px bg-slate-200 my-4"></div>
 
@@ -631,7 +783,7 @@ function PageComponent({ data }: any) {
                       {product.pricingParams.map((parameter: string) => (
                         <div
                           key={parameter}
-                          className="py-1 px-2.5 border border-[#FBA834]/40 bg-[#FBA834]/10 transition-all duration-200 hover:cursor-pointer text-[#FBA834] rounded-full text-xs hover:bg-primary2 hover:border-primary1 hover:text-primary1"
+                          className="py-1 px-2.5 border  transition-all duration-200 hover:cursor-pointer  rounded-full text-xs bg-primary2 border-primary1 text-primary1"
                         >
                           {parameter}
                         </div>
@@ -681,6 +833,19 @@ function PageComponent({ data }: any) {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
+              </div>
+
+              <div>
+                <SliderElement>
+                  {product?.Images?.map((image: string, index: number) => (
+                    <img
+                      key={index}
+                      src={image}
+                      className="w-full rounded-3xl"
+                      alt=""
+                    />
+                  ))}
+                </SliderElement>
               </div>
 
               <ProductReference product={product} />

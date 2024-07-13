@@ -66,6 +66,17 @@ const lifecycleStages = [
     ],
   },
   {
+    category: "Document Management and Automation Software",
+    stages: [
+      "Capture",
+      "Change management",
+      "Review",
+      "Organize",
+      "Access management",
+      "Retrieval",
+    ],
+  },
+  {
     category: "E-billing and Invoicing",
     stages: [
       "Invoice generation",
@@ -140,12 +151,12 @@ const ProcessLifecycle = ({ product }: any) => {
               <div
                 key={index}
                 className={`p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2 ${
-                  selectedStages.includes(stage) ? "" : "opacity-50"
+                  selectedStages.includes(stage) ? "border-teal-500" : "opacity-90"
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-bold leading-5 mb-2">{stage}</p>
-                  <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-primary1 bg-primary2">
+                  <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-teal-500 bg-teal-100">
                     {index + 1}
                   </p>
                 </div>
@@ -159,12 +170,12 @@ const ProcessLifecycle = ({ product }: any) => {
               <div
                 key={index + 3}
                 className={`p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2 ${
-                  selectedStages.includes(stage) ? "" : "opacity-50"
+                  selectedStages.includes(stage) ? "border-teal-500" : "opacity-90"
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-bold leading-5 mb-2">{stage}</p>
-                  <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-primary1 bg-primary2">
+                  <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-teal-500 bg-teal-100">
                     {index + 4}
                   </p>
                 </div>

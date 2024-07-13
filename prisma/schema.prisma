@@ -247,3 +247,9 @@ model Analytics {
   createdAt DateTime @default(now())
 
 }
+
+model ClickCount {
+  id        Int    @id @default(autoincrement())
+  productId String @unique
+  feature   Json   @default("[]")
+}

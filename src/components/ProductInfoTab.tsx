@@ -18,7 +18,7 @@ import {
 function ProductInfoTab({ product }: any) {
   return (
     <div>
-      <div className="grid max-w-md gap-5 row-gap-10 sm:mx-auto lg:max-w-full lg:grid-cols-3 font-clarity">
+      <div className=" flex flex-col gap-10 font-clarity">
         <div className="flex flex-col sm:flex-row">
           <div className="sm:mr-4">
             <div className="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-primary2">
@@ -34,7 +34,7 @@ function ProductInfoTab({ product }: any) {
               {product.deployement.map((option: string, index: number) => (
                 <li key={index} className="flex items-start">
                   <span className="mr-1">
-                    <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
+                    <FaCircleCheck className="w-5 h-5 mt-px text-teal-500" />
                   </span>
                   {option}
                 </li>
@@ -74,7 +74,7 @@ function ProductInfoTab({ product }: any) {
                 ) => (
                   <li key={index} className="flex items-start">
                     <span className="mr-1">
-                      <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
+                      <FaCircleCheck className="w-5 h-5 mt-px text-teal-500" />
                     </span>
                     {country}
                   </li>
@@ -100,7 +100,7 @@ function ProductInfoTab({ product }: any) {
             <ul className="mb-4 -ml-1 space-y-2">
               <li className="flex items-start">
                 <span className="mr-1">
-                  <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
+                  <FaCircleCheck className="w-5 h-5 mt-px text-teal-500" />
                 </span>
                 {product.mobileAvailable}
               </li>{" "}
@@ -108,7 +108,7 @@ function ProductInfoTab({ product }: any) {
           </div>
         </div>
       </div>
-      <div className="grid max-w-md gap-5 row-gap-10 sm:mx-auto mt-3 lg:max-w-full lg:grid-cols-2 font-clarity">
+      <div className="flex flex-col gap-10 font-clarity mt-10 w-full">
         <div className="flex flex-col sm:flex-row">
           <div className="sm:mr-4">
             <div className="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-primary2">
@@ -125,7 +125,7 @@ function ProductInfoTab({ product }: any) {
             <ul className="mb-4 -ml-1 space-y-2">
               <li className="flex items-start">
                 <span className="mr-1">
-                  <FaCalendarAlt className="w-5 h-5 mt-px text-primary1" />
+                  <FaCalendarAlt className="w-5 h-5 mt-px text-teal-500" />
                 </span>
                 {product.avgTimeAdoption}
               </li>{" "}
@@ -133,7 +133,9 @@ function ProductInfoTab({ product }: any) {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row">
+        
+      </div>
+      <div className="flex flex-col sm:flex-row mt-10">
           <div className="sm:mr-4">
             <div className="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-primary2">
               <IoLanguage className=" text-primary1 w-4 h-4" />
@@ -145,19 +147,19 @@ function ProductInfoTab({ product }: any) {
               Supported languages for the product.
             </p>
 
-            <ul className="mb-4 -ml-1 space-y-2">
+          
+          </div>
+        </div>
+        <ul className=" grid grid-cols-3 gap-8 w-full ">
               {product.languages.map((language: string, index: number) => (
                 <li key={index} className="flex items-start">
                   <span className="mr-1">
-                    <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
+                    <FaCircleCheck className="w-5 h-5 mt-px text-teal-500" />
                   </span>
                   {language}
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
