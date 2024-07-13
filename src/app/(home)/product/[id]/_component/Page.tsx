@@ -26,12 +26,121 @@ import ProductReview from "@/components/ProductReview";
 import ProductMobileSidebar from "@/components/ProductMobileSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
+import useGeoLocation from "react-ipgeolocation";
+
+const countryNames: { [key: string]: string } = {
+  US: "United States of America",
+  IN: "India",
+  CA: "Canada",
+  GB: "United Kingdom",
+  AU: "Australia",
+  FR: "France",
+  DE: "Germany",
+  JP: "Japan",
+  CN: "China",
+  BR: "Brazil",
+  RU: "Russia",
+  ZA: "South Africa",
+  IT: "Italy",
+  ES: "Spain",
+  MX: "Mexico",
+  KR: "South Korea",
+  NG: "Nigeria",
+  AR: "Argentina",
+  SA: "Saudi Arabia",
+  TR: "Turkey",
+  SE: "Sweden",
+  NO: "Norway",
+  FI: "Finland",
+  DK: "Denmark",
+  NL: "Netherlands",
+  BE: "Belgium",
+  CH: "Switzerland",
+  AT: "Austria",
+  IE: "Ireland",
+  NZ: "New Zealand",
+  SG: "Singapore",
+  MY: "Malaysia",
+  TH: "Thailand",
+  ID: "Indonesia",
+  PH: "Philippines",
+  VN: "Vietnam",
+  EG: "Egypt",
+  KE: "Kenya",
+  GH: "Ghana",
+  PK: "Pakistan",
+  BD: "Bangladesh",
+  LK: "Sri Lanka",
+  IR: "Iran",
+  IQ: "Iraq",
+  IL: "Israel",
+  AE: "United Arab Emirates",
+  QA: "Qatar",
+  KW: "Kuwait",
+  OM: "Oman",
+  BH: "Bahrain",
+  JO: "Jordan",
+  LB: "Lebanon",
+  SY: "Syria",
+  YE: "Yemen",
+  MA: "Morocco",
+  DZ: "Algeria",
+  TN: "Tunisia",
+  LY: "Libya",
+  SD: "Sudan",
+  ET: "Ethiopia",
+  UG: "Uganda",
+  TZ: "Tanzania",
+  ZM: "Zambia",
+  MZ: "Mozambique",
+  AO: "Angola",
+  CM: "Cameroon",
+  SN: "Senegal",
+  CI: "Ivory Coast",
+  
+  NE: "Niger",
+  BF: "Burkina Faso",
+  ML: "Mali",
+  MR: "Mauritania",
+  GM: "Gambia",
+  GN: "Guinea",
+  SL: "Sierra Leone",
+  LR: "Liberia",
+  TG: "Togo",
+  BJ: "Benin",
+  NA: "Namibia",
+  BW: "Botswana",
+  SZ: "Eswatini",
+  LS: "Lesotho",
+  MW: "Malawi",
+  RW: "Rwanda",
+  BI: "Burundi",
+  SO: "Somalia",
+  DJ: "Djibouti",
+  ER: "Eritrea",
+  GQ: "Equatorial Guinea",
+  GA: "Gabon",
+  CG: "Republic of the Congo",
+  CD: "Democratic Republic of the Congo",
+  ST: "Sao Tome and Principe",
+  CV: "Cape Verde",
+  GW: "Guinea-Bissau",
+  KM: "Comoros",
+  SC: "Seychelles",
+  MU: "Mauritius",
+  MG: "Madagascar",
+  RE: "Reunion",
+  YT: "Mayotte",
+};
 
 
 function PageComponent({ data }: any) {
+  const location = useGeoLocation();
+  const countryName = countryNames[location.country] || "Unknown Country";
+  const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null; // Check if window is defined
+
   useEffect(() => {
     const addAnalytics = async () => {
-      const userId = localStorage.getItem('userId')
       const loginsViews = userId ? 1 : 0
       const userAgent = navigator.userAgent;
       let desktopViews = 0;
@@ -61,7 +170,7 @@ function PageComponent({ data }: any) {
             desktopViews: desktopViews,
             mobileViews: mobileViews,
             tabletViews: tabletViews,
-            country: data.country,
+            country: countryName,
           }),
         });
   
@@ -78,7 +187,7 @@ function PageComponent({ data }: any) {
     };
   
     addAnalytics();
-  }, [data]);
+  }, [data,countryName,userId]);
   const [product, setProduct] = useState(data.product);
   const [company, setCompany] = useState(data.company);
   const [error, setError] = useState(null);

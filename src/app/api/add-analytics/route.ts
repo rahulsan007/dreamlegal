@@ -40,7 +40,7 @@ export async function POST(request: Request) {
         productId: productId,
       },
       update: {
-        userId,
+    
         shares: updatedShares,
         followers: updatedFollowers,
         views: updatedViews,
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
         country: updatedCountry
       },
       create: {
-        userId,
+      
         productId,
         shares: updatedShares,
         followers: updatedFollowers,
