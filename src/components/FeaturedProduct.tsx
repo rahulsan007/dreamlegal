@@ -1,98 +1,127 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { FaBookmark } from "react-icons/fa6";
+import { FiShare2 } from "react-icons/fi";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { TiStarFullOutline } from "react-icons/ti";
 
 function FeaturedProduct({ id, image, title, description, category, userCategory, product }: any) {
+  const userCategories = [
+    {
+      name: "Law firms",
+      icon: "/lawfirmicon.svg"
+    },
+    {
+      name: "Individual Practitioner",
+      icon: "/prac.svg"
+    },
+    {
+      name: "Government departments",
+      icon: "/govdepticon.svg"
+    },
+    {
+      name: "Startups",
+      icon: "/startupicon.svg"
+    },
+    {
+      name: "Enterprises",
+      icon: "/enterpriceicon.svg"
+    },
+    {
+      name: "Judiciary",
+      icon: "/judge1.svg"
+    }
+  ];
+
+  const userCategoryIcons = product.userCategory.map((userCat:any) => {
+    const categoryObj = userCategories.find((cat) => cat.name === userCat);
+    return categoryObj ? categoryObj : null;
+  }).filter(Boolean); // Filter out null values
   return (
-    <div className="w-full px-10 py-7 bg-gray-50 rounded-xl border border-gray-200">
-      <div className="grid grid-cols-1 md:grid-cols-3">
-        <div className="md:col-span-2 inline-flex flex-col md:flex-row gap-4">
-          <img
-            src={image}
-            width={80}
-            height={80}
-            alt="logo"
-            className="rounded-full w-20 h-20 object-cover"
-          ></img>
+    <div className="w-full px-10 py-7 rounded-xl border  font-clarity bg-gray-50 border-gray-300 shadow-md ">
+    <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between">
+      <div className="flex gap-4 items-center">
+        <img
+          src={image}
+          className="w-14 h-14 rounded-full shadow-blue-50 shadow-sm"
+          alt=""
+        />
+        <div className="flex flex-col gap-1 ml-1">
           <div>
-            <h3 className=" flex gap-3 font-bold text-base">{title}
-            <span className=" bg-primary1 rounded-full px-1 py-1 inline-flex items-center gap-1">
-                <TiStarFullOutline className="text-sm text-white" />
-              </span>
-            </h3>
-            <p className=" text-sm text-slate-500 mt-2">{description}</p>
-            <div className=" flex gap-3 items-center mt-3 ">
-              
-              <div>
-                {category.map(
-                  (
-                    cat:
-                      | string
-                      | number
-                      | bigint
-                      | boolean
-                      | React.ReactElement<
-                          any,
-                          string | React.JSXElementConstructor<any>
-                        >
-                      | Iterable<React.ReactNode>
-                      | React.ReactPortal
-                      | Promise<React.AwaitedReactNode>
-                      | null
-                      | undefined,
-                    index: React.Key | null | undefined
-                  ) => (
-                    <div key={index}>
-                      <p className="bg-primary2 px-2 py-2 text-xs rounded-full text-primary1 font-bold">
-                        {cat}
-                      </p>
-                    </div>
-                  )
-                )}
-              </div>
-            </div>
-            <div className=" flex gap-3 items-center mt-3 ">
-              
-            <div className="flex gap-2">
-                {userCategory.slice(0, 2).map(
-                  (
-                    cat:any,
-                    index:any
-                  ) => (
-                    <div key={index}>
-                      <p className="bg-[#c7f9cc]/50 px-2 py-2 text-xs rounded-full text-[#38a3a5] font-bold">
-                        {cat}
-                      </p>
-                    </div>
-                  )
-                )}
-                {userCategory.length > 2 && (
-                  <div>
-                   <Link href={`/product/${id}`}>
-                   <p className="bg-[#c7f9cc]/50 px-2 py-2 text-xs rounded-full text-[#38a3a5] font-bold">
-                      +
-                    </p></Link>
-                  </div>
-                )}
-              </div>
-            </div>
+            <h3 className="flex gap-2 items-center font-bold text-base">{title} <span className="text-white p-2 rounded-full bg-primary1"><TiStarFullOutline /></span> </h3>
           </div>
-        </div>
-        <div className="col-span-1 mt-2">
-          <div className="flex  h-full items-center ">
-            
-            <Link href={`/product/${id}`} className="ml-auto ">
-            <button className=" ml-auto flex gap-2 rounded-full  bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all  items-center hover:bg-primary2 hover:text-primary1 hover:gap-4">
-              View
-              <IoIosArrowRoundForward className=" text-xl" />
-            </button>
-            </Link>
+          <div className="px-2 py-1 bg-primary2 rounded-full">
+            {" "}
+            <span className="text-xs text-primary1 font-bold">
+              {category}
+            </span>
           </div>
         </div>
       </div>
+      <div className="md:ml-auto mt-4 md:mt-0 flex gap-4 items-center">
+        <div>
+          <Link
+            href={`/product/${id}`}
+            className="flex gap-2 items-center bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all w-fit  hover:bg-primary2 hover:text-primary1 hover:border-primary1 rounded-full hover:gap-4"
+          >
+            View
+            <IoIosArrowRoundForward className="text-xl" />
+          </Link>
+        </div>
+
+        <div className="flex gap-2 text-slate-800 text-lg items-center ">
+          {" "}
+          <FaBookmark />{" "}
+        </div>
+        <div className="flex gap-2 text-slate-800 text-lg items-center">
+          {" "}
+          <FiShare2 />{" "}
+        </div>
+      </div>
+      <div></div>
     </div>
+    <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between">
+      <div>
+        <div className="text-xs text-slate-400 mt-4 mb-1">Overview</div>
+        <div>
+          <p className="text-sm text-gray-600">{description}</p>
+        </div>
+      </div>
+      <div>
+        <div className="flex text-xs text-slate-400 mt-4 mb-1">
+          Industries
+        </div>
+        <div className="flex gap-2">
+          {product.industry.map((industry: any, index: number) => (
+            <div key={industry}>
+              <p className="text-sm text-primary1">
+                {industry}
+                {index !== product.industry.length - 1 ? "," : ""}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div>
+      <div className="text-xs text-slate-400 mt-4 mb-1">User Category</div>
+       <div className="flex gap-2">
+        {userCategoryIcons.map((userCategory:any, index:number) => (
+          <div key={userCategory.name} className="relative group flex gap-2 items-center bg-primary2 rounded-md p-2">
+            <img
+              src={userCategory.icon}
+              alt={userCategory.name}
+              className="w-6 h-6"
+            />
+            <div className="hidden group-hover:block text-[10px] font-clarity font-bold transition-all duration-200 cursor-pointer">
+              {userCategory.name}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
   );
 }
 
