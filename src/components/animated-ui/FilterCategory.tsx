@@ -18,38 +18,38 @@ const categories = [
     name: "Law firms",
     href: "#",
     img: "/lawfirmicon.svg",
-    description: "Lorem, saepe officia tempore officiis et.",
+    description: "Expert legal services team",
   },
   
   {
     name: "Enterprises",
     href: "#",
     img: "/enterpriceicon.svg",
-    description: "Lorem, saepe officia tempore officiis et.",
+    description: "Corporate legal powerhouses",
   },
  {
    name: "Individual Practitioners",
    href: "#",
    img: "/prac.svg",
-   description: "Lorem, saepe officia tempore officiis et.",
+   description: "Independent legal experts and chambers",
  },
   {
     name: "Startups",
     href: "#",
     img: "/startupicon.svg",
-    description: "Lorem, saepe officia tempore officiis et.",
+    description: "Young-age entities",
   },
   {
     name: "Government  Departments",
     href: "#",
     img: "/govdepticon.svg",
-    description: "Lorem, saepe officia tempore officiis et.",
+    description: "Public sector legal teams",
   },
   {
     name: "Judiciary",
     href: "#",
     img: "/judge1.svg",
-    description: "Lorem, saepe officia tempore officiis et.",
+    description: "Courtroom justice servers",
   },
 
 ];
