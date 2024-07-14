@@ -102,6 +102,13 @@ function DirectoryProduct() {
   const [latestProduct, setLatestProduct] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedFilters, setSelectedFilters] = useState({
+    categories: [],
+    language: [],
+    country: [],
+    // Add more filter parameters here
+  });
+
 
   const fetchProducts = async (search = "") => {
     try {
@@ -109,32 +116,45 @@ function DirectoryProduct() {
       const data = await response.json();
 
       if (data.success) {
-        const products = data.products.filter((product: { active: string }) => product.active === "publish");
+        const products = data.products.filter((product:any) => product.active === "publish");
         const searchLower = search.toLowerCase();
 
-        const filtered = products.filter(
-          (product: { name: string; category: string[] }) => {
-            const matchesName = product.name
-              .toLowerCase()
-              .includes(searchLower);
-            const matchesCategory = product.category.some((cat) => {
-              const keywords = categoryKeywords[cat] || [];
-              return keywords.some(
-                (keyword) =>
-                  keyword.toLowerCase().includes(searchLower) ||
-                  searchLower.includes(keyword.toLowerCase())
-              );
-            });
-            return matchesName || matchesCategory;
-          }
-        );
+        const filtered = products.filter((product:any) => {
+          const matchesName = product.name.toLowerCase().includes(searchLower);
+          const matchesCategory = product.category.some((cat:any) => {
+            const keywords = categoryKeywords[cat] || [];
+            return keywords.some(
+              (keyword) =>
+                keyword.toLowerCase().includes(searchLower) ||
+                searchLower.includes(keyword.toLowerCase())
+            );
+          });
 
-        setFeatureProduct(
-          filtered.filter((product: { featured: boolean }) => product.featured)
-        );
-        setLatestProduct(
-          filtered.filter((product: { featured: boolean }) => !product.featured)
-        );
+          const matchesSelectedCategory =
+            selectedFilters.categories.length === 0 ||
+            product.category.some((cat:any) => selectedFilters.categories.includes(cat as never));
+
+          const matchesSelectedLanguage =
+            selectedFilters.language.length === 0 ||
+            selectedFilters.language.includes(product.language as never);
+
+          const matchesSelectedCountry =
+            selectedFilters.country.length === 0 ||
+            selectedFilters.country.includes(product.country as never);
+
+          // Add more filter matches here
+
+          return (
+            (matchesName || matchesCategory) &&
+            matchesSelectedCategory &&
+            matchesSelectedLanguage &&
+            matchesSelectedCountry
+            // Add more filter matches here
+          );
+        });
+
+        setFeatureProduct(filtered.filter((product:any) => product.featured));
+        setLatestProduct(filtered.filter((product:any) => !product.featured));
         setFilteredProducts(filtered);
       }
     } catch (error) {
@@ -144,7 +164,7 @@ function DirectoryProduct() {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [selectedFilters]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -155,6 +175,19 @@ function DirectoryProduct() {
     fetchProducts(searchTerm);
   };
 
+  const handleFilterChange = (filterType: keyof typeof selectedFilters, value: string) => {
+    setSelectedFilters((prevFilters) => {
+      const currentValues = prevFilters[filterType];
+      return {
+        ...prevFilters,
+        [filterType]: currentValues.includes(value as never)
+          ? currentValues.filter((v) => v !== value as never)
+          : [...currentValues, value as never],
+      };
+    });
+  };
+
+
   return (
     <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 font-clarity">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -162,23 +195,8 @@ function DirectoryProduct() {
           <h2 className="text-lg font-bold text-gray-900 mb-4">
             Filter By Category
           </h2>
-          <DirectoryFilter />
-          {/* <div className="my-4">
-            <div className="h-[360px] md:h-[310px] bg-primary2 rounded-xl px-8 py-10 flex flex-col gap-5">
-              <div className="h-12 w-12 rounded-full bg-primary1 inline-flex justify-center items-center">
-                <FaArrowUp className="text-white text-[28px]" />
-              </div>
-              <h3 className="font-bold text-xl">Submit your product!</h3>
-              <p className="text-sm text-slate-500">
-                Lorem ipsum dolor amet consectetur adipiscing elit ut gravida
-                sit vel.
-              </p>
-              <button className="flex gap-2 rounded-full transition-all duration-200 bg-gray-900 text-white font-bold px-6 py-3 text-xs w-fit items-center hover:bg-primary1 hover:gap-4">
-                Submit
-                <IoIosArrowRoundForward className="text-xl" />
-              </button>
-            </div>
-          </div> */}
+          <DirectoryFilter selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
+        
         </div>
         <div className="col-span-2 overflow-y-scroll no-scrollbar">
           <div className="w-full flex flex-col md:flex-row items-center justify-between">

@@ -100,7 +100,7 @@ function HomeProduct({ data }: any) {
             </button>
           </div>
         </div>
-        <div className="h-[450px] md:h-fit w-full md:col-span-1 sticky top-0">
+        <div className="h-fit md:h-fit w-full md:col-span-1 sticky top-0">
           <div className=" md:px-4">
             <div className="h-fit md:h-fit bg-primary2  rounded-xl px-8 py-10 flex flex-col gap-5 ">
               <div className=" h-12 w-12 rounded-full bg-primary1 inline-flex justify-center items-center">

@@ -65,13 +65,11 @@ function HomeHero() {
           <img src="/background2.png" className="w-full" alt="" />
           <div className="absolute top-0 left-0 w-full h-full ">
             <div className="flex flex-col items-center justify-center h-full px-4">
-              <h2 className="text-3xl font-bold text-center">
-                Discover the next SaaS product today.
+              <h2 className="text-2xl font-bold text-center">
+              Discover technology  tailored for legal professionals
               </h2>
               <p className=" text-sm text-[#46526a] text-center my-2 ">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit etiam
-                nisl tellus dolor egestas quis laoreet fames odio habitasse
-                orci.
+              Optimize legal process and operations- Find, compare and evaluate the best technology for your unique legal needs.
               </p>
               <div className="flex flex-col items-center  justify-center gap-3 w-full mt-3">
                 <div className="flex-initial w-full">
