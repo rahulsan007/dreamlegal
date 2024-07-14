@@ -124,6 +124,10 @@ export interface FormValues {
   AssignmentAllotmentAndTracking: string[];
   DocumentCreationAndManagement: string[];
   LawsComplianceAndRegulatoryTrackingIP: string[];
+  CaseLawResearch: string[];
+  StatutoryResearch: string[];
+  AdvancedSearchCapabilities: string[];
+  FilterAndSorting: string[];
   // Extra
   fixedPricing: string;
   nameofPlan1: string;
@@ -136,6 +140,7 @@ export interface FormValues {
   price2: string;
   price3: string;
   contractUnit: string;
+
 }
 
 // Define the initial values for the form
@@ -177,6 +182,7 @@ const initialFormValues: FormValues = {
   LitigationManagement: [],
   DocumentCreationAndTemplates: [],
   legalWorkflow: [],
+  
   features: [],
   freeTrial: "",
   timePeriod: "",
@@ -237,6 +243,10 @@ const initialFormValues: FormValues = {
   CaseAlerts: [],
   BudgetExpenseAndTimeTracking: [],
   ClientBillingAndInvoicing: [],
+  CaseLawResearch: [],
+  StatutoryResearch: [],
+  AdvancedSearchCapabilities: [],
+  FilterAndSorting: [],
   PolicyManagement: [],
   IssueManagement: [],
   LawsComplianceAndRegulatoryTracking: [],
@@ -319,6 +329,10 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
     DocumnetManagement: [],
     Ebilling: [],
     Ediscovery: [],
+    CaseLawResearch: [],
+    StatutoryResearch: [],
+    AdvancedSearchCapabilities: [],
+    FilterAndSorting: [],
     IPManagement: [],
     LitigationManagement: [],
     DocumentCreationAndTemplates: [],

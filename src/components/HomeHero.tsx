@@ -40,18 +40,22 @@ function HomeHero() {
                   <p className=" text-sm text-[#46526a] text-center ">
                   Optimize legal process and operations- Find, compare and evaluate the best technology for your unique legal needs.
                   </p>
-                  <div className=" inline-flex items-center  justify-between w-full">
-                    <div className="flex-initial w-[62%]">
-                      <Search
-                        placeholders={placeholders}
-                        onChange={handleChange}
-                        onSubmit={onSubmit}
-                      />
-                    </div>
-                    <div className="flex-initial w-[20%]">
-                      <FilterCategory />
+                 <div className="w-full relative">
+                 <div className=" absolute -ml-28 ">
+                  <div className="flex gap-3 items-center justify-center w-full"> 
+                      <div className="flex w-[60%]">
+                        <Search
+                          placeholders={placeholders}
+                          onChange={handleChange}
+                          onSubmit={onSubmit}
+                        />
+                      </div>
+                      <div className="flex w-[20%]">
+                        <FilterCategory />
+                      </div>
                     </div>
                   </div>
+                 </div>
                 </div>
                 <div className="col-span-3"></div>
               </div>
@@ -79,7 +83,7 @@ function HomeHero() {
                     onSubmit={onSubmit}
                   />
                 </div>
-                <div className="flex-initial w-full">
+                <div className="flex items-center justify-center w-full">
                   <FilterCategory />
                 </div>
               </div>

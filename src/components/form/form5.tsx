@@ -696,6 +696,124 @@ function Form5() {
             </div>
           )}
 
+          {formValues.category.includes("Legal Research") && (
+            <div>
+              <div className="mt-2">
+                <Label className="text-sm font-bold" htmlFor="">
+                  Case Law Research
+                </Label>
+                {[
+                  "Comprehensive case law databases",
+                  "Jurisdictional filters",
+                  "Citation search and validation",
+                  "Historical case law archives",
+                ].map((item) => (
+                  <div key={item} className="items-top flex space-x-2 mt-2">
+                    <Input
+                      name="CaseLawResearch"
+                      type="checkbox"
+                      value={item}
+                      checked={formValues.CaseLawResearch.includes(item)}
+                      onChange={handleChange}
+                      className="w-5 h-5"
+                    />
+                    <div className="grid gap-1.5 leading-none">
+                      <label className="text-sm font-medium leading-none">
+                        {item}
+                      </label>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-2">
+                <Label className="text-sm font-bold" htmlFor="">
+                  Statutory Research
+                </Label>
+                {[
+                  "Statutes and regulations databases",
+                  "Annotations and historical versions",
+                  "Legislative tracking and updates",
+                  "Secondary Sources",
+                  "Legal treatises and commentaries",
+                  "Journals and law reviews",
+                  "International treaties and conventions",
+                ].map((item) => (
+                  <div key={item} className="items-top flex space-x-2 mt-2">
+                    <Input
+                      name="StatutoryResearch"
+                      type="checkbox"
+                      value={item}
+                      checked={formValues.StatutoryResearch.includes(item)}
+                      onChange={handleChange}
+                      className="w-5 h-5"
+                    />
+                    <div className="grid gap-1.5 leading-none">
+                      <label className="text-sm font-medium leading-none">
+                        {item}
+                      </label>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-2">
+                <Label className="text-sm font-bold" htmlFor="">
+                  Advanced Search Capabilities
+                </Label>
+                {[
+                  "Search Functionality",
+                  "Boolean and logical search",
+                  "AI-powered search and chat",
+                  "Document upload",
+                ].map((item) => (
+                  <div key={item} className="items-top flex space-x-2 mt-2">
+                    <Input
+                      name="AdvancedSearchCapabilities"
+                      type="checkbox"
+                      value={item}
+                      checked={formValues.AdvancedSearchCapabilities.includes(item)}
+                      onChange={handleChange}
+                      className="w-5 h-5"
+                    />
+                    <div className="grid gap-1.5 leading-none">
+                      <label className="text-sm font-medium leading-none">
+                        {item}
+                      </label>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-2">
+                <Label className="text-sm font-bold" htmlFor="">
+                  Filter and Sorting
+                </Label>
+                {[
+                  "Jurisdiction and court level",
+                  "Date range and publication type",
+                  "Relevance and citation frequency",
+                ].map((item) => (
+                  <div key={item} className="items-top flex space-x-2 mt-2">
+                    <Input
+                      name="FilterAndSorting"
+                      type="checkbox"
+                      value={item}
+                      checked={formValues.FilterAndSorting.includes(item)}
+                      onChange={handleChange}
+                      className="w-5 h-5"
+                    />
+                    <div className="grid gap-1.5 leading-none">
+                      <label className="text-sm font-medium leading-none">
+                        {item}
+                      </label>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {formValues.category.includes(
             "Document Management and Automation"
           ) && (

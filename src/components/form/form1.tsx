@@ -380,6 +380,7 @@ function Form1() {
               "Intellectual Property Management",
               "Litigation Management and Analytics",
               "Legal Workflow Automation",
+              "Legal Research"
             ].map((category) => (
               <div key={category} className="items-top flex space-x-2 mt-2">
                 <Input

@@ -208,6 +208,61 @@ function Form9({ editing }: { editing: boolean }) {
             newFeatures[index].subcategories = prevValues.InternalCollaboration;
           }
         }
+        if (prevValues.CaseLawResearch.length > 0) {
+          const index = newFeatures.findIndex(
+            (item) => item.category === "Case Law Research"
+          );
+          if (index === -1) {
+            newFeatures.push({
+              category: "Case Law Research",
+              subcategories: prevValues.CaseLawResearch,
+            });
+          } else {
+            newFeatures[index].subcategories = prevValues.CaseLawResearch;
+          }
+        }
+
+        if (prevValues.StatutoryResearch.length > 0) {
+          const index = newFeatures.findIndex(
+            (item) => item.category === "Statutory Research"
+          );
+          if (index === -1) {
+            newFeatures.push({
+              category: "Statutory Research",
+              subcategories: prevValues.StatutoryResearch,
+            });
+          } else {
+            newFeatures[index].subcategories = prevValues.StatutoryResearch;
+          }
+        }
+
+        if (prevValues.AdvancedSearchCapabilities.length > 0) {
+          const index = newFeatures.findIndex(
+            (item) => item.category === "Advanced Search Capabilities"
+          );
+          if (index === -1) {
+            newFeatures.push({
+              category: "Advanced Search Capabilities",
+              subcategories: prevValues.AdvancedSearchCapabilities,
+            });
+          } else {
+            newFeatures[index].subcategories = prevValues.AdvancedSearchCapabilities;
+          }
+        }
+
+        if (prevValues.FilterAndSorting.length > 0) {
+          const index = newFeatures.findIndex(
+            (item) => item.category === "Filter and Sorting"
+          );
+          if (index === -1) {
+            newFeatures.push({
+              category: "Filter and Sorting",
+              subcategories: prevValues.FilterAndSorting,
+            });
+          } else {
+            newFeatures[index].subcategories = prevValues.FilterAndSorting;
+          }
+        }
 
         if (prevValues.DocumentCreationAndTemplates.length > 0) {
           const index = newFeatures.findIndex(

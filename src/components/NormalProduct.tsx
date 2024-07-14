@@ -1,88 +1,136 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { FaBookmark } from "react-icons/fa6";
+import { FiShare2 } from "react-icons/fi";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
-function NormalProduct({ id, image, title, description, category ,product}: any) {
+const userCategories = [
+  {
+    name:"Law firms",
+    icon:"/lawfirmicon.svg"
+  },
+  {
+    name:"Government departments",
+    icons:"/govdepticon.svg"
+  },
+  {
+    name:"Individual Practitioner",
+    icon:"/prac.svg"
+  },
+  
+  {
+    name:"Startups",
+    icons: "/startupicon.svg"
+  },
+ { 
+  name:"Enterprises",
+  icons: "/enterpriceicon.svg"
+ },
+  {
+    name:"Judiciary",
+    icons: "/judge1.svg"
+  },
+  
+];
+
+function NormalProduct({
+  id,
+  image,
+  title,
+  description,
+  category,
+  product,
+}: any) {
+
+  const userCategoryIcons = product.userCategory.map((userCat:any) => {
+    const categoryObj = userCategories.find((cat) => cat.name === userCat);
+    return categoryObj ? categoryObj : null;
+  }).filter(Boolean); // Filter out null values
+
+
+
   return (
     <div className="w-full px-10 py-7 bg-secondary1 rounded-xl border shadow-md">
-      <div className="grid grid-cols-1 md:grid-cols-3">
-        <div className="md:col-span-2 inline-flex flex-col md:flex-row gap-4">
+      <div className="w-full flex items-center justify-between">
+        <div className="flex gap-4 items-center">
           <img
             src={image}
-            width={80}
-            height={80}
-            alt="logo"
-            className="rounded-full w-20 h-20 object-cover"
-          ></img>
-          <div>
-            <h3 className=" font-bold text-base">{title}</h3>
-            <p className=" text-sm text-slate-500 mt-2">{description}</p>
-            <div className=" flex gap-3 items-center mt-3 ">
-              {category.map(
-                (
-                  cat:
-                    | string
-                    | number
-                    | bigint
-                    | boolean
-                    | React.ReactElement<
-                        any,
-                        string | React.JSXElementConstructor<any>
-                      >
-                    | Iterable<React.ReactNode>
-                    | React.ReactPortal
-                    | Promise<React.AwaitedReactNode>
-                    | null
-                    | undefined,
-                  index: React.Key | null | undefined
-                ) => (
-                  <div key={index}>
-                    <p className="bg-primary2 px-2 py-2 text-xs rounded-full text-primary1 font-bold">
-                      {cat}
-                    </p>
-                  </div>
-                )
-              )}
+            className="w-14 h-14 rounded-full shadow-blue-50 shadow-sm"
+            alt=""
+          />
+          <div className="flex flex-col gap-1 ml-1">
+            <div>
+              <h3 className="font-bold text-base">{title}</h3>
             </div>
-            <div className=" flex gap-3 items-center mt-3 ">
-              
-            <div className="flex gap-2">
-                {product.userCategory.slice(0, 2).map(
-                  (
-                    cat:any,
-                    index:any
-                  ) => (
-                    <div key={index}>
-                      <p className="bg-[#c7f9cc]/50 px-2 py-2 text-xs rounded-full text-[#38a3a5] font-bold">
-                        {cat}
-                      </p>
-                    </div>
-                  )
-                )}
-                {product.userCategory.length > 2 && (
-                  <div>
-                   <Link href={`/product/${id}`}>
-                   <p className="bg-[#c7f9cc]/50 px-2 py-2 text-xs rounded-full text-[#38a3a5] font-bold">
-                      +
-                    </p></Link>
-                  </div>
-                )}
-              </div>
+            <div className="px-2 py-1 bg-primary2 rounded-full">
+              {" "}
+              <span className="text-xs text-primary1 font-bold">
+                {category}
+              </span>
             </div>
           </div>
         </div>
-        <div className="col-span-1 mt-2">
-          <div className="flex flex-col md:flex-row gap-4 md:items-center justify-center h-full ">
-          
-            
-            <Link href={`/product/${id}`} className="md:ml-auto">
-            <button className=" flex gap-2 rounded-full bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all  w-fit items-center hover:bg-gray-900 hover:gap-4">
-              Visit
-              <IoIosArrowRoundForward className=" text-xl" />
-            </button>
+        <div className="ml-auto flex gap-4 items-center">
+          <div>
+            <Link
+              href={`/product/${id}`}
+              className="flex gap-2 items-center bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all w-fit  hover:bg-primary2 hover:text-primary1 hover:border-primary1 rounded-full hover:gap-4"
+            >
+              View
+              <IoIosArrowRoundForward className="text-xl" />
             </Link>
           </div>
+
+          <div className="flex gap-2 text-slate-800 text-lg items-center ">
+            {" "}
+            <FaBookmark />{" "}
+          </div>
+          <div className="flex gap-2 text-slate-800 text-lg items-center">
+            {" "}
+            <FiShare2 />{" "}
+          </div>
+        </div>
+        <div></div>
+      </div>
+      <div className="w-full flex items-center justify-between">
+        <div>
+          <div className="text-xs text-slate-400 mt-4 mb-1">Overview</div>
+          <div>
+            <p className="text-sm text-gray-600">{description}</p>
+          </div>
+        </div>
+        <div>
+          <div className="flex text-xs text-slate-400 mt-4 mb-1">
+            Industries
+          </div>
+          <div className="flex gap-2">
+            {product.industry.map((industry: any, index: number) => (
+              <div key={industry}>
+                <p className="text-sm text-primary1">
+                  {industry}
+                  {index !== product.industry.length - 1 ? "," : ""}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className="text-xs text-slate-400 mt-4 mb-1">User Category</div>
+         <div className="flex gap-2">
+          {userCategoryIcons.map((userCategory:any, index:number) => (
+            <div key={userCategory.name} className="relative group">
+              <img
+                src={userCategory.icon}
+                alt={userCategory.name}
+                className="w-10 h-10"
+              />
+              <div className="absolute bottom-0 left-0 w-full bg-black text-white text-center text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                {userCategory.name}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
