@@ -163,7 +163,7 @@ function DirectoryProduct() {
             Filter By Category
           </h2>
           <DirectoryFilter />
-          <div className="my-4">
+          {/* <div className="my-4">
             <div className="h-[360px] md:h-[310px] bg-primary2 rounded-xl px-8 py-10 flex flex-col gap-5">
               <div className="h-12 w-12 rounded-full bg-primary1 inline-flex justify-center items-center">
                 <FaArrowUp className="text-white text-[28px]" />
@@ -178,7 +178,7 @@ function DirectoryProduct() {
                 <IoIosArrowRoundForward className="text-xl" />
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="col-span-2 overflow-y-scroll no-scrollbar">
           <div className="w-full flex flex-col md:flex-row items-center justify-between">
