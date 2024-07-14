@@ -4,7 +4,7 @@ import React from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { TiStarFullOutline } from "react-icons/ti";
 
-function FeaturedProduct({ id, image, title, description, category }: any) {
+function FeaturedProduct({ id, image, title, description, category, userCategory, product }: any) {
   return (
     <div className="w-full px-10 py-7 bg-gray-50 rounded-xl border border-gray-200">
       <div className="grid grid-cols-1 md:grid-cols-3">
@@ -50,6 +50,31 @@ function FeaturedProduct({ id, image, title, description, category }: any) {
                       </p>
                     </div>
                   )
+                )}
+              </div>
+            </div>
+            <div className=" flex gap-3 items-center mt-3 ">
+              
+            <div className="flex gap-2">
+                {userCategory.slice(0, 2).map(
+                  (
+                    cat:any,
+                    index:any
+                  ) => (
+                    <div key={index}>
+                      <p className="bg-[#c7f9cc]/50 px-2 py-2 text-xs rounded-full text-[#38a3a5] font-bold">
+                        {cat}
+                      </p>
+                    </div>
+                  )
+                )}
+                {userCategory.length > 2 && (
+                  <div>
+                   <Link href={`/product/${id}`}>
+                   <p className="bg-[#c7f9cc]/50 px-2 py-2 text-xs rounded-full text-[#38a3a5] font-bold">
+                      +
+                    </p></Link>
+                  </div>
                 )}
               </div>
             </div>

@@ -109,7 +109,7 @@ function DirectoryProduct() {
       const data = await response.json();
 
       if (data.success) {
-        const products = data.products;
+        const products = data.products.filter((product: { active: string }) => product.active === "publish");
         const searchLower = search.toLowerCase();
 
         const filtered = products.filter(
@@ -215,10 +215,11 @@ function DirectoryProduct() {
                 <NormalProduct
                   key={product.id}
                   id={product.id}
-                  image={product.logourl}
+                  image={product.logoUrl}
                   title={product.name}
                   description={product.description}
                   category={product.category}
+                  product={product}
                 />
               ))
             ) : (

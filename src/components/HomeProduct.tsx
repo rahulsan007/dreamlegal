@@ -12,7 +12,7 @@ function HomeProduct({ data }: any) {
   useEffect(() => {
     const fetchProducts = async () => {
       if (data) {
-        const products = data.products;
+        const products = data.products.filter((product: { active: string }) => product.active === "publish");
         const featured = products.filter(
           (product: { featured: any }) => product.featured
         );
@@ -77,14 +77,16 @@ function HomeProduct({ data }: any) {
             </button>
           </div>
           <div className=" flex flex-col gap-4 mt-4 mb-4">
-            {featureProduct.slice(0, 3).map((product: any) => (
+            {featureProduct.slice(0, 4).map((product: any) => (
               <FeaturedProduct
                 key={product.id}
                 id={product.id}
-                image={product.logourl}
+                image={product.logoUrl}
                 title={product.name}
                 description={product.description}
                 category={product.category}
+                userCategory={product.userCategory}
+                product={product}
               />
             ))}
           </div>
