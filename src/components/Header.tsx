@@ -31,7 +31,7 @@ export const Header = () => {
             </li>
             <li>
               <a
-                href="/dirctory"
+                href="/directory"
                 className=" font-medium text-sm tracking-wide text-gray-900 transition-colors duration-200 hover:text-primary1"
               >
                 Directory
