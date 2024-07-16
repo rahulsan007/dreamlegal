@@ -35,7 +35,7 @@ function UserPage() {
         const response = await fetch("/api/get-user?userId=" + userId);
         const data = await response.json();
 
-        if (response.status === 404 && otpVerify === "false") {
+        if (response.status === 404 && otpVerify === "false" || otpVerify === undefined) {
           window.location.href = `/user/${userId}?verified=true`;
         }
 
