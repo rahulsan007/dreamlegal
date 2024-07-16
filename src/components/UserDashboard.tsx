@@ -35,7 +35,7 @@ function UserDashboard() {
 };
 
   const [userReviews, setUserReviews] = React.useState<Review[]>([]);
-  const userId = localStorage.getItem('userId');
+  const userId =typeof window !== "undefined" ? localStorage.getItem('userId') : null;
   useEffect(() => {
     const fetchReviews = (userId:any) => {
       if (userId) {
