@@ -46,6 +46,10 @@ function UserProfile({ userId }: { userId: string }) {
         const response = await fetch("/api/get-user?userId=" + userId);
         const data = await response.json();
 
+        if (response.status === 404) {
+          window.location.href = `/user/${userId}?verified=true`;
+        }
+
         if (data.success) {
           setProfile(data.profile);
           setAccountDetails(data.account);
@@ -53,6 +57,8 @@ function UserProfile({ userId }: { userId: string }) {
             data.account.image ||
               "https://cdn-icons-png.flaticon.com/512/4715/4715330.png"
           );
+
+        
         } else {
           setError(data.msg);
         }

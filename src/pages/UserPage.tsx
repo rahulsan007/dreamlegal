@@ -1,7 +1,7 @@
 "use client";
 import UserDashboard from "@/components/UserDashboard";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SavedItems from "@/components/SavedItems";
 import { useParams } from "next/navigation";
@@ -28,6 +28,33 @@ function UserPage() {
     ProfileImage: null,
     MarketingAccept: false,
   });
+
+  useEffect(() => {
+    const fetchProfile = async (userId: string) => {
+      try {
+        const response = await fetch("/api/get-user?userId=" + userId);
+        const data = await response.json();
+
+        if (response.status === 404) {
+          window.location.href = `/user/${userId}?verified=true`;
+        }
+
+        if (data.success) {
+          console.log(data);
+
+        
+        } else {
+        console.error(data.msg);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        console.log("done");
+      }
+    };
+
+    if(userId) fetchProfile(userId as never);
+  }, [userId]);
 
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const router = useRouter();
