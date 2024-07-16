@@ -4,9 +4,12 @@ import { TiStarFullOutline } from "react-icons/ti";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { FaUser } from "react-icons/fa6";
 import { RiLoginCircleLine } from "react-icons/ri";
+import Link from "next/link";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const userId = localStorage.getItem("userId");
+  const vendorId = localStorage.getItem("vendorId");
 
   return (
     <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 font-clarity">
@@ -28,7 +31,7 @@ export const Header = () => {
             </li>
             <li>
               <a
-                href="/"
+                href="/dirctory"
                 className=" font-medium text-sm tracking-wide text-gray-900 transition-colors duration-200 hover:text-primary1"
               >
                 Directory
@@ -36,7 +39,7 @@ export const Header = () => {
             </li>
             <li>
               <a
-                href="/"
+                href="/about"
                 aria-label="Product pricing"
                 title="Product pricing"
                 className=" font-medium text-sm tracking-wide text-gray-900 transition-colors duration-200 hover:text-primary1"
@@ -57,7 +60,7 @@ export const Header = () => {
 
             <li>
               <a
-                href="/"
+                href="/contact"
                 aria-label="About us"
                 title="About us"
                 className=" font-medium text-sm tracking-wide text-gray-900 transition-colors duration-200 hover:text-primary1"
@@ -67,18 +70,51 @@ export const Header = () => {
             </li>
           </ul>
         </div>
-        <ul className="flex items-center hidden space-x-8 lg:flex">
+       {userId && (
+          <ul className="flex items-center hidden space-x-8 lg:flex">
           <li>
+            <Link href={"/user/"+ userId}>
             <button className="inline-flex items-center justify-center gap-2 font-bold text-xs  text-gray-900 transition-all duration-300 hover:text-white hover:bg-primary1 rounded-full border border-black hover:border-primary1 px-5 py-3 hover:scale-95 hover:-translate-y-1">
-            <RiLoginCircleLine className=" text-base" />  User signup
-            </button>
+            <RiLoginCircleLine className=" text-base" />  Account
+            </button></Link>
           </li>
-          <li>
-            <button className="inline-flex items-center justify-center gap-2 font-bold text-xs bg-primary1  text-white transition-all duration-300 hover:text-primary1 hover:bg-primary2 rounded-full border   px-5 py-3  hover:-translate-y-1">
-              <FaUser className=" text-base" /> User Login
-            </button>
-          </li>
+          
         </ul>
+       )
+       }
+       {vendorId && (
+         <ul className="flex items-center hidden space-x-8 lg:flex">
+         <li>
+           <Link href={"/vendor"}>
+           <button className="inline-flex items-center justify-center gap-2 font-bold text-xs  text-gray-900 transition-all duration-300 hover:text-white hover:bg-primary1 rounded-full border border-black hover:border-primary1 px-5 py-3 hover:scale-95 hover:-translate-y-1">
+           <RiLoginCircleLine className=" text-base" />  Account
+           </button></Link>
+         </li>
+         
+       </ul>
+       )
+         
+      }
+
+      {
+        !userId && !vendorId && (
+          <ul className="flex items-center hidden space-x-8 lg:flex">
+        <li>
+          <Link href={"/sign-up"}>
+          <button className="inline-flex items-center justify-center gap-2 font-bold text-xs  text-gray-900 transition-all duration-300 hover:text-white hover:bg-primary1 rounded-full border border-black hover:border-primary1 px-5 py-3 hover:scale-95 hover:-translate-y-1">
+          <RiLoginCircleLine className=" text-base" />  User signup
+          </button></Link>
+        </li>
+        <li>
+          <Link href={"sign-in"}>
+          <button className="inline-flex items-center justify-center gap-2 font-bold text-xs bg-primary1  text-white transition-all duration-300 hover:text-primary1 hover:bg-primary2 rounded-full border   px-5 py-3  hover:-translate-y-1">
+            <FaUser className=" text-base" /> User Login
+          </button>
+          </Link>
+        </li>
+      </ul>
+        )
+      }
         <div className="lg:hidden">
           <button
             className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline text-primary1 text-[30px] "

@@ -70,6 +70,7 @@ function NormalProduct({
             </div>
           </div>
         </div>
+        <div className=" hidden md:block md:ml-auto">
         <div className="md:ml-auto mt-4 md:mt-0 flex gap-4 items-center">
           <div>
             <Link
@@ -89,6 +90,7 @@ function NormalProduct({
             {" "}
             <FiShare2 />{" "}
           </div>
+        </div>
         </div>
         <div></div>
       </div>
@@ -132,6 +134,28 @@ function NormalProduct({
           ))}
         </div>
       </div>
+      <div className=" block md:hidden">
+        <div className="md:ml-auto mt-4 md:mt-0 flex gap-4 items-center">
+          <div>
+            <Link
+              href={`/product/${id}`}
+              className="flex gap-2 items-center bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all w-fit  hover:bg-primary2 hover:text-primary1 hover:border-primary1 rounded-full hover:gap-4"
+            >
+              View
+              <IoIosArrowRoundForward className="text-xl" />
+            </Link>
+          </div>
+
+          <div className="flex gap-2 text-slate-800 text-lg items-center ">
+            {" "}
+            <FaBookmark />{" "}
+          </div>
+          <div className="flex gap-2 text-slate-800 text-lg items-center">
+            {" "}
+            <FiShare2 />{" "}
+          </div>
+        </div>
+        </div>
     </div>
   );
 }

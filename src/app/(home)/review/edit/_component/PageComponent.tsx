@@ -114,7 +114,7 @@ function EditReviewPage() {
                   </Link>
                 </div>
               </div>
-              <CheckboxDemo review={review} product={product} />
+             {product?.id && <CheckboxDemo review={review} product={product} />}
 
             </div>
           </div>

@@ -1,6 +1,6 @@
 
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -16,6 +16,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 
 const CheckboxDemo = ({ product ,review}: any) => {
+  interface FeatureRating {
+    category: string;
+    rating: number;
+  }
+  
+  interface ProcessLifecycleRating {
+    category: string;
+    rating: number;
+  }
   const [selectedInvolvements, setSelectedInvolvements] = useState<string[]>(
     []
   );
@@ -31,24 +40,36 @@ const CheckboxDemo = ({ product ,review}: any) => {
   const [integration, setIntegration] = useState(2.5);
   const [support, setSupport] = useState(2.5);
   const [roi, setRoi] = useState(2.5);
-  const [featureRatings, setFeatureRatings] = useState(() =>
-    product.features.map((feature: { category: any }) => ({
-      category: feature.category,
-      rating: 2.5, // Default rating value
-    }))
-  );
+  const [featureRatings, setFeatureRatings] = useState<FeatureRating[]>([]);
+  const [processLifecycleRatings, setProcessLifecycleRatings] = useState<ProcessLifecycleRating[]>([]);
 
-  const [processLifecycleRatings, setProcessLifecycleRatings] = useState(
-    product.processLifecycle.flatMap(
-      (lifecycle: { subcategories: any[]; category: any }) =>
-        lifecycle.subcategories.map((subcategory: any) => ({
-          category: `${lifecycle.category} - ${subcategory}`,
-          rating: 2.5,
-        }))
-    )
-  );
   const [rating, setRating] = useState<number>(0);
   const [attachmentUrl, setAttachmentUrl] = useState("");
+
+  useEffect(() => {
+    if (product && product.features) {
+      const initialFeatureRatings = product.features.map((feature: { category: any }) => ({
+        category: feature.category,
+        rating: review.functionality?.find((f: { category: any }) => f.category === feature.category)?.rating || 2.5,
+      }));
+      setFeatureRatings(initialFeatureRatings);
+    }
+  }, [product, review]);
+
+  useEffect(() => {
+    if (product && product.processLifecycle) {
+      const initialProcessLifecycleRatings = product.processLifecycle.flatMap(
+        (lifecycle: { subcategories: any[]; category: any }) =>
+          lifecycle.subcategories.map((subcategory: any) => ({
+            category: `${lifecycle.category} - ${subcategory}`,
+            rating: review.processLifecycle?.find(
+              (f: { category: any }) => f.category === `${lifecycle.category} - ${subcategory}`
+            )?.rating || 2.5,
+          }))
+      );
+      setProcessLifecycleRatings(initialProcessLifecycleRatings);
+    }
+  }, [product, review]);
 
   const uploadFile = async (file: File, folderName: string) => {
     // Create the form data
@@ -311,12 +332,9 @@ const CheckboxDemo = ({ product ,review}: any) => {
     }
   };
 
-  const handleFeatureRatingChange = (
-    category: any,
-    newValue: number | null
-  ) => {
-    setFeatureRatings((prevRatings: any[]) =>
-      prevRatings.map((rating: { category: any }) =>
+  const handleFeatureRatingChange = (category: string, newValue: number | null) => {
+    setFeatureRatings((prevRatings) =>
+      prevRatings.map((rating) =>
         rating.category === category
           ? { ...rating, rating: newValue || 0 }
           : rating
@@ -325,11 +343,8 @@ const CheckboxDemo = ({ product ,review}: any) => {
     console.log("Updated feature ratings:", featureRatings);
   };
 
-  const handleProcessLifecycleRatingChange = (
-    category: string,
-    newValue: number | null
-  ) => {
-    setProcessLifecycleRatings((prevRatings: any[]) =>
+  const handleProcessLifecycleRatingChange = (category: string, newValue: number | null) => {
+    setProcessLifecycleRatings((prevRatings) =>
       prevRatings.map((rating) =>
         rating.category === category
           ? { ...rating, rating: newValue || 0 }

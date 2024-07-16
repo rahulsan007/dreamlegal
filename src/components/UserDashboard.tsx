@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import BookMarkCard from "./BookMarkCard";
 import { IoIosNotifications } from "react-icons/io";
 import SliderElement from "./Silder";
@@ -7,6 +8,63 @@ import UserReviewCard from "./UserReviewCard";
 import SavedItems from "./SavedItems";
 
 function UserDashboard() {
+  type Review = {
+    id: string;
+    userId: string;
+    productId: string;
+    involvement: string[];
+    WhyBought: string[];
+    GoalBehind: string[];
+    otherProducts: string;
+    oftenUsed: string;
+    overallExperienc: string;
+    bestThing: string;
+    worstThing: string;
+    easeOfLearning: number;
+    integration: number;
+    support: number;
+    roi: number;
+    functionality: Record<string, any>;
+    processStep: Record<string, any>;
+    recommend: number;
+    reference: string;
+    attachement?: string;
+    createdAt: string;
+    updatedAt: string;
+    product: JSON;
+};
+
+  const [userReviews, setUserReviews] = React.useState<Review[]>([]);
+  const userId = localStorage.getItem('userId');
+  useEffect(() => {
+    const fetchReviews = (userId:any) => {
+      if (userId) {
+          fetch('/api/get-user-review', {
+              method: 'POST', // Use POST method
+              headers: {
+                  'Content-Type': 'application/json' // Set the content type to JSON
+              },
+              body: JSON.stringify({ userId }) // Send the userId in the request body
+          })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              return response.json();
+          })
+          .then(data => {
+              console.log(data);
+              // Handle the fetched reviews data as needed
+              setUserReviews(data.userReviews);
+          })
+          .catch(error => {
+              console.error('Error fetching reviews:', error);
+          });
+      }
+  };
+
+    fetchReviews(userId);
+  }, [userId]);
   return (
     <div className="font-clarity">
       <div>
@@ -16,12 +74,10 @@ function UserDashboard() {
               Reviewed Products
             </h2>
 
-            <ScrollArea className=" md:h-72 border rounded-md px-4 py-5">
-              <UserReviewCard />
-              <UserReviewCard />
-              <UserReviewCard />
-              <UserReviewCard />
-              <UserReviewCard />
+            <ScrollArea className="md:h-72 border rounded-md px-4 py-5">
+                {userReviews?.map((review: Review) => (
+                    <UserReviewCard key={review.id} review={review} />
+                ))}
             </ScrollArea>
           </div>
 
