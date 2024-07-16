@@ -20,7 +20,7 @@ const CheckPage = () => {
             body: JSON.stringify({ email: userEmail }),
           });
           const data = await response.json();
-          if (data.success && data.user) {
+          if (data.success && data.user  && typeof window !== "undefined" ) {
             localStorage.setItem("userId", data.user.id);
             localStorage.setItem("userEmail", data.user.email);
 

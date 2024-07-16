@@ -80,7 +80,9 @@ function VendorSignup() {
         setotpStep(true);
         const data = await response.json();
         if (data.user && data.user.id) {
-          localStorage.setItem("vendorId", data.user.id);
+          if (typeof window !== "undefined") {
+            localStorage.setItem("vendorId", data.user.id);
+          }
         }
         alert("OTP verified successfully");
         router.push("/vendor?verified=true");

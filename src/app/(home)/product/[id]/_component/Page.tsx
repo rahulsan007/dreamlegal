@@ -139,8 +139,7 @@ const countryNames: { [key: string]: string } = {
 function PageComponent({ data }: any) {
   const location = useGeoLocation();
   const countryName = countryNames[location.country] || "Unknown Country";
-  const userId =
-    typeof window !== "undefined" ? localStorage.getItem("userId") : null; // Check if window is defined
+  const userId = typeof window !== "undefined" ? localStorage.getItem("userId") : null; // Check if window is defined
 
   // useEffect(() => {
   //   const addAnalytics = async () => {

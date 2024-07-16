@@ -18,7 +18,7 @@ function VendorPage() {
       setVerified(search);
     }
 
-    const getVendorId = localStorage.getItem("vendorId");
+    const getVendorId = typeof window !== "undefined" ? localStorage.getItem("vendorId") : null;
     if (!getVendorId) {
       router.push("/sign-in");
     } else {

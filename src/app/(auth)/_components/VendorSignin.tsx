@@ -41,7 +41,8 @@ function VendorSignin() {
 
         // Save the user ID in localStorage if available in the response
         if (data.user && data.user.id) {
-          localStorage.setItem("vendorId", data.user.id);
+          typeof window !== "undefined" ?
+          localStorage.setItem("vendorId", data.user.id): null;
         }
 
         // Redirect to the home page or any other desired page
