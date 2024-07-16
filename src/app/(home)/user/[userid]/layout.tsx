@@ -13,7 +13,8 @@ export default function UserLayout({
   children: React.ReactNode;
 }>) {
   const [activeTab, setActiveTab] = useState("dashboard");
-  const userId = localStorage.getItem("userId");
+  const userId =
+   typeof window !== "undefined" ? localStorage.getItem("userId") : null;
   if(!userId){
     return null
   }

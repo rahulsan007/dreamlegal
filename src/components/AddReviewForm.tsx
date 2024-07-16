@@ -85,7 +85,8 @@ const CheckboxDemo = ({ product }: any) => {
     e.preventDefault();
 
     // Consolidate all state values into an object
-    const userId = localStorage.getItem("userId");
+    const userId =
+    typeof window !== "undefined" ? localStorage.getItem("userId") : null;
     const productId = product.id;
 
     try {
