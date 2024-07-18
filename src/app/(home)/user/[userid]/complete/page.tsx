@@ -1,171 +1,109 @@
 "use client";
-import UserDashboard from "@/components/UserDashboard";
+import { Input } from '@/components/ui/input';
+import { useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import React, { useState } from 'react'
 
-import React, { useEffect, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SavedItems from "@/components/SavedItems";
-import { useParams } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import UserProfile from "@/components/UserProfile";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useRouter } from "next/navigation";
-
-function UserPage() {
-  const path = useParams();
-  const searchParams = useSearchParams();
-  const userId = path?.userid;
-  const otpVerify = searchParams?.get("verified");
-  const [formData, setFormData] = useState({
-    Contact: "",
-    Location: "",
-    Address: "",
-    Designation: "",
-    CompanyType: "",
-    CompanyAddress: "",
-    CompanyEmail: "",
-    ProfileImage: null,
-    MarketingAccept: false,
-  });
-  const router = useRouter();
-
-
-  useEffect(() => {
-    const fetchProfile = async (userId: string) => {
-      try {
-        const response = await fetch("/api/get-user?userId=" + userId);
-        const data = await response.json();
-
-        if (response.status === 404) {
-          window.location.href = `/user/${userId}/complete`;
-        }
-
-        if (data.success) {
-          console.log(data);
-
-        
-        } else {
-        console.error(data.msg);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        console.log("done");
-      }
-    };
-
-    if(userId) fetchProfile(userId as never);
-  }, []);
-
+function page() {
+    const path = useParams();
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
-  const handleChange = (e: any) => {
-    const { name, value, type, checked, files } = e.target;
-    if (type === "file") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: files[0],
-      }));
-    } else if (type === "checkbox") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: checked,
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-  };
-
-  const uploadFile = async (file: File, folderName: string) => {
-    // Create the form data
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("folderName", folderName);
-
-    try {
-      // Send the POST request
-      const response = await fetch("/api/upload-file", {
-        method: "POST",
-        body: formData,
+  const userId = path?.userid;
+  const router = useRouter();
+    const [formData, setFormData] = useState({
+        Contact: "",
+        Location: "",
+        Address: "",
+        Designation: "",
+        CompanyType: "",
+        CompanyAddress: "",
+        CompanyEmail: "",
+        ProfileImage: null,
+        MarketingAccept: false,
       });
-
-      // Handle the response
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          const url = data.location;
-          console.log("Uploaded file location:", url);
-          return url;
+    const handleChange = (e: any) => {
+        const { name, value, type, checked, files } = e.target;
+        if (type === "file") {
+          setFormData((prevData) => ({
+            ...prevData,
+            [name]: files[0],
+          }));
+        } else if (type === "checkbox") {
+          setFormData((prevData) => ({
+            ...prevData,
+            [name]: checked,
+          }));
         } else {
-          console.error("Upload failed:", data.error);
+          setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+          }));
         }
-      } else {
-        console.error("Failed to upload file:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
-    return null;
-  };
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    // Handle form submission, e.g., send data to an API
-    try {
-      if (formData.ProfileImage) {
-        const response = await uploadFile(formData.ProfileImage, "profile");
-        setLogoPreview(response);
-      }
-      const response = await fetch("/api/edit-user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...formData, userId, logoPreview }),
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        console.log("Profile created successfully:", result.profile);
-        router.push(`/user/${userId}`);
-      } else {
-        console.error("Error creating profile:", result.msg);
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
-    console.log("Form submitted:", formData);
-  };
-
-
+      };
+    
+      const uploadFile = async (file: File, folderName: string) => {
+        // Create the form data
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("folderName", folderName);
+    
+        try {
+          // Send the POST request
+          const response = await fetch("/api/upload-file", {
+            method: "POST",
+            body: formData,
+          });
+    
+          // Handle the response
+          if (response.ok) {
+            const data = await response.json();
+            if (data.success) {
+              const url = data.location;
+              console.log("Uploaded file location:", url);
+              return url;
+            } else {
+              console.error("Upload failed:", data.error);
+            }
+          } else {
+            console.error("Failed to upload file:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error uploading file:", error);
+        }
+        return null;
+      };
+    
+      const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        // Handle form submission, e.g., send data to an API
+        try {
+          if (formData.ProfileImage) {
+            const response = await uploadFile(formData.ProfileImage, "profile");
+            setLogoPreview(response);
+          }
+          const response = await fetch("/api/edit-user", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ...formData, userId, logoPreview }),
+          });
+    
+          const result = await response.json();
+    
+          if (result.success) {
+            console.log("Profile created successfully:", result.profile);
+            router.push(`/user/${userId}`);
+          } else {
+            console.error("Error creating profile:", result.msg);
+          }
+        } catch (error) {
+          console.error("Error submitting form:", error);
+        }
+        console.log("Form submitted:", formData);
+      };
   return (
-    <div className="">
-      {/* <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="">
-          <TabsTrigger asChild value="overview">
-            <button className=" text-primary1 bg-primary2 px-4 py-2">
-              Overview
-            </button>
-          </TabsTrigger>
-          <TabsTrigger asChild value="saved">
-            <button className=" text-primary1 bg-primary2 px-4 py-2">
-              Saved
-            </button>
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="overview">
-          <UserDashboard />
-        </TabsContent>
-        <TabsContent value="saved">
-          <SavedItems />
-        </TabsContent>
-      </Tabs> */}
-      {otpVerify === "true" ? (
-        <>
+    <div>
+       <>
           <section className="bg-white font-clarity">
             <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
               <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
@@ -428,24 +366,8 @@ function UserPage() {
             </div>
           </section>
         </>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-5 px-4">
-            <div className="col-span-1">
-              <div style={{ maxWidth: "100%" }}>
-                <UserProfile userId={userId as string} />
-              </div>
-            </div>
-            <div className="col-span-4">
-              <ScrollArea className="h-screen px-5">
-                <UserDashboard />
-              </ScrollArea>
-            </div>
-          </div>
-        </>
-      )}
     </div>
-  );
+  )
 }
 
-export default UserPage;
+export default page
