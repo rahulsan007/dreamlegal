@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import React, { useState } from 'react'
 
-function page() {
+function Page() {
     const path = useParams();
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const userId = path?.userid;
@@ -370,4 +370,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
