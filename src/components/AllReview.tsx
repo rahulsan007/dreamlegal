@@ -19,6 +19,8 @@ import AddReviewForm from "./AddReviewForm";
 import Link from "next/link";
 
 function AllReview({ type = "user", product }: any) {
+
+  const userId =  typeof window !== "undefined" ? localStorage.getItem("userId") : null;
   return (
     <div className=" font-clarity mt-5">
       <div className="flex flex-col md:flex-row items-center justify-between">
@@ -38,7 +40,7 @@ function AllReview({ type = "user", product }: any) {
       </div>
 
       <div className="flex flex-col md:flex-row items-center gap-5">
-        {type === "user" ? (
+        {userId ? (
           // <Dialog>
           //   <DialogTrigger className="mt-6 ml-auto">
           //     <button className=" ml-auto bg-primary1 text-white py-4 px-4 rounded-lg text-xs md:w-[200px]">
@@ -63,9 +65,11 @@ function AllReview({ type = "user", product }: any) {
             </button>
           </Link>
         ) : (
+        <Link href={"/sign-in"}>
           <button className=" ml-auto bg-primary1 text-white py-4 px-4 rounded-lg text-xs md:w-[200px]">
             Login to Review
           </button>
+        </Link>
         )}
       </div>
       <ReviewCard />
