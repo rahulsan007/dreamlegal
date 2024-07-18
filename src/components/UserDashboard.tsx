@@ -75,9 +75,14 @@ function UserDashboard() {
             </h2>
 
             <ScrollArea className="md:h-72 border rounded-md px-4 py-5">
-                {userReviews?.map((review: Review) => (
-                    <UserReviewCard key={review.id} review={review} />
-                ))}
+                {userReviews.length === 0 ? (
+                    <p className=" text-gray-500 font-bold  text-center">No reviews yet</p>
+                ) : (
+                    userReviews.map((review: Review) => (
+                        <UserReviewCard key={review.id} review={review} />
+
+                    ))
+                )}
             </ScrollArea>
           </div>
 
