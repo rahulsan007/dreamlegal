@@ -40,37 +40,37 @@ function UserProfile({ userId }: { userId: string }) {
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // useEffect(() => {
-  //   const fetchProfile = async (userId: string) => {
-  //     try {
-  //       const response = await fetch("/api/get-user?userId=" + userId);
-  //       const data = await response.json();
+  useEffect(() => {
+    const fetchProfile = async (userId: string) => {
+      try {
+        const response = await fetch("/api/get-user?userId=" + userId);
+        const data = await response.json();
 
-  //       if (response.status === 404) {
-  //         window.location.href = `/user/${userId}?verified=true`;
-  //       }
+        if (response.status === 404) {
+          window.location.href = `/user/${userId}?verified=true`;
+        }
 
-  //       if (data.success) {
-  //         setProfile(data.profile);
-  //         setAccountDetails(data.account);
-  //         setImage(
-  //           data.account.image ||
-  //             "https://cdn-icons-png.flaticon.com/512/4715/4715330.png"
-  //         );
+        if (data.success) {
+          setProfile(data.profile);
+          setAccountDetails(data.account);
+          setImage(
+            data.account.image ||
+              "https://cdn-icons-png.flaticon.com/512/4715/4715330.png"
+          );
 
         
-  //       } else {
-  //         setError(data.msg);
-  //       }
-  //     } catch (err) {
-  //       console.error(err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+        } else {
+          setError(data.msg);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //   fetchProfile(userId);
-  // }, [userId]);
+    fetchProfile(userId);
+  }, [userId]);
   return (
     <>
       <div
