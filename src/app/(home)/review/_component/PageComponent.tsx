@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import AddReviewForm from "@/components/AddReviewForm";
 import Link from "next/link";
+import Loading from "@/components/Loading";
 
 function PageComponent() {
   const searchParams = useSearchParams() || new URLSearchParams();
@@ -45,7 +46,7 @@ function PageComponent() {
   return (
     <div>
       {loading ? (
-        <p>Loading product...</p>
+       <Loading></Loading>
       ) : (
         <div>
           <div className="px-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8 font-clarity">

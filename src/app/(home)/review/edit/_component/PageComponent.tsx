@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import CheckboxDemo from "./EditReviewForm";
+import Loading from "@/components/Loading";
 
 function EditReviewPage() {
   const searchParams = useSearchParams() || new URLSearchParams();
@@ -82,9 +83,9 @@ function EditReviewPage() {
   return (
     <div>
       {loadingReview ? (
-        <p>Loading review...</p>
+        <Loading></Loading>
       ) : loadingProduct ? (
-        <p>Loading product...</p>
+        <Loading></Loading>
       ) : (
 
         <div>
