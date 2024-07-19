@@ -12,8 +12,9 @@ import { HiOutlinePencil } from "react-icons/hi";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
-function UserProfile({ userId }: { userId: string }) {
+function UserProfile({ userId , data }: { userId: string, data : any }) {
   interface Account {
     name: string;
     image: string;
@@ -33,44 +34,51 @@ function UserProfile({ userId }: { userId: string }) {
   const [details, setDetails] = useState(true);
   const [CompDetails, setCompDetails] = useState(true);
   const [Account, setAccount] = useState(false);
-  const [profile, setProfile] = useState<profile | null>(null);
-  const [AccountDetails, setAccountDetails] = useState<Account | null>();
+  const [profile, setProfile] = useState<profile | null>(data.profile);
+  const [AccountDetails, setAccountDetails] = useState<Account | null>(data.account);
   const [Image, setImage] = useState(
     "https://cdn-icons-png.flaticon.com/512/4715/4715330.png"
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  useEffect(() => {
-    const fetchProfile = async (userId: string) => {
-      try {
-        const response = await fetch("/api/get-user?userId=" + userId);
-        const data = await response.json();
+  // useEffect(() => {
+  //   const fetchProfile = async (userId: string) => {
+  //     try {
+  //       const response = await fetch("/api/get-user?userId=" + userId);
+  //       const data = await response.json();
 
-        if (response.status === 404) {
-          window.location.href = `/user/${userId}?verified=true`;
-        }
+  //       if (response.status === 404) {
+  //         window.location.href = `/user/${userId}?verified=true`;
+  //       }
 
-        if (data.success) {
-          setProfile(data.profile);
-          setAccountDetails(data.account);
-          setImage(
-            data.account.image ||
-              "https://cdn-icons-png.flaticon.com/512/4715/4715330.png"
-          );
+  //       if (data.success) {
+  //         setProfile(data.profile);
+  //         setAccountDetails(data.account);
+  //         setImage(
+  //           data.account.image ||
+  //             "https://cdn-icons-png.flaticon.com/512/4715/4715330.png"
+  //         );
 
         
-        } else {
-          setError(data.msg);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //       } else {
+  //         setError(data.msg);
+  //       }
+  //     } catch (err) {
+  //       console.error(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchProfile(userId);
-  }, [userId]);
+  //   fetchProfile(userId);
+  // }, [userId]);
+  const router = useRouter();
+
+  const handleLogout = () => {
+     typeof window !== "undefined" && localStorage.clear();
+     typeof window !== "undefined" && localStorage.removeItem("userId");
+     router.push("/");
+  }
   return (
     <>
       <div
@@ -211,7 +219,7 @@ function UserProfile({ userId }: { userId: string }) {
                   </button>
                 </li>
                 <li>
-                  <button className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary1 text-sm font-medium text-white items-center">
+                  <button onClick={handleLogout} className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary1 text-sm font-medium text-white items-center">
                     <CiLogout />
                     Logout
                   </button>
@@ -344,7 +352,7 @@ function UserProfile({ userId }: { userId: string }) {
                   </button>
                 </li>
                 <li>
-                  <button className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary1 text-sm font-medium text-white items-center">
+                  <button onClick={handleLogout} className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary1 text-sm font-medium text-white items-center">
                     <CiLogout />
                     Logout
                   </button>

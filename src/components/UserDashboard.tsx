@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BookMarkCard from "./BookMarkCard";
 import { IoIosNotifications } from "react-icons/io";
 import SliderElement from "./Silder";
@@ -8,6 +8,8 @@ import UserReviewCard from "./UserReviewCard";
 import SavedItems from "./SavedItems";
 
 function UserDashboard() {
+
+  
   type Review = {
     id: string;
     userId: string;
@@ -34,7 +36,13 @@ function UserDashboard() {
     product: JSON;
 };
 
+
+
+
+
   const [userReviews, setUserReviews] = React.useState<Review[]>([]);
+  const [savedProducts, setSavedProducts] = useState()
+  const [savedProductsResponse, setSavedProductsResponse] = useState([])
   const userId =typeof window !== "undefined" ? localStorage.getItem('userId') : null;
   useEffect(() => {
     const fetchReviews = (userId:any) => {
@@ -63,8 +71,43 @@ function UserDashboard() {
       }
   };
 
+  const fetchSavedProducts = (userId: any) => {
+    if (userId) {
+      fetch("/api/user-bookmark", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Saved products:", data);
+          setSavedProductsResponse(data.products);
+          // The state update happens asynchronously
+        })
+        .catch((error) => {
+          console.error("Error fetching saved products:", error);
+        });
+    }
+  };
+  
+
     fetchReviews(userId);
+    fetchSavedProducts(userId);
+   
   }, [userId]);
+
+  useEffect(() => {
+    console.log("Saved products useEffect:", savedProductsResponse);
+    
+  }, [savedProductsResponse]);
+  
   return (
     <div className="font-clarity">
       <div>
@@ -91,11 +134,13 @@ function UserDashboard() {
               Saved Resources
             </h2>
             <ScrollArea className=" md:h-72 border rounded-md px-4 py-5">
+            <p className=" text-gray-500 font-bold  text-center">No Saved items yet</p>
+
+              {/* <SavedItems />
               <SavedItems />
               <SavedItems />
               <SavedItems />
-              <SavedItems />
-              <SavedItems />
+              <SavedItems /> */}
             </ScrollArea>
           </div>
         </div>
@@ -106,10 +151,14 @@ function UserDashboard() {
         <div className=" grid grid-cols-1 md:grid-cols-3 gap-4 my-4 ">
           <div className=" col-span-3">
             <SliderElement>
-              <BookMarkCard />
-              <BookMarkCard />
-              <BookMarkCard />
-              <BookMarkCard />
+            
+            {savedProductsResponse.length === 0 ? (
+                <p className="text-gray-500 font-bold text-center">No bookmarked items yet</p>
+              ) : (
+                savedProductsResponse?.map((product:any) => (
+                  <BookMarkCard key={product.id} product={product} />
+                ))
+              )}
             </SliderElement>
           </div>
         </div>
@@ -117,7 +166,7 @@ function UserDashboard() {
       <div>
         <h2 className=" text-gray-900 text-xl font-bold my-5 ">Notification</h2>
       </div>
-      <div className="">
+      {/* <div className="">
         <div className="md:pb-24">
           <div className="flex items-center gap-4 md:w-3/5">
             <div className="bg-primary2 text-primary1 p-3 rounded-full">
@@ -130,7 +179,8 @@ function UserDashboard() {
           </div>
           <span className="text-xs text-slate-500 mt-5">1 day ago</span>
         </div>
-      </div>
+      </div> */}
+    <p className="text-gray-500 font-bold text-center">No notifications yet</p>
     </div>
   );
 }

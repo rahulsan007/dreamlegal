@@ -41,7 +41,8 @@ function UserSignin() {
 
         // Save the user ID in localStorage if available in the response
         if (data.user && data.user.id) {
-          const userId = typeof window !== "undefined" ? localStorage.getItem("userId") : null;
+          typeof window !== "undefined" ? localStorage.setItem("userId", data.user.id) : null;
+          typeof window !== "undefined" ? localStorage.getItem("userId") : null;
         }
 
         // Redirect to the home page or any other desired page
