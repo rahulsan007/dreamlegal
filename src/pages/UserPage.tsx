@@ -433,7 +433,7 @@ function UserPage( { data }: any) {
           <div className="grid grid-cols-1 md:grid-cols-5 px-4">
             <div className="col-span-1">
               <div style={{ maxWidth: "100%" }}>
-                <UserProfile data={data} userId={userId as string} />
+                <UserProfile data={data}  />
               </div>
             </div>
             <div className="col-span-4">

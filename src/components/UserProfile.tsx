@@ -14,7 +14,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { useRouter } from "next/navigation";
 
-function UserProfile({ userId , data }: { userId: string, data : any }) {
+function UserProfile({ data }: {  data : any }) {
   interface Account {
     name: string;
     image: string;
