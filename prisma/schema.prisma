@@ -32,6 +32,8 @@ model User {
   Product     Product[]
   Review      Review[]
   userAccount userAccount[]
+
+  SaveProduct SaveProduct[]
 }
 
 model userAccount {
@@ -200,6 +202,8 @@ model Product {
   user                    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   company                 companyInfo @relation(fields: [companyId], references: [id], onDelete: Cascade)
   Review                  Review[]
+
+  SaveProduct SaveProduct[]
 }
 
 model Review {
@@ -252,4 +256,12 @@ model ClickCount {
   id        Int    @id @default(autoincrement())
   productId String @unique
   feature   Json   @default("[]")
+}
+
+model SaveProduct {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String[]
+  user                      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Product                   Product[]
 }

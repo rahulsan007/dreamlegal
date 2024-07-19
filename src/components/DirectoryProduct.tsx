@@ -104,8 +104,12 @@ function DirectoryProduct() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilters, setSelectedFilters] = useState({
     categories: [],
+    userCategories: [],
     language: [],
     country: [],
+    industry: [],
+    practiceAreas: [],
+    mobileAvailable: [],
     // Add more filter parameters here
   });
 
@@ -143,6 +147,7 @@ function DirectoryProduct() {
             selectedFilters.country.includes(product.country as never);
 
           // Add more filter matches here
+
 
           return (
             (matchesName || matchesCategory) &&
