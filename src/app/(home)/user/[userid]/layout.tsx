@@ -20,21 +20,21 @@ export default function UserLayout({
   }
 
   let ActiveComponent;
-  switch (activeTab) {
-    case "dashboard":
-      ActiveComponent = <UserDashboard />;
-      break;
-    case "saved":
-      ActiveComponent = <SavedItems />;
-      break;
-    case "profile":
-      ActiveComponent = <UserProfile userId={userId} />;
-      break;
-    case "addReview":
-      ActiveComponent = <AddReview />;
-      break;
-    default:
-      ActiveComponent = <UserDashboard />;
-  }
+  // switch (activeTab) {
+  //   case "dashboard":
+  //     ActiveComponent = <UserDashboard />;
+  //     break;
+  //   case "saved":
+  //     ActiveComponent = <SavedItems />;
+  //     break;
+  //   case "profile":
+  //     ActiveComponent = <UserProfile userId={userId} />;
+  //     break;
+  //   case "addReview":
+  //     ActiveComponent = <AddReview />;
+  //     break;
+  //   default:
+  //     ActiveComponent = <UserDashboard />;
+  // }
   return <main>{children}</main>;
 }
