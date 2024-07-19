@@ -1,3 +1,4 @@
+import UserPage from "@/pages/UserPage";
 import Complete from "./_components/Complete";
 import UserPageWrapper from "./_components/UserPageWrapper";
 
@@ -38,7 +39,7 @@ export default async function Page({ params }: { params: { userid: string } }) {
   
 
   if (data && data.success) {
-    return <UserPageWrapper data={data} />;
+    return     <UserPage data={data} />;
   }
 
   // You should return a default UI if data is null or data.success is false
