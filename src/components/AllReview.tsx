@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -21,22 +22,46 @@ import Link from "next/link";
 function AllReview({ type = "user", product }: any) {
 
   const userId =  typeof window !== "undefined" ? localStorage.getItem("userId") : null;
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [overallRating, setOverallRating] = useState<number>(0);
+  const [totalReviews, setTotalReviews] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch("/api/get-reviews", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productId: product.id }),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          setReviews(result.reviews);
+          setOverallRating(result.overallRating);
+          setTotalReviews(result.totalReviews);
+        } else {
+          setError(result.msg);
+        }
+      } catch (error) {
+        setError(error instanceof Error ? error.message : "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, [product.id]);
   return (
     <div className=" font-clarity mt-5">
       <div className="flex flex-col md:flex-row items-center justify-between">
-        <h2 className=" text-lg  text-gray-900">1080+ Reviews</h2>
-        <div className=" flex gap-4">
-          <Select value="best">
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select an option" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="best">Best</SelectItem>
-              <SelectItem value="most-recent">Most Recent</SelectItem>
-              <SelectItem value="negative">Negative</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+       
+      
       </div>
 
       <div className="flex flex-col md:flex-row items-center gap-5">
@@ -72,11 +97,13 @@ function AllReview({ type = "user", product }: any) {
         </Link>
         )}
       </div>
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
+      {reviews.length > 0 ? (
+        reviews.map((review: any) => (
+          <ReviewCard key={review.id} review={review} overallRating={overallRating} />
+        ))
+      ) : (
+        <p>No reviews available.</p>
+      )}
     </div>
   );
 }

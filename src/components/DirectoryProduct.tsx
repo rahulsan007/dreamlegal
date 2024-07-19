@@ -226,7 +226,7 @@ function DirectoryProduct() {
                     </button>
                   </SheetTrigger>
                   <SheetContent>
-                    <DirectoryFilter />
+                    <DirectoryFilter selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
                   </SheetContent>
                 </Sheet>
               </div>

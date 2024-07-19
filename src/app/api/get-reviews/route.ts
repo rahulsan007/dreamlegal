@@ -5,36 +5,56 @@ export async function POST(request: Request) {
     const { productId } = await request.json();
 
     if (!productId) {
-      return Response.json(
-        {
+      return new Response(
+        JSON.stringify({
           success: false,
           msg: "Please provide a product ID",
-        },
-        { status: 400 }
+        }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
-    // Fetch reviews for the given product ID
+    // Fetch reviews for the given product ID along with user details
     const reviews = await prisma.review.findMany({
       where: { productId },
+      include: {
+        user: { // Include user details
+          select: { 
+            id: true,
+            image: true,
+            name: true,
+          }
+        },
+      },
     });
 
-    return Response.json(
-      {
+    // Calculate overall rating
+    const totalReviews = reviews.length;
+    const overallRating = totalReviews ? (
+      reviews.reduce((acc, review) => acc + (review.easeOfLearning + review.integration + review.support + review.roi) / 4, 0) / totalReviews
+    ) : 0;
+
+    return new Response(
+      JSON.stringify({
         success: true,
         msg: "Reviews fetched successfully",
-        reviews,
-      },
-      { status: 200 }
+        reviews: reviews.map(review => ({
+          ...review,
+          overallExperience: review.overallExperienc // Assuming you meant `overallExperience`
+        })),
+        overallRating,
+        totalReviews,
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     console.error(error);
-    return Response.json(
-      {
+    return new Response(
+      JSON.stringify({
         success: false,
         msg: "Something went wrong",
-      },
-      { status: 500 }
+      }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 }

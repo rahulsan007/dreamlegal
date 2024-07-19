@@ -5,7 +5,7 @@ import AllReview from "./AllReview";
 function ProductReview({ product }: any) {
   return (
     <div>
-      <ProductAllReviewProgressbar />
+      <ProductAllReviewProgressbar product={product} />
       <AllReview product={product} />
     </div>
   );

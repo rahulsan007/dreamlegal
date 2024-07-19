@@ -30,6 +30,36 @@ import useGeoLocation from "react-ipgeolocation";
 import { GoShareAndroid } from "react-icons/go";
 import { FiPrinter } from "react-icons/fi";
 import ReactApexChart from "react-apexcharts";
+import Loading from "@/components/Loading";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+  RedditShareButton,
+  RedditIcon,
+  TelegramShareButton,
+  TelegramIcon,
+} from "next-share";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const countryNames: { [key: string]: string } = {
   US: "United States of America",
@@ -136,67 +166,132 @@ const countryNames: { [key: string]: string } = {
   YT: "Mayotte",
 };
 
+
 function PageComponent({ data }: any) {
   const location = useGeoLocation();
   const countryName = countryNames[location.country] || "Unknown Country";
-  const userId = typeof window !== "undefined" ? localStorage.getItem("userId") : null; // Check if window is defined
+  const userId =
+    typeof window !== "undefined" ? localStorage.getItem("userId") : null; // Check if window is defined
 
-  // useEffect(() => {
-  //   const addAnalytics = async () => {
-  //     const loginsViews = userId ? 1 : 0
-  //     const userAgent = navigator.userAgent;
-  //     let desktopViews = 0;
-  //     let mobileViews = 0;
-  //     let tabletViews = 0;
+  useEffect(() => {
+    const addAnalytics = async () => {
+      const loginsViews = userId ? 1 : 0;
+      const userAgent = navigator.userAgent;
+      let desktopViews = 0;
+      let mobileViews = 0;
+      let tabletViews = 0;
 
-  //     if (/Mobi|Android/i.test(userAgent)) {
-  //       mobileViews = 1;
-  //     } else if (/Tablet|iPad/i.test(userAgent)) {
-  //       tabletViews = 1;
-  //     } else {
-  //       desktopViews = 1;
-  //     }
+      if (/Mobi|Android/i.test(userAgent)) {
+        mobileViews = 1;
+      } else if (/Tablet|iPad/i.test(userAgent)) {
+        tabletViews = 1;
+      } else {
+        desktopViews = 1;
+      }
 
-  //     try {
-  //       const response = await fetch('/api/add-analytics', {
+      try {
+        const response = await fetch("/api/add-analytics", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: data.product.userId,
+            productId: data.product.id,
+            views: 1,
+            loginsViews: loginsViews,
+            desktopViews: desktopViews,
+            mobileViews: mobileViews,
+            tabletViews: tabletViews,
+            country: countryName,
+          }),
+        });
 
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //           userId: data.product.userId,
-  //           productId: data.product.id,
-  //           views: 1,
-  //           loginsViews: loginsViews ,
-  //           desktopViews: desktopViews,
-  //           mobileViews: mobileViews,
-  //           tabletViews: tabletViews,
-  //           country: countryName,
-  //         }),
-  //       });
+        if (!response.ok) {
+          throw new Error("Failed to add analytics");
+        }
 
-  //       if (!response.ok) {
-  //         throw new Error('Failed to add analytics');
-  //       }
+        const result = await response.json();
+        console.log("Analytics added:", result);
+      } catch (error) {
+        console.error("Error adding analytics:", error);
+      }
+    };
 
-  //       const result = await response.json();
-  //       console.log('Analytics added:', result);
-  //     } catch (error) {
-  //       console.error('Error adding analytics:', error);
-
-  //     }
-  //   };
-
-  //   addAnalytics();
-  // }, [data,countryName,userId]);
+    addAnalytics();
+  }, [data, countryName, userId]);
   const [product, setProduct] = useState(data.product);
   const [company, setCompany] = useState(data.company);
   const [error, setError] = useState(null);
   const usps = product.usp ? product.usp.split(",") : [];
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  useEffect(() => {
+    // Fetch initial bookmark status if needed
+    // This can be an API call to check if the product is already bookmarked by the user
+  }, []);
+  const savePageAsPDF = async () => {
+    if (typeof window !== 'undefined') {
+      window.print();
+    }
+    
+  };
+  useEffect(() => {
+    const checkBookmark = async () => {
+      if (!userId) return;
+
+      try {
+        const response = await fetch("/api/check-bookmark", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId, productId: data.product.id }),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          setIsBookmarked(result.isBookmarked);
+        }
+      } catch (error) {
+        console.error("Error checking bookmark", error);
+      }
+    };
+
+    checkBookmark();
+  }, [userId, data.product]);
+
+  const handleBookmarkClick = async () => {
+    if (!userId) {
+      alert("Please log in to bookmark products");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/save-product", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, productId: data.product.id }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setIsBookmarked(!isBookmarked);
+        alert(result.message);
+      } else {
+        const error = await response.json();
+        alert(error.message);
+      }
+    } catch (error) {
+      console.error("Error bookmarking product", error);
+      alert("Failed to bookmark product");
+    }
+  };
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   console.log(product);
@@ -238,18 +333,97 @@ function PageComponent({ data }: any) {
                   {product.name}
                 </h1>
                 <div className="flex gap-3 md:ml-auto">
-                  <div className="text-xl text-primary1 p-2 rounded-full border border-primary1">
-                    <MdOutlineBookmarkBorder />
+                  <div
+                    className="text-xl text-primary1 p-2 rounded-full border border-primary1"
+                    onClick={handleBookmarkClick}
+                  >
+                    <MdOutlineBookmarkBorder
+                      className={isBookmarked ? "text-teal-500" : ""}
+                    />
                   </div>
-                  <div className="text-xl text-primary1 p-2 rounded-full border border-primary1">
-                    <GoShareAndroid />
-                  </div>
-                  <div className="text-xl text-primary1 p-2 rounded-full border border-primary1">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <div className="text-xl text-primary1 p-2 rounded-full border border-primary1">
+                        <GoShareAndroid />
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>Share link</DialogTitle>
+                        <DialogDescription>
+                          Anyone who has this link will be able to view this.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="flex items-center space-x-2">
+                        <div className="grid flex-1 gap-2">
+                          <Label htmlFor="link" className="sr-only">
+                            Link
+                          </Label>
+                          <Input
+                            id="link"
+                            defaultValue={`https://www.dreamlegal.in/product/${data.product.id}`}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                      <div className="mt-4 flex gap-4">
+                        <div>
+                          <FacebookShareButton
+                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                          >
+                            <FacebookIcon size={32} round />
+                          </FacebookShareButton>
+                        </div>
+                        <div>
+                          <TwitterShareButton
+                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                          >
+                            <TwitterIcon size={32} round />
+                          </TwitterShareButton>
+                        </div>
+                        <div>
+                          <WhatsappShareButton
+                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                          >
+                            <WhatsappIcon size={32} round />
+                          </WhatsappShareButton>
+                        </div>
+                        <div>
+                          <LinkedinShareButton
+                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                          >
+                            <LinkedinIcon size={32} round />
+                          </LinkedinShareButton>
+                        </div>
+                        <div>
+                          <RedditShareButton
+                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                          >
+                            <RedditIcon size={32} round />
+                          </RedditShareButton>
+                        </div>
+                        <div>
+                          <TelegramShareButton
+                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                          >
+                            <TelegramIcon size={32} round />
+                          </TelegramShareButton>
+                        </div>
+                      </div>
+                      <DialogFooter className="sm:justify-start">
+                        <DialogClose asChild>
+                          <Button type="button" variant="secondary">
+                            Close
+                          </Button>
+                        </DialogClose>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+
+                  <div   onClick={savePageAsPDF} className="text-xl text-primary1 p-2 rounded-full border border-primary1">
                     <FiPrinter />
                   </div>
-                  <div className="text-xl text-primary1 p-2 rounded-full border border-primary1">
-                    <IoLinkSharp />
-                  </div>
+                  
                 </div>
               </div>
               <div className="flex ">
@@ -489,7 +663,10 @@ function PageComponent({ data }: any) {
                     <h2 className="text-sm font-bold text-gray-700">
                       Distribution
                     </h2>
-                    <div id="chart" style={{ maxWidth: "90%", margin: "0 auto" }}>
+                    <div
+                      id="chart"
+                      style={{ maxWidth: "90%", margin: "0 auto" }}
+                    >
                       <ReactApexChart
                         options={{
                           chart: {
@@ -565,7 +742,10 @@ function PageComponent({ data }: any) {
                     <h2 className="text-sm font-bold text-gray-700">
                       Distribution
                     </h2>
-                    <div id="chart" style={{ maxWidth: "90%", margin: "0 auto" }}>
+                    <div
+                      id="chart"
+                      style={{ maxWidth: "90%", margin: "0 auto" }}
+                    >
                       <ReactApexChart
                         options={{
                           chart: {
@@ -644,7 +824,10 @@ function PageComponent({ data }: any) {
                       Distribution
                     </h2>
 
-                    <div id="chart" style={{ maxWidth: "90%", margin: "0 auto" }}>
+                    <div
+                      id="chart"
+                      style={{ maxWidth: "90%", margin: "0 auto" }}
+                    >
                       <ReactApexChart
                         options={{
                           chart: {
@@ -721,7 +904,10 @@ function PageComponent({ data }: any) {
                 </TooltipProvider>
               </div>
 
-              <ProductFeature features={product.features} productId={product.id} />
+              <ProductFeature
+                features={product.features}
+                productId={product.id}
+              />
 
               <div className="w-full h-px bg-slate-200 my-4"></div>
 
