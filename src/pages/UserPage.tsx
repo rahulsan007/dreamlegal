@@ -16,19 +16,19 @@ function UserPage( { data }: any) {
   const path = useParams();
   const searchParams = useSearchParams();
   const userId = path?.userid;
-  const otpVerify = searchParams?.get("verified");
-  const [formData, setFormData] = useState({
-    Contact: "",
-    Location: "",
-    Address: "",
-    Designation: "",
-    CompanyType: "",
-    CompanyAddress: "",
-    CompanyEmail: "",
-    ProfileImage: null,
-    MarketingAccept: false,
-  });
-  const router = useRouter();
+  // const otpVerify = searchParams?.get("verified");
+  // const [formData, setFormData] = useState({
+  //   Contact: "",
+  //   Location: "",
+  //   Address: "",
+  //   Designation: "",
+  //   CompanyType: "",
+  //   CompanyAddress: "",
+  //   CompanyEmail: "",
+  //   ProfileImage: null,
+  //   MarketingAccept: false,
+  // });
+  // const router = useRouter();
 
 
   // useEffect(() => {
@@ -58,88 +58,88 @@ function UserPage( { data }: any) {
   //   if(userId) fetchProfile(userId as never);
   // }, []);
 
-  const [logoPreview, setLogoPreview] = useState<string | null>(null);
-  const handleChange = (e: any) => {
-    const { name, value, type, checked, files } = e.target;
-    if (type === "file") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: files[0],
-      }));
-    } else if (type === "checkbox") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: checked,
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-  };
+  // const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  // const handleChange = (e: any) => {
+  //   const { name, value, type, checked, files } = e.target;
+  //   if (type === "file") {
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       [name]: files[0],
+  //     }));
+  //   } else if (type === "checkbox") {
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       [name]: checked,
+  //     }));
+  //   } else {
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       [name]: value,
+  //     }));
+  //   }
+  // };
 
-  const uploadFile = async (file: File, folderName: string) => {
-    // Create the form data
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("folderName", folderName);
+  // const uploadFile = async (file: File, folderName: string) => {
+  //   // Create the form data
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("folderName", folderName);
 
-    try {
-      // Send the POST request
-      const response = await fetch("/api/upload-file", {
-        method: "POST",
-        body: formData,
-      });
+  //   try {
+  //     // Send the POST request
+  //     const response = await fetch("/api/upload-file", {
+  //       method: "POST",
+  //       body: formData,
+  //     });
 
-      // Handle the response
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          const url = data.location;
-          console.log("Uploaded file location:", url);
-          return url;
-        } else {
-          console.error("Upload failed:", data.error);
-        }
-      } else {
-        console.error("Failed to upload file:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
-    return null;
-  };
+  //     // Handle the response
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       if (data.success) {
+  //         const url = data.location;
+  //         console.log("Uploaded file location:", url);
+  //         return url;
+  //       } else {
+  //         console.error("Upload failed:", data.error);
+  //       }
+  //     } else {
+  //       console.error("Failed to upload file:", response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error uploading file:", error);
+  //   }
+  //   return null;
+  // };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    // Handle form submission, e.g., send data to an API
-    try {
-      if (formData.ProfileImage) {
-        const response = await uploadFile(formData.ProfileImage, "profile");
-        setLogoPreview(response);
-      }
-      const response = await fetch("/api/edit-user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...formData, userId, logoPreview }),
-      });
+  // const handleSubmit = async (e: any) => {
+  //   e.preventDefault();
+  //   // Handle form submission, e.g., send data to an API
+  //   try {
+  //     if (formData.ProfileImage) {
+  //       const response = await uploadFile(formData.ProfileImage, "profile");
+  //       setLogoPreview(response);
+  //     }
+  //     const response = await fetch("/api/edit-user", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ ...formData, userId, logoPreview }),
+  //     });
 
-      const result = await response.json();
+  //     const result = await response.json();
 
-      if (result.success) {
-        console.log("Profile created successfully:", result.profile);
-        router.push(`/user/${userId}`);
-      } else {
-        console.error("Error creating profile:", result.msg);
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
-    console.log("Form submitted:", formData);
-  };
+  //     if (result.success) {
+  //       console.log("Profile created successfully:", result.profile);
+  //       router.push(`/user/${userId}`);
+  //     } else {
+  //       console.error("Error creating profile:", result.msg);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error submitting form:", error);
+  //   }
+  //   console.log("Form submitted:", formData);
+  // };
 
 
   return (
@@ -164,7 +164,7 @@ function UserPage( { data }: any) {
           <SavedItems />
         </TabsContent>
       </Tabs> */}
-      {otpVerify === "true" ? (
+      {/* {otpVerify === "true" ? (
         <>
           <section className="bg-white font-clarity">
             <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
@@ -428,7 +428,7 @@ function UserPage( { data }: any) {
             </div>
           </section>
         </>
-      ) : (
+      ) : ( */}
         <>
           <div className="grid grid-cols-1 md:grid-cols-5 px-4">
             <div className="col-span-1">
@@ -443,7 +443,7 @@ function UserPage( { data }: any) {
             </div>
           </div>
         </>
-      )}
+      {/* )} */}
     </div>
   );
 }
