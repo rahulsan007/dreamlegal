@@ -19,6 +19,7 @@ function Complete() {
         CompanyEmail: "",
         ProfileImage: null,
         MarketingAccept: false,
+        editing: false,
       });
     const handleChange = (e: any) => {
         const { name, value, type, checked, files } = e.target;

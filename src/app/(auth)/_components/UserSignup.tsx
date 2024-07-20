@@ -84,7 +84,7 @@ function UserSignup() {
         typeof window !== "undefined" ? localStorage.setItem("userId", data.user.id) : null;
         typeof window !== "undefined" ? localStorage.setItem("userEmail", data.user.email): null;
         alert("OTP verified successfully");
-        router.push(`/user/${data.user.id}?verified=true`);
+        router.push(`/user/${data.user.id}/complete`);
       } else {
         // Handle error response
         console.error("Failed to verify OTP");

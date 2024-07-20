@@ -13,8 +13,9 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-function UserProfile({ data }: {  data : any }) {
+function UserProfile({ data, onEditClick, onChangePassword }: any) {
   interface Account {
     name: string;
     image: string;
@@ -35,7 +36,9 @@ function UserProfile({ data }: {  data : any }) {
   const [CompDetails, setCompDetails] = useState(true);
   const [Account, setAccount] = useState(false);
   const [profile, setProfile] = useState<profile | null>(data.profile);
-  const [AccountDetails, setAccountDetails] = useState<Account | null>(data.account);
+  const [AccountDetails, setAccountDetails] = useState<Account | null>(
+    data.account
+  );
   const [Image, setImage] = useState(
     "https://cdn-icons-png.flaticon.com/512/4715/4715330.png"
   );
@@ -59,7 +62,6 @@ function UserProfile({ data }: {  data : any }) {
   //             "https://cdn-icons-png.flaticon.com/512/4715/4715330.png"
   //         );
 
-        
   //       } else {
   //         setError(data.msg);
   //       }
@@ -75,10 +77,10 @@ function UserProfile({ data }: {  data : any }) {
   const router = useRouter();
 
   const handleLogout = () => {
-     typeof window !== "undefined" && localStorage.clear();
-     typeof window !== "undefined" && localStorage.removeItem("userId");
-     router.push("/");
-  }
+    typeof window !== "undefined" && localStorage.clear();
+    typeof window !== "undefined" && localStorage.removeItem("userId");
+    router.push("/");
+  };
   return (
     <>
       <div
@@ -114,7 +116,10 @@ function UserProfile({ data }: {  data : any }) {
                 <MdOutlineKeyboardArrowDown />
                 Details
               </h3>
-              <button className="text-primary1 text-sm flex gap-2 pr-5">
+              <button
+                onClick={onEditClick}
+                className="text-primary1 text-sm flex gap-2 pr-5"
+              >
                 <HiOutlinePencil />
                 Edit{" "}
               </button>
@@ -151,10 +156,11 @@ function UserProfile({ data }: {  data : any }) {
                   <p className=" text-sm text-gray-900">{profile?.Contact}</p>
                 </li>
 
-                <li className="hover:cursor-pointer pr-5">
+                <li onClick={onChangePassword} className="hover:cursor-pointer pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
-
-                  <p className=" text-sm text-primary1">Change password</p>
+                  <button onClick={onChangePassword}>
+                    <p className=" text-sm text-primary1">Change password</p>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -169,7 +175,10 @@ function UserProfile({ data }: {  data : any }) {
                 <MdOutlineKeyboardArrowDown />
                 Company Details
               </h3>
-              <button className="text-primary1 text-sm grid grid-cols-2 pr-5">
+              <button
+                onClick={onEditClick}
+                className="text-primary1 text-sm grid grid-cols-2 pr-5"
+              >
                 <HiOutlinePencil />
                 Edit{" "}
               </button>
@@ -219,7 +228,10 @@ function UserProfile({ data }: {  data : any }) {
                   </button>
                 </li>
                 <li>
-                  <button onClick={handleLogout} className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary1 text-sm font-medium text-white items-center">
+                  <button
+                    onClick={handleLogout}
+                    className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary1 text-sm font-medium text-white items-center"
+                  >
                     <CiLogout />
                     Logout
                   </button>
@@ -238,11 +250,13 @@ function UserProfile({ data }: {  data : any }) {
         <div className=" py-6 px-6 ">
           <div className="flex flex-col justify-center items-center">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage src={AccountDetails?.image} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <h3 className=" text-lg font-bold text-gray-900">Rahul Santra</h3>
-            <p className=" text-sm text-slate-500">@rahulsantra</p>
+            <h3 className=" text-lg font-bold text-gray-900">
+              {AccountDetails?.name}
+            </h3>
+            <p className=" text-sm text-slate-500">{AccountDetails?.email}</p>
           </div>
           <div className="py-5">
             <div className=" flex justify-between items-center">
@@ -253,7 +267,10 @@ function UserProfile({ data }: {  data : any }) {
                 <MdOutlineKeyboardArrowDown />
                 Details
               </h3>
-              <button className="text-primary1 text-sm flex gap-2 pr-5">
+              <button
+                onClick={onEditClick}
+                className="text-primary1 text-sm flex gap-2 pr-5"
+              >
                 <HiOutlinePencil />
                 Edit{" "}
               </button>
@@ -267,33 +284,35 @@ function UserProfile({ data }: {  data : any }) {
                 <li className="grid grid-cols-1 pr-5">
                   {/* <MdAlternateEmail className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Email</p>
-                  <p className=" text-sm text-gray-900">l5k7H@example.com</p>
+                  <p className=" text-sm text-gray-900">
+                    {AccountDetails?.email}
+                  </p>
                 </li>
 
                 <li className="grid grid-cols-1 pr-5">
                   {/* <TiWorldOutline className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Location</p>
-                  <p className=" text-sm text-gray-900">Mumbai, India</p>
+                  <p className=" text-sm text-gray-900">{profile?.Location}</p>
                 </li>
 
                 <li className="grid grid-cols-1 pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Address</p>
-                  <p className=" text-sm text-gray-900">
-                    Solitaire space, sec 6 Panvel
-                  </p>
+                  <p className=" text-sm text-gray-900">{profile?.Address}</p>
                 </li>
 
                 <li className="grid grid-cols-1 pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Contact</p>
-                  <p className=" text-sm text-gray-900">9876543210</p>
+                  <p className=" text-sm text-gray-900">{profile?.Contact}</p>
                 </li>
 
-                <li className="hover:cursor-pointer pr-5">
+                <li onClick={onChangePassword} className="hover:cursor-pointer pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
 
-                  <p className=" text-sm text-primary1">Change password</p>
+                  <button >
+                    <p className=" text-sm text-primary1">Change password</p>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -308,7 +327,10 @@ function UserProfile({ data }: {  data : any }) {
                 <MdOutlineKeyboardArrowDown />
                 Company Details
               </h3>
-              <button className="text-primary1 text-sm grid grid-cols-1 pr-5">
+              <button
+                onClick={onEditClick}
+                className="text-primary1 text-sm grid grid-cols-1 pr-5"
+              >
                 <HiOutlinePencil />
                 Edit{" "}
               </button>
@@ -322,37 +344,49 @@ function UserProfile({ data }: {  data : any }) {
                 <li className="grid grid-cols-1 pr-5">
                   {/* <MdAlternateEmail className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Designation</p>
-                  <p className=" text-sm text-gray-900">Senior Advocate</p>
+                  <p className=" text-sm text-gray-900">
+                    {profile?.Designation}
+                  </p>
                 </li>
 
                 <li className="grid grid-cols-1 pr-5">
                   {/* <TiWorldOutline className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Type</p>
-                  <p className=" text-sm text-gray-900">Law Firm</p>
+                  <p className=" text-sm text-gray-900">
+                    {profile?.CompanyType}
+                  </p>
                 </li>
 
                 <li className="grid grid-cols-1 pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500">Address</p>
                   <p className=" text-sm text-gray-900">
-                    Solitaire space, sec 6 Panvel
+                    {profile?.CompanyAddress}
                   </p>
                 </li>
 
                 <li className="grid grid-cols-1 pr-5">
                   {/* <GoOrganization className="text-primary1" /> */}
                   <p className=" text-sm text-slate-500"> Email</p>
-                  <p className=" text-sm text-gray-900">5k0f6@example.com</p>
+                  <p className=" text-sm text-gray-900">
+                    {profile?.CompanyEmail}
+                  </p>
                 </li>
 
                 <li>
-                  <button className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary2 text-sm font-medium text-primary1 items-center">
-                    <FaStar />
-                    Add Review
-                  </button>
+                  <Link href={"/directory"}>
+                    {" "}
+                    <button className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary2 text-sm font-medium text-primary1 items-center">
+                      <FaStar />
+                      Add Review
+                    </button>
+                  </Link>
                 </li>
                 <li>
-                  <button onClick={handleLogout} className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary1 text-sm font-medium text-white items-center">
+                  <button
+                    onClick={handleLogout}
+                    className=" flex w-full gap-2 rounded-lg  px-4 py-2 bg-primary1 text-sm font-medium text-white items-center"
+                  >
                     <CiLogout />
                     Logout
                   </button>
