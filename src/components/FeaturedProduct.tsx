@@ -169,7 +169,7 @@ function FeaturedProduct({
           <div className="md:ml-auto mt-4 md:mt-0 flex gap-4 items-center">
             <div>
               <Link
-                href={`/product/${id}`}
+                href={`/product/${product.slug}`}
                 className="flex gap-2 items-center bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all w-fit  hover:bg-primary2 hover:text-primary1 hover:border-primary1 rounded-full hover:gap-4"
               >
                 View
@@ -182,7 +182,7 @@ function FeaturedProduct({
               onClick={handleBookmarkClick}
             >
               {/* Bookemark button */}{" "}
-              <FaBookmark className={isBookmarked ? "text-primary1" : ""} />{" "}
+              <FaBookmark className={isBookmarked ? "text-primary1" : " text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"} />{" "}
             </div>
             <Dialog>
               <DialogTrigger asChild>
@@ -291,7 +291,7 @@ function FeaturedProduct({
         </div>
       </div>
       <div>
-        <div className="text-xs text-slate-400 mt-4 mb-1">User Category</div>
+        <div className="text-xs text-slate-400 mt-4 mb-1">User</div>
         <div className="flex gap-2">
           {userCategoryIcons.map((userCategory: any, index: number) => (
             <div
@@ -327,7 +327,7 @@ function FeaturedProduct({
             onClick={handleBookmarkClick}
           >
             {" "}
-            <FaBookmark className={isBookmarked ? "text-primary1" : ""} />{" "}
+            <FaBookmark className={isBookmarked ? "text-primary1" : "text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"} />{" "}
           </div>
           <Dialog>
             <DialogTrigger asChild>

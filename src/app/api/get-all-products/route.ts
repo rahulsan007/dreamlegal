@@ -7,6 +7,7 @@ export async function GET(request: Request) {
         id: true,
         name: true,
         description: true,
+        slug: true,
         logoUrl: true,
         featured: true,
         category: true,

@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/utils/cn";
+import { CiSearch } from "react-icons/ci";
 
 function Search({
   placeholders,
@@ -185,7 +186,7 @@ function Search({
         value={value}
         type="text"
         className={cn(
-          "w-full  relative text-sm sm:text-base z-50 border-none dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-10 pr-20",
+          "w-full  relative text-sm sm:text-base z-50 border dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-10 pr-20",
           animating && "text-transparent dark:text-transparent"
         )}
       />
@@ -195,7 +196,8 @@ function Search({
         type="submit"
         className="absolute font-clarity right-2 top-1/2 z-50 -translate-y-1/2 h-10 px-5  rounded-full disabled:bg-gray-100 disabled:text-gray-700 bg-primary1   transition duration-200 text-white text-xs font-semibold "
       >
-        Search
+       <span className="flex gap-2 items-center"> Search
+        <CiSearch className="w-5 h-5" /></span>
       </button>
 
       <div className="absolute inset-0 flex items-center rounded-full pointer-events-none">

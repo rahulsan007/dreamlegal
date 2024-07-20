@@ -139,6 +139,7 @@ model Product {
   userId                  String
   companyId               String
   name                    String
+  slug                    String     @unique
   logoUrl                 String
   active                  String      @default("draft")
   featured                Boolean     @default(false)
@@ -234,22 +235,20 @@ model Review {
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
-
 model Analytics {
-  id        String   @id @default(cuid())
-  productId String @unique
-  shares    Int?
-  followers Int?
-  views     Int?
-  loginsViews    Int?
-  leads          Int?
-  desktopViews   Int?
-  mobileViews    Int?
-  tabletViews    Int?
-  country Json?
+  id           String @id @default(cuid())
+  productId    String @unique
+  shares       Int?
+  followers    Int?
+  views        Int?
+  loginsViews  Int?
+  leads        Int?
+  desktopViews Int?
+  mobileViews  Int?
+  tabletViews  Int?
+  country      Json?
 
   createdAt DateTime @default(now())
-
 }
 
 model ClickCount {
@@ -259,9 +258,9 @@ model ClickCount {
 }
 
 model SaveProduct {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   userId    String
   productId String[]
-  user                      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Product                   Product[]
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Product   Product[]
 }

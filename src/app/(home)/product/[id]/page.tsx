@@ -8,7 +8,7 @@ async function getData(id: string) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ slug: id }),
 
     },
     

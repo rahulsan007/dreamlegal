@@ -1,23 +1,39 @@
 import prisma from "@/lib/prisma";
 
 export async function POST(request: Request) {
-  const { id } = await request.json();
-  if (id) {
-    const product = await prisma.product.findFirst({
-      where: {
-        id,
-      },
-    });
+  const { id, slug } = await request.json();
 
-    const CompanyInfo = await prisma.companyInfo.findFirst({
+  if (!id && !slug) {
+    return Response.json(
+      {
+        msg: "Provide Product ID or Slug",
+        success: false,
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const product = await prisma.product.findFirst({
+    where: {
+      OR: [
+        { id },
+        { slug },
+      ],
+    },
+  });
+
+  if (product) {
+    const companyInfo = await prisma.companyInfo.findFirst({
       where: {
-        id: product?.companyId,
+        id: product.companyId,
       },
     });
 
     const userInfo = await prisma.user.findFirst({
       where: {
-        id: product?.userId,
+        id: product.userId,
       },
       select: {
         name: true,
@@ -25,38 +41,27 @@ export async function POST(request: Request) {
         image: true,
       },
     });
-    if (product && CompanyInfo) {
-      return Response.json(
-        {
-          msg: "Product fetched successfully",
-          success: true,
-          product,
-          company: CompanyInfo,
-          user: userInfo,
-        },
-        {
-          status: 200,
-        }
-      );
-    } else {
-      return Response.json(
-        {
-          msg: "Product not found",
-          success: true,
-        },
-        {
-          status: 200,
-        }
-      );
-    }
+
+    return Response.json(
+      {
+        msg: "Product fetched successfully",
+        success: true,
+        product,
+        company: companyInfo,
+        user: userInfo,
+      },
+      {
+        status: 200,
+      }
+    );
   } else {
     return Response.json(
       {
-        msg: "Provide Product ID",
+        msg: "Product not found",
         success: false,
       },
       {
-        status: 400,
+        status: 404,
       }
     );
   }

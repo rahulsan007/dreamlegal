@@ -4,6 +4,7 @@ import { FaArrowUp } from "react-icons/fa6";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import FeaturedProduct from "./FeaturedProduct";
 import NormalProduct from "./NormalProduct";
+import Link from "next/link";
 
 function HomeProduct({ data }: any) {
   const [featureProduct, setFeatureProduct] = useState([]);
@@ -35,35 +36,39 @@ function HomeProduct({ data }: any) {
   const category =[
     {
       name: "Client Relationship Management",
-      link: "#"
+      link: "/directory"
     },
     {
       name: "Governance, Risk and Compliance",
-      link: "#"
+      link: "/directory"
     },
     {
       name: "Contract Lifecycle Management",
-      link: "#"
+      link: "/directory"
     },
     {
       name: "E-Signature",
-      link: "#"
+      link: "/directory"
     },
     {
       name: "Document Management Software",
-      link: "#"
+      link: "/directory"
     },
     {
       name: "E-billing and invoicing",
-      link: "#"
+      link: "/directory"
     },
     {
       name: "E-discovery",
-      link: "#"
+      link: "/directory"
     },
     {
       name: "Intellectual Property Management",
-      link: "#"
+      link: "/directory"
+    },
+    {
+      name: "Legal Research",
+      link: "/directory"
     }
   ]
   return (
@@ -72,9 +77,11 @@ function HomeProduct({ data }: any) {
         <div className=" col-span-2 overflow-y-scroll no-scrollbar">
         <div className=" w-full flex items-center justify-between mt-10 ">
             <h2 className=" text-2xl md:text-3xl font-bold">Featured products</h2>
+            <Link href={"/directory"}>
             <button className=" flex gap-2 rounded-full bg-white text-gray-900 border border-gray-700 font-bold px-6 py-3 text-xs transition-all  w-fit items-center hover:bg-primary1 hover:text-white hover:border-white">
               Browse all products
             </button>
+            </Link>
           </div>
           <div className=" flex flex-col gap-4 mt-4 mb-4">
             {featureProduct.slice(0, 4).map((product: any) => (
@@ -94,10 +101,12 @@ function HomeProduct({ data }: any) {
      
 
           <div className=" w-full flex items-center justify-center mt-10 ">
+            <Link href={"/directory"}>
             <button className=" flex gap-2 rounded-full bg-primary2 text-primary1 font-bold px-6 py-3 text-xs transition-all  w-fit border items-center hover:border-primary1 hover:text-primary1 hover:gap-4 duration-200">
               View All
               <IoIosArrowRoundForward className=" text-xl" />
             </button>
+            </Link>
           </div>
         </div>
         <div className="h-fit md:h-fit w-full md:col-span-1 sticky top-0">
@@ -111,10 +120,12 @@ function HomeProduct({ data }: any) {
              
 
               {category.map((item: any) => (
+               <Link href={item.link}>
                 <button key={item.name}  className=" flex gap-2 w-full rounded-full transition-all duration-200 bg-primary2 border border-primary1 text-primary1 font-bold px-6 py-3 text-xs  items-center justify-center hover:bg-primary2 hover:text-primary1 hover:gap-4">
                   {item.name}
                   <IoIosArrowRoundForward className=" text-xl" />
                 </button>
+               </Link>
               ))}
             </div>
           </div>

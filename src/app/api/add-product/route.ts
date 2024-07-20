@@ -77,7 +77,6 @@ export async function POST(request: Request) {
     trainingReqNote,
     dataMigration,
     dataMigrationNote,
-
     videoUrl,
     ImageUrl,
     youtubeUrl,
@@ -153,16 +152,13 @@ export async function POST(request: Request) {
     const name = prname;
     const avgTimeAdoption = adoptionPeriod + " " + adoptionPeriodUnit;
     const timePeriodServer = timePeriod + " " + timePeriodUnit;
-    // nameofPlan is array of nameofPlan1, nameofPlan2, nameofPlan3
     const nameofPlan = [nameofPlan1, nameofPlan2, nameofPlan3];
     const validity = [validity1, validity2, validity3];
     const price = [price1, price2, price3];
     const MinContarct = contractPeriod + " " + contractUnit;
-    // Convert mobileAccessibility to boolean
     const storageServer = storage + " " + storageUnit;
     const fileSizeServer = fileSize + " " + fileSizeUnit;
 
-    // number to string
     const userCategoryPercentageString = userCategoryPercentage.map(
       (number: number) => String(number)
     );
@@ -175,7 +171,24 @@ export async function POST(request: Request) {
     const teamSizePercentageString = teamSizePercentage.map((number: number) =>
       String(number)
     );
-    // logo upload and get logoUrl
+
+    // Generate initial slug
+    let slug = name.toLowerCase().replace(/ /g, '-');
+    
+    // Check if the slug already exists
+    let existingProduct = await prisma.product.findUnique({
+      where: { slug }
+    });
+
+    // If the slug exists, append a number to make it unique
+    let counter = 1;
+    while (existingProduct) {
+      slug = `${name.toLowerCase().replace(/ /g, '-')}-${counter}`;
+      existingProduct = await prisma.product.findUnique({
+        where: { slug }
+      });
+      counter++;
+    }
 
     const product = await prisma.product.create({
       data: {
@@ -183,6 +196,7 @@ export async function POST(request: Request) {
         companyId: findCompanyId.id,
         featured: false,
         name,
+        slug, // Include slug in the data
         logoUrl,
         category,
         deployement: deployment,

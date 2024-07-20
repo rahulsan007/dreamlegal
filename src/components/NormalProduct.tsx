@@ -140,7 +140,7 @@ function NormalProduct({
 
 
   return (
-    <div className="w-full px-10 py-7 bg-secondary1 rounded-xl border shadow-md font-clarity">
+    <div className="w-full px-10 py-7  rounded-xl border  font-clarity bg-gray-50 border-gray-300 shadow-md">
       <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between">
         <div className="flex gap-4 items-center">
           <img
@@ -164,7 +164,7 @@ function NormalProduct({
         <div className="md:ml-auto mt-4 md:mt-0 flex gap-4 items-center">
           <div>
             <Link
-              href={`/product/${id}`}
+              href={`/product/${product.slug}`}
               className="flex gap-2 items-center bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all w-fit  hover:bg-primary2 hover:text-primary1 hover:border-primary1 rounded-full hover:gap-4"
             >
               View
@@ -177,7 +177,7 @@ function NormalProduct({
               onClick={handleBookmarkClick}
             >
               {/* Bookemark button */}{" "}
-              <FaBookmark className={isBookmarked ? "text-primary1" : ""} />{" "}
+              <FaBookmark className={isBookmarked ? "text-primary1" : "text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"} />{" "}
             </div>
             <Dialog>
               <DialogTrigger asChild>
@@ -286,7 +286,7 @@ function NormalProduct({
         </div>
       </div>
       <div>
-        <div className="text-xs text-slate-400 mt-4 mb-1">User Category</div>
+        <div className="text-xs text-slate-400 mt-4 mb-1">User</div>
          <div className="flex gap-2">
           {userCategoryIcons.map((userCategory:any, index:number) => (
             <div key={userCategory.name} className="relative group flex gap-2 items-center bg-primary2 rounded-md p-2">
@@ -319,7 +319,7 @@ function NormalProduct({
               onClick={handleBookmarkClick}
             >
               {/* Bookemark button */}{" "}
-              <FaBookmark className={isBookmarked ? "text-primary1" : ""} />{" "}
+              <FaBookmark className={isBookmarked ? "text-primary1" : "text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"} />{" "}
             </div>
             <Dialog>
               <DialogTrigger asChild>
