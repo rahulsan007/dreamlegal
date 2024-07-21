@@ -24,7 +24,7 @@ const CheckPage = () => {
             localStorage.setItem("userId", data.user.id);
             localStorage.setItem("userEmail", data.user.email);
 
-            router.push(`/user/${data.user.id}?verified=true`);
+            router.push(`/user/${data.user.id}/complete`);
           } else {
             // Handle user not found scenario
             router.push("/error");

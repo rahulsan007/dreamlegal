@@ -57,10 +57,10 @@ function FeaturedProduct({
       if (!userId) return;
 
       try {
-        const response = await fetch('/api/check-bookmark', {
-          method: 'POST',
+        const response = await fetch("/api/check-bookmark", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ userId, productId: id }),
         });
@@ -132,6 +132,17 @@ function FeaturedProduct({
     }
   };
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        alert("Copied to clipboard!");
+      })
+      .catch((error) => {
+        console.error("Failed to copy to clipboard: ", error);
+      });
+  };
+
   const userCategoryIcons = product.userCategory
     .map((userCat: any) => {
       const categoryObj = userCategories.find((cat) => cat.name === userCat);
@@ -182,7 +193,13 @@ function FeaturedProduct({
               onClick={handleBookmarkClick}
             >
               {/* Bookemark button */}{" "}
-              <FaBookmark className={isBookmarked ? "text-primary1" : " text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"} />{" "}
+              <FaBookmark
+                className={
+                  isBookmarked
+                    ? "text-primary1"
+                    : " text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"
+                }
+              />{" "}
             </div>
             <Dialog>
               <DialogTrigger asChild>
@@ -205,50 +222,62 @@ function FeaturedProduct({
                     </Label>
                     <Input
                       id="link"
-                      defaultValue={`https://www.dreamlegal.in/product/${id}`}
+                      defaultValue={`https://www.dreamlegal.in/product/${product.slug}`}
                       readOnly
                     />
+                     <div className="">
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        copyToClipboard(
+                          `https://www.dreamlegal.in/product/${product.slug}`
+                        )
+                      }
+                    >
+                      Copy
+                    </Button>
+                  </div>
                   </div>
                 </div>
                 <div className="mt-4 flex gap-4">
                   <div>
                     <FacebookShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <FacebookIcon size={32} round />
                     </FacebookShareButton>
                   </div>
                   <div>
                     <TwitterShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <TwitterIcon size={32} round />
                     </TwitterShareButton>
                   </div>
                   <div>
                     <WhatsappShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <WhatsappIcon size={32} round />
                     </WhatsappShareButton>
                   </div>
                   <div>
                     <LinkedinShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <LinkedinIcon size={32} round />
                     </LinkedinShareButton>
                   </div>
                   <div>
                     <RedditShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <RedditIcon size={32} round />
                     </RedditShareButton>
                   </div>
                   <div>
                     <TelegramShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <TelegramIcon size={32} round />
                     </TelegramShareButton>
@@ -278,7 +307,7 @@ function FeaturedProduct({
           <div className="flex text-xs text-slate-400 mt-4 mb-1">
             Industries
           </div>
-          <div className="flex gap-2">
+          <div className="w-[200px] flex gap-2 flex-wrap">
             {product.industry.map((industry: any, index: number) => (
               <div key={industry}>
                 <p className="text-sm text-primary1">
@@ -314,7 +343,7 @@ function FeaturedProduct({
         <div className="md:ml-auto mt-4 md:mt-0 flex gap-4 items-center">
           <div>
             <Link
-              href={`/product/${id}`}
+              href={`/product/${product.slug}`}
               className="flex gap-2 items-center bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all w-fit  hover:bg-primary2 hover:text-primary1 hover:border-primary1 rounded-full hover:gap-4"
             >
               View
@@ -327,7 +356,13 @@ function FeaturedProduct({
             onClick={handleBookmarkClick}
           >
             {" "}
-            <FaBookmark className={isBookmarked ? "text-primary1" : "text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"} />{" "}
+            <FaBookmark
+              className={
+                isBookmarked
+                  ? "text-primary1"
+                  : "text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"
+              }
+            />{" "}
           </div>
           <Dialog>
             <DialogTrigger asChild>
@@ -350,50 +385,62 @@ function FeaturedProduct({
                   </Label>
                   <Input
                     id="link"
-                    defaultValue={`https://www.dreamlegal.in/product/${id}`}
+                    defaultValue={`https://www.dreamlegal.in/product/${product.slug}`}
                     readOnly
                   />
+                  <div className="">
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        copyToClipboard(
+                          `https://www.dreamlegal.in/product/${product.slug}`
+                        )
+                      }
+                    >
+                      Copy
+                    </Button>
+                  </div>
                 </div>
               </div>
               <div className="mt-4 flex gap-4">
                 <div>
                   <FacebookShareButton
-                    url={`https://www.dreamlegal.in/product/${id}`}
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
                   >
                     <FacebookIcon size={32} round />
                   </FacebookShareButton>
                 </div>
                 <div>
                   <TwitterShareButton
-                    url={`https://www.dreamlegal.in/product/${id}`}
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
                   >
                     <TwitterIcon size={32} round />
                   </TwitterShareButton>
                 </div>
                 <div>
                   <WhatsappShareButton
-                    url={`https://www.dreamlegal.in/product/${id}`}
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
                   >
                     <WhatsappIcon size={32} round />
                   </WhatsappShareButton>
                 </div>
                 <div>
                   <LinkedinShareButton
-                    url={`https://www.dreamlegal.in/product/${id}`}
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
                   >
                     <LinkedinIcon size={32} round />
                   </LinkedinShareButton>
                 </div>
                 <div>
                   <RedditShareButton
-                    url={`https://www.dreamlegal.in/product/${id}`}
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
                   >
                     <RedditIcon size={32} round />
                   </RedditShareButton>
                 </div>
                 <div>
                   <TelegramShareButton
-                    url={`https://www.dreamlegal.in/product/${id}`}
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
                   >
                     <TelegramIcon size={32} round />
                   </TelegramShareButton>

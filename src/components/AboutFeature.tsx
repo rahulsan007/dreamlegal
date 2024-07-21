@@ -7,7 +7,7 @@ function AboutFeature() {
           <h2 className="max-w-lg mb-6  text-2xl md:text-4xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
             The values that drives everything we do
           </h2>
-          <p className="text-sm text-slate-700 md:px-14 ">
+          <p className="text-base text-slate-700 md:px-14 ">
           Our vision is to unlock these six core values in the life of <br /> legal professionals through technology.
           </p>
         </div>
@@ -18,7 +18,7 @@ function AboutFeature() {
                 <img src="/about1.svg" alt="" />
               </div>
               <h6 className="mb-5 text-xl font-bold ">Integration</h6>
-              <p className="mb-5 text-sm text-slate-500 leading-6">
+              <p className="mb-5 text-base text-slate-500 leading-6">
               Inculcate technology into your workflow, ensuring smooth operation.
               </p>
             </div>
@@ -30,7 +30,7 @@ function AboutFeature() {
                 <img src="/about2.svg" alt="" />
               </div>
               <h6 className="mb-5 text-xl font-bold ">Value for Investment</h6>
-              <p className="mb-5 text-sm text-slate-500 leading-6">
+              <p className="mb-5 text-base text-slate-500 leading-6">
               Tangible returns on investment, that deliver functionality and ROI.
               </p>
             </div>
@@ -42,7 +42,7 @@ function AboutFeature() {
                 <img src="/about3.svg" alt="" />
               </div>
               <h6 className="mb-5 text-xl font-bold ">Innovation</h6>
-              <p className="mb-5 text-sm text-slate-500 leading-6">
+              <p className="mb-5 text-base text-slate-500 leading-6">
               Push the boundaries of traditional legal practice, unlocking new possibilities.
               </p>
             </div>
@@ -54,7 +54,7 @@ function AboutFeature() {
                 <img src="/about4.svg" alt="" />
               </div>
               <h6 className="mb-5 text-xl font-bold ">Collaboration</h6>
-              <p className="mb-5 text-sm text-slate-500 leading-6">
+              <p className="mb-5 text-base text-slate-500 leading-6">
               Foster teamwork and connectivity, enabling effortless communication.
               </p>
             </div>
@@ -66,7 +66,7 @@ function AboutFeature() {
                 <img src="/about5.svg" alt="" />
               </div>
               <h6 className="mb-5 text-xl font-bold ">Efficiency</h6>
-              <p className="mb-5 text-sm text-slate-500 leading-6">
+              <p className="mb-5 text-base text-slate-500 leading-6">
               Maximise productivity, freeing up valuable time to focus on what truly matters.
               </p>
             </div>
@@ -78,7 +78,7 @@ function AboutFeature() {
                 <img src="/about6.svg" alt="" />
               </div>
               <h6 className="mb-5 text-xl font-bold ">Impact</h6>
-              <p className="mb-5 text-sm text-slate-500 leading-6">
+              <p className="mb-5 text-base text-slate-500 leading-6">
               Driving meaningful change in how you serve clients and achieve results.
               </p>
             </div>

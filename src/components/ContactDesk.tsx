@@ -36,9 +36,11 @@ function ContactDesk() {
                 Explore how we ensure exceptional user support. Reach out for assistance today!
                 </p>
                 <div className="flex items-center gap-3 transition-all duration-200 group-hover:gap-5">
+                  <a href="mailto:support@dreamlegal.in">
                   <p className="text-sm font-bold text-gray-900">
                     support@dreamlegal.in
                   </p>
+                  </a>
                   <IoIosArrowRoundForward className="text-xl text-primary1" />
                 </div>
               </div>
@@ -62,9 +64,11 @@ function ContactDesk() {
                 </p>
 
                 <div className="flex items-center gap-3 transition-all duration-200 group-hover:gap-5">
-                  <p className="text-sm font-bold text-gray-900">
+                 <a href="mailto:career@dreamlegal.in">
+                 <p className="text-sm font-bold text-gray-900">
                     career@dreamlegal.in
                   </p>
+                 </a>
                   <IoIosArrowRoundForward className="text-xl text-primary1" />
                 </div>
               </div>
@@ -87,9 +91,11 @@ function ContactDesk() {
                 Learn about our dedicated vendor support services. Connect with us to discuss partnerships and support.
                 </p>
                 <div className="flex items-center gap-3 transition-all duration-200 group-hover:gap-5">
+                  <a href="mailto:vendor@dreamlegal.in">
                   <p className="text-sm font-bold text-gray-900">
                     vendor@dreamlegal.in
                   </p>
+                  </a>
                   <IoIosArrowRoundForward className="text-xl text-primary1" />
                 </div>
               </div>

@@ -33,7 +33,7 @@ export const WhyChooseUs = () => {
                 </svg>
               </div>
               <h6 className="mb-2 font-semibold leading-5">Smart Savings, Swift Decisions</h6>
-              <p className="mb-3 text-sm text-gray-700 text-justify">
+              <p className="mb-3 text-base text-gray-700 text-justify">
               Slash consultation costs and discovery time with our intuitive compare feature, paving the way for seamless product analysis.
               </p>
             </div>
@@ -45,7 +45,7 @@ export const WhyChooseUs = () => {
               <RiPresentationLine className="w-8 h-8 " />
               </div>
               <h6 className="mb-2 font-semibold leading-5">Easy Legal Tech Learning</h6>
-              <p className="mb-3 text-sm text-gray-700 text-justify">
+              <p className="mb-3 text-base text-gray-700 text-justify">
               We've made catching up legal tech super simple for professionals. Dive in and master with ease!
               </p>
             </div>
@@ -57,7 +57,7 @@ export const WhyChooseUs = () => {
               <TbDeviceAnalytics className=" w-8 h-8 " />
               </div>
               <h6 className="mb-2 font-semibold leading-5">Detailed Software Analysis</h6>
-              <p className="mb-3 text-sm text-gray-700 text-justify">
+              <p className="mb-3 text-base text-gray-700 text-justify">
               Gain access to detailed feature breakdowns of each legal tech with comprehensive insights 
 
               </p>
@@ -70,7 +70,7 @@ export const WhyChooseUs = () => {
               <GiStairsGoal className="w-8 h-8"  />
               </div>
               <h6 className="mb-2 font-semibold leading-5">Tailored Software Visions</h6>
-              <p className="mb-3 text-sm text-gray-700 text-justify">
+              <p className="mb-3 text-base text-gray-700 text-justify">
               Clear communication of the visions of software companies, allowing legal tech buyers to align them with their specific requirements.
               </p>
             </div>

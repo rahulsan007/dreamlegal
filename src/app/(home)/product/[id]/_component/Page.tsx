@@ -197,7 +197,7 @@ function PageComponent({ data }: any) {
           },
           body: JSON.stringify({
             userId: data.product.userId,
-            productId: data.product.id,
+            productId: data.product.slug,
             views: 1,
             loginsViews: loginsViews,
             desktopViews: desktopViews,
@@ -246,7 +246,7 @@ function PageComponent({ data }: any) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userId, productId: data.product.id }),
+          body: JSON.stringify({ userId, productId: data.product.slug }),
         });
 
         if (response.ok) {
@@ -273,7 +273,7 @@ function PageComponent({ data }: any) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId, productId: data.product.id }),
+        body: JSON.stringify({ userId, productId: data.product.slug }),
       });
 
       if (response.ok) {
@@ -296,6 +296,14 @@ function PageComponent({ data }: any) {
 
   console.log(product);
   console.log(company);
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Copied to clipboard!");
+    }).catch((error) => {
+      console.error("Failed to copy to clipboard: ", error);
+    });
+  };
 
   return (
     <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 font-clarity">
@@ -361,50 +369,58 @@ function PageComponent({ data }: any) {
                           </Label>
                           <Input
                             id="link"
-                            defaultValue={`https://www.dreamlegal.in/product/${data.product.id}`}
+                            defaultValue={`https://www.dreamlegal.in/product/${data.product.slug}`}
                             readOnly
                           />
+                        </div>
+                        <div className="">
+                          <Button
+                            variant="outline"
+                            onClick={() => copyToClipboard(`https://www.dreamlegal.in/product/${data.product.slug}`)}
+                          >
+                            Copy
+                          </Button>
                         </div>
                       </div>
                       <div className="mt-4 flex gap-4">
                         <div>
                           <FacebookShareButton
-                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                            url={`https://www.dreamlegal.in/product/${data.product.slug}`}
                           >
                             <FacebookIcon size={32} round />
                           </FacebookShareButton>
                         </div>
                         <div>
                           <TwitterShareButton
-                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                            url={`https://www.dreamlegal.in/product/${data.product.slug}`}
                           >
                             <TwitterIcon size={32} round />
                           </TwitterShareButton>
                         </div>
                         <div>
                           <WhatsappShareButton
-                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                            url={`https://www.dreamlegal.in/product/${data.product.slug}`}
                           >
                             <WhatsappIcon size={32} round />
                           </WhatsappShareButton>
                         </div>
                         <div>
                           <LinkedinShareButton
-                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                            url={`https://www.dreamlegal.in/product/${data.product.slug}`}
                           >
                             <LinkedinIcon size={32} round />
                           </LinkedinShareButton>
                         </div>
                         <div>
                           <RedditShareButton
-                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                            url={`https://www.dreamlegal.in/product/${data.product.slug}`}
                           >
                             <RedditIcon size={32} round />
                           </RedditShareButton>
                         </div>
                         <div>
                           <TelegramShareButton
-                            url={`https://www.dreamlegal.in/product/${data.product.id}`}
+                            url={`https://www.dreamlegal.in/product/${data.product.slug}`}
                           >
                             <TelegramIcon size={32} round />
                           </TelegramShareButton>
@@ -906,7 +922,7 @@ function PageComponent({ data }: any) {
 
               <ProductFeature
                 features={product.features}
-                productId={product.id}
+                productId={product.slug}
               />
 
               <div className="w-full h-px bg-slate-200 my-4"></div>

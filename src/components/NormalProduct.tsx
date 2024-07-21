@@ -32,9 +32,6 @@ import {
   TelegramIcon,
 } from "next-share";
 
-
-
-
 function NormalProduct({
   id,
   image,
@@ -44,12 +41,12 @@ function NormalProduct({
   product,
 }: any) {
   const userId =
-  typeof window !== "undefined" && localStorage.getItem("userId");
+    typeof window !== "undefined" && localStorage.getItem("userId");
   const [isBookmarked, setIsBookmarked] = useState(false);
-  
+
   useEffect(() => {
-  // Fetch initial bookmark status if needed
-  // This can be an API call to check if the product is already bookmarked by the user
+    // Fetch initial bookmark status if needed
+    // This can be an API call to check if the product is already bookmarked by the user
   }, []);
 
   useEffect(() => {
@@ -57,10 +54,10 @@ function NormalProduct({
       if (!userId) return;
 
       try {
-        const response = await fetch('/api/check-bookmark', {
-          method: 'POST',
+        const response = await fetch("/api/check-bookmark", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ userId, productId: id }),
         });
@@ -79,28 +76,28 @@ function NormalProduct({
   const userCategories = [
     {
       name: "Law firms",
-      icon: "/lawfirmicon.svg"
+      icon: "/lawfirmicon.svg",
     },
     {
       name: "Individual Practitioner",
-      icon: "/prac.svg"
+      icon: "/prac.svg",
     },
     {
       name: "Government departments",
-      icon: "/govdepticon.svg"
+      icon: "/govdepticon.svg",
     },
     {
       name: "Startups",
-      icon: "/startupicon.svg"
+      icon: "/startupicon.svg",
     },
     {
       name: "Enterprises",
-      icon: "/enterpriceicon.svg"
+      icon: "/enterpriceicon.svg",
     },
     {
       name: "Judiciary",
-      icon: "/judge1.svg"
-    }
+      icon: "/judge1.svg",
+    },
   ];
 
   const handleBookmarkClick = async () => {
@@ -132,12 +129,26 @@ function NormalProduct({
     }
   };
 
-  const userCategoryIcons = product.userCategory.map((userCat:any) => {
-    const categoryObj = userCategories.find((cat) => cat.name === userCat);
-    return categoryObj ? categoryObj : null;
-  }).filter(Boolean); // Filter out null values
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        alert("Copied to clipboard!");
+      })
+      .catch((error) => {
+        console.error("Failed to copy to clipboard: ", error);
+      });
+  };
 
+  const userCategoryIcons = product.userCategory
+    .map((userCat: any) => {
+      const categoryObj = userCategories.find((cat) => cat.name === userCat);
+      return categoryObj ? categoryObj : null;
+    })
+    .filter(Boolean); // Filter out null values
 
+    const industries = product.industry;
+    const isOdd = industries.length % 2 !== 0;
 
   return (
     <div className="w-full px-10 py-7  rounded-xl border  font-clarity bg-gray-50 border-gray-300 shadow-md">
@@ -161,23 +172,29 @@ function NormalProduct({
           </div>
         </div>
         <div className=" hidden md:block md:ml-auto">
-        <div className="md:ml-auto mt-4 md:mt-0 flex gap-4 items-center">
-          <div>
-            <Link
-              href={`/product/${product.slug}`}
-              className="flex gap-2 items-center bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all w-fit  hover:bg-primary2 hover:text-primary1 hover:border-primary1 rounded-full hover:gap-4"
-            >
-              View
-              <IoIosArrowRoundForward className="text-xl" />
-            </Link>
-          </div>
+          <div className="md:ml-auto mt-4 md:mt-0 flex gap-4 items-center">
+            <div>
+              <Link
+                href={`/product/${product.slug}`}
+                className="flex gap-2 items-center bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all w-fit  hover:bg-primary2 hover:text-primary1 hover:border-primary1 rounded-full hover:gap-4"
+              >
+                View
+                <IoIosArrowRoundForward className="text-xl" />
+              </Link>
+            </div>
 
-          <div
+            <div
               className="flex gap-2 text-slate-800 text-lg items-center "
               onClick={handleBookmarkClick}
             >
               {/* Bookemark button */}{" "}
-              <FaBookmark className={isBookmarked ? "text-primary1" : "text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"} />{" "}
+              <FaBookmark
+                className={
+                  isBookmarked
+                    ? "text-primary1"
+                    : "text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"
+                }
+              />{" "}
             </div>
             <Dialog>
               <DialogTrigger asChild>
@@ -200,50 +217,62 @@ function NormalProduct({
                     </Label>
                     <Input
                       id="link"
-                      defaultValue={`https://www.dreamlegal.in/product/${id}`}
+                      defaultValue={`https://www.dreamlegal.in/product/${product.slug}`}
                       readOnly
                     />
+                    <div className="">
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        copyToClipboard(
+                          `https://www.dreamlegal.in/product/${product.slug}`
+                        )
+                      }
+                    >
+                      Copy
+                    </Button>
+                  </div>
                   </div>
                 </div>
                 <div className="mt-4 flex gap-4">
                   <div>
                     <FacebookShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <FacebookIcon size={32} round />
                     </FacebookShareButton>
                   </div>
                   <div>
                     <TwitterShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <TwitterIcon size={32} round />
                     </TwitterShareButton>
                   </div>
                   <div>
                     <WhatsappShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <WhatsappIcon size={32} round />
                     </WhatsappShareButton>
                   </div>
                   <div>
                     <LinkedinShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <LinkedinIcon size={32} round />
                     </LinkedinShareButton>
                   </div>
                   <div>
                     <RedditShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <RedditIcon size={32} round />
                     </RedditShareButton>
                   </div>
                   <div>
                     <TelegramShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+                      url={`https://www.dreamlegal.in/product/${product.slug}`}
                     >
                       <TelegramIcon size={32} round />
                     </TelegramShareButton>
@@ -258,7 +287,7 @@ function NormalProduct({
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-        </div>
+          </div>
         </div>
         <div></div>
       </div>
@@ -273,7 +302,7 @@ function NormalProduct({
           <div className="flex text-xs text-slate-400 mt-4 mb-1">
             Industries
           </div>
-          <div className="flex gap-2">
+          <div className="w-[200px] flex gap-2 flex-wrap ">
             {product.industry.map((industry: any, index: number) => (
               <div key={industry}>
                 <p className="text-sm text-primary1">
@@ -287,9 +316,12 @@ function NormalProduct({
       </div>
       <div>
         <div className="text-xs text-slate-400 mt-4 mb-1">User</div>
-         <div className="flex gap-2">
-          {userCategoryIcons.map((userCategory:any, index:number) => (
-            <div key={userCategory.name} className="relative group flex gap-2 items-center bg-primary2 rounded-md p-2">
+        <div className="flex gap-2">
+          {userCategoryIcons.map((userCategory: any, index: number) => (
+            <div
+              key={userCategory.name}
+              className="relative group flex gap-2 items-center bg-primary2 rounded-md p-2"
+            >
               <img
                 src={userCategory.icon}
                 alt={userCategory.name}
@@ -306,7 +338,7 @@ function NormalProduct({
         <div className="md:ml-auto mt-4 md:mt-0 flex gap-4 items-center">
           <div>
             <Link
-              href={`/product/${id}`}
+              href={`/product/${product.slug}`}
               className="flex gap-2 items-center bg-primary1 text-white font-bold px-6 py-3 text-xs transition-all w-fit  hover:bg-primary2 hover:text-primary1 hover:border-primary1 rounded-full hover:gap-4"
             >
               View
@@ -315,93 +347,111 @@ function NormalProduct({
           </div>
 
           <div
-              className="flex gap-2 text-slate-800 text-lg items-center "
-              onClick={handleBookmarkClick}
-            >
-              {/* Bookemark button */}{" "}
-              <FaBookmark className={isBookmarked ? "text-primary1" : "text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"} />{" "}
-            </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <div className="flex gap-2 text-slate-800 text-lg items-center">
-                  {" "}
-                  <FiShare2 />{" "}
-                </div>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Share link</DialogTitle>
-                  <DialogDescription>
-                    Anyone who has this link will be able to view this.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="flex items-center space-x-2">
-                  <div className="grid flex-1 gap-2">
-                    <Label htmlFor="link" className="sr-only">
-                      Link
-                    </Label>
-                    <Input
-                      id="link"
-                      defaultValue={`https://www.dreamlegal.in/product/${id}`}
-                      readOnly
-                    />
-                  </div>
-                </div>
-                <div className="mt-4 flex gap-4">
-                  <div>
-                    <FacebookShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
+            className="flex gap-2 text-slate-800 text-lg items-center "
+            onClick={handleBookmarkClick}
+          >
+            {/* Bookemark button */}{" "}
+            <FaBookmark
+              className={
+                isBookmarked
+                  ? "text-primary1"
+                  : "text-gray-300 hover:text-primary1 cursor-pointer transition-all duration-200"
+              }
+            />{" "}
+          </div>
+          <Dialog>
+            <DialogTrigger asChild>
+              <div className="flex gap-2 text-slate-800 text-lg items-center">
+                {" "}
+                <FiShare2 />{" "}
+              </div>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Share link</DialogTitle>
+                <DialogDescription>
+                  Anyone who has this link will be able to view this.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex items-center space-x-2">
+                <div className="grid flex-1 gap-2">
+                  <Label htmlFor="link" className="sr-only">
+                    Link
+                  </Label>
+                  <Input
+                    id="link"
+                    defaultValue={`https://www.dreamlegal.in/product/${product.slug}`}
+                    readOnly
+                  />
+                  <div className="">
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        copyToClipboard(
+                          `https://www.dreamlegal.in/product/${product.slug}`
+                        )
+                      }
                     >
-                      <FacebookIcon size={32} round />
-                    </FacebookShareButton>
-                  </div>
-                  <div>
-                    <TwitterShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
-                    >
-                      <TwitterIcon size={32} round />
-                    </TwitterShareButton>
-                  </div>
-                  <div>
-                    <WhatsappShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
-                    >
-                      <WhatsappIcon size={32} round />
-                    </WhatsappShareButton>
-                  </div>
-                  <div>
-                    <LinkedinShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
-                    >
-                      <LinkedinIcon size={32} round />
-                    </LinkedinShareButton>
-                  </div>
-                  <div>
-                    <RedditShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
-                    >
-                      <RedditIcon size={32} round />
-                    </RedditShareButton>
-                  </div>
-                  <div>
-                    <TelegramShareButton
-                      url={`https://www.dreamlegal.in/product/${id}`}
-                    >
-                      <TelegramIcon size={32} round />
-                    </TelegramShareButton>
-                  </div>
-                </div>
-                <DialogFooter className="sm:justify-start">
-                  <DialogClose asChild>
-                    <Button type="button" variant="secondary">
-                      Close
+                      Copy
                     </Button>
-                  </DialogClose>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 flex gap-4">
+                <div>
+                  <FacebookShareButton
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
+                  >
+                    <FacebookIcon size={32} round />
+                  </FacebookShareButton>
+                </div>
+                <div>
+                  <TwitterShareButton
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
+                  >
+                    <TwitterIcon size={32} round />
+                  </TwitterShareButton>
+                </div>
+                <div>
+                  <WhatsappShareButton
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
+                  >
+                    <WhatsappIcon size={32} round />
+                  </WhatsappShareButton>
+                </div>
+                <div>
+                  <LinkedinShareButton
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
+                  >
+                    <LinkedinIcon size={32} round />
+                  </LinkedinShareButton>
+                </div>
+                <div>
+                  <RedditShareButton
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
+                  >
+                    <RedditIcon size={32} round />
+                  </RedditShareButton>
+                </div>
+                <div>
+                  <TelegramShareButton
+                    url={`https://www.dreamlegal.in/product/${product.slug}`}
+                  >
+                    <TelegramIcon size={32} round />
+                  </TelegramShareButton>
+                </div>
+              </div>
+              <DialogFooter className="sm:justify-start">
+                <DialogClose asChild>
+                  <Button type="button" variant="secondary">
+                    Close
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
-        </div>
+      </div>
     </div>
   );
 }

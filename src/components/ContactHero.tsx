@@ -23,9 +23,11 @@ function ContactHero() {
                 </div>
                 <div className="inline-flex flex-col">
                   <h3 className="text-xs text-slate-500">Send us an email</h3>
+                  <a href="mailto:contact@dreamlegal.in">
                   <span className="text-sm font-bold text-gray-900">
                   contact@dreamlegal.in
                   </span>
+                  </a>
                 </div>
               </div>
 

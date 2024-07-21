@@ -113,12 +113,7 @@ function ProductPricingTable({ nameofPlan, price, validity }: any) {
               </div>
             </div>
             <div>
-              <a
-                href="/"
-                className="inline-flex items-center justify-center w-full h-12 px-6 mb-4 font-medium tracking-wide text-white transition duration-200 bg-gray-800 rounded shadow-md hover:bg-gray-900 focus:shadow-outline focus:outline-none"
-              >
-                Book a Demo
-              </a>
+              
             </div>
           </div>
         )

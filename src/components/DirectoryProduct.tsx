@@ -110,6 +110,7 @@ function DirectoryProduct() {
     industry: [],
     practiceAreas: [],
     mobileAvailable: [],
+    price: [],
     // Add more filter parameters here
   });
 
@@ -198,7 +199,7 @@ function DirectoryProduct() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="h-fit w-full md:w-[300px] md:col-span-1 sticky top-0 hidden md:block">
           <h2 className="text-lg font-bold text-gray-900 mb-4">
-            Filter By Category
+            Filters
           </h2>
           <DirectoryFilter selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
         
