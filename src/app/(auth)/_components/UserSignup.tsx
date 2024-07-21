@@ -120,6 +120,17 @@ function UserSignup() {
         <div>
           <form onSubmit={handleSubmit}>
             <h1 className="text-lg font-bold">Create Account</h1>
+            <Button
+              onClick={() => signIn("google", { callbackUrl: "/check" })}
+             
+              className="w-full bg-white gap-4 text-black border hover:text-white my-4"
+            >
+              <FcGoogle />
+              Continue with Google
+            </Button>
+            <p className="text-gray-400 text-xs">By Continue with Google, you agree to our Terms of Service and Privacy Policy</p>
+            <p className="text-center text-gray-800">or</p>
+            <hr />
             <div>
               <Label htmlFor="name">Name</Label>
               <Input
@@ -185,14 +196,7 @@ function UserSignup() {
 
             <hr />
 
-            <Button
-              onClick={() => signIn("google", { callbackUrl: "/check" })}
-              disabled={!terms}
-              className="w-full bg-white gap-4 text-black border hover:text-white my-4"
-            >
-              <FcGoogle />
-              Continue with Google
-            </Button>
+           
           </form>
 
           <p className="text-center">

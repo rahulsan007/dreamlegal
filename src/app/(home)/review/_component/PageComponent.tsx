@@ -69,7 +69,7 @@ function PageComponent() {
                 <div className="ml-4">
                   <Link
                     className=" text-primary1  text-sm"
-                    href={`/product/${product.id}`}
+                    href={`/product/${product.slug}`}
                   >
                     Back to product
                   </Link>

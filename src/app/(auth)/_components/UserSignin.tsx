@@ -61,6 +61,16 @@ function UserSignin() {
       <form onSubmit={handleSubmit}>
         <h1 className="text-lg font-bold">Create Account</h1>
 
+        <Button
+          onClick={() => signIn("google", { callbackUrl: "/check" })}
+          className="w-full bg-white gap-4 text-black border hover:text-white my-4"
+        >
+          <FcGoogle />
+          Continue with Google
+        </Button>
+          <p className="text-center text-gray-800">or</p>
+        <hr />
+
         <div>
           <Label htmlFor="email">Email</Label>
           <Input
@@ -89,13 +99,7 @@ function UserSignin() {
 
         <hr />
 
-        <Button
-          onClick={() => signIn("google", { callbackUrl: "/" })}
-          className="w-full bg-white gap-4 text-black border hover:text-white my-4"
-        >
-          <FcGoogle />
-          Continue with Google
-        </Button>
+   
       </form>
 
       <p className="text-center">

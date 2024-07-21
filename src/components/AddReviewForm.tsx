@@ -25,14 +25,14 @@ const CheckboxDemo = ({ product }: any) => {
   const [utilization, setUtilization] = useState("");
   const [liked, setLiked] = useState("");
   const [disliked, setDisliked] = useState("");
-  const [easeOfLearning, setEaseOfLearning] = useState(2.5);
-  const [integration, setIntegration] = useState(2.5);
-  const [support, setSupport] = useState(2.5);
-  const [roi, setRoi] = useState(2.5);
+  const [easeOfLearning, setEaseOfLearning] = useState(0);
+  const [integration, setIntegration] = useState(0);
+  const [support, setSupport] = useState(0);
+  const [roi, setRoi] = useState(0);
   const [featureRatings, setFeatureRatings] = useState(() =>
     product.features.map((feature: { category: any }) => ({
       category: feature.category,
-      rating: 2.5, // Default rating value
+      rating: 0, // Default rating value
     }))
   );
 
@@ -41,7 +41,7 @@ const CheckboxDemo = ({ product }: any) => {
       (lifecycle: { subcategories: any[]; category: any }) =>
         lifecycle.subcategories.map((subcategory: any) => ({
           category: `${lifecycle.category} - ${subcategory}`,
-          rating: 2.5,
+          rating: 0, // Default rating value
         }))
     )
   );
@@ -461,7 +461,7 @@ const CheckboxDemo = ({ product }: any) => {
         <div className="mt-2">
           <div className="flex flex-col space-y-4 mt-4">
             <p>
-              <b>6. How often do you and your team utilize the solution?</b>
+              <b>6.	How is your overall experience?</b>
             </p>
             <Textarea
               placeholder="Type your message here."
@@ -533,8 +533,8 @@ const CheckboxDemo = ({ product }: any) => {
 
         <div>
           {/* Features */}
-          <div>
-            <p className=" font-bold text-xl">Features experience</p>
+          <div className="flex flex-col space-y-4 mt-4">
+            <p className=" font-bold text-xl">Features</p>
             {product.features.map((feature: { category: string }) => (
               // @ts-ignore
               <div key={feature.category}>
@@ -565,8 +565,8 @@ const CheckboxDemo = ({ product }: any) => {
           </div>
 
           {/* Process Lifecycle */}
-          <div>
-            <p className=" font-bold text-xl">Process Lifecycle experience</p>
+          <div className="flex flex-col space-y-4 mt-4">
+            <p className=" font-bold text-xl">Process Lifecycle</p>
 
             {product.processLifecycle.map(
               (lifecycle: {
