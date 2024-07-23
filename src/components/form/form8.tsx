@@ -73,7 +73,7 @@ function Form8() {
           <h3>Maintaince</h3>
           <RadioGroup
             onValueChange={(value) => handleRadioChange("maintenance", value)}
-            defaultValue="free"
+            defaultValue="not-available"
           >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="free" id="free" />
@@ -84,8 +84,8 @@ function Form8() {
               <Label htmlFor="paid">Paid</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="NA" id="option-two" />
-              <Label htmlFor="NA">Not available</Label>
+              <RadioGroupItem value="not-available" id="option-two" />
+              <Label htmlFor="not-available">Not available</Label>
             </div>
           </RadioGroup>
 
@@ -98,10 +98,10 @@ function Form8() {
         </div>
 
         <div>
-          <h3>Request for change</h3>
+          <h3> </h3>
           <RadioGroup
             onValueChange={(value) => handleRadioChange("reqForChange", value)}
-            defaultValue="free"
+            defaultValue="not-available"
           >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="available" id="available" />
@@ -115,7 +115,7 @@ function Form8() {
 
           <Textarea
             name="reqForChangeNote"
-            placeholder="Request for change Note optional"
+            placeholder="  Note optional"
             value={formValues.reqForChangeNote}
             onChange={handleChange}
           ></Textarea>
@@ -125,7 +125,7 @@ function Form8() {
           <h3>Training</h3>
           <RadioGroup
             onValueChange={(value) => handleRadioChange("trainingReq", value)}
-            defaultValue="free"
+            defaultValue="not-available"
           >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="free" id="free" />
@@ -143,7 +143,7 @@ function Form8() {
 
           <Textarea
             name="trainingReqNote"
-            placeholder="Request for change Note optional"
+            placeholder="  Note optional"
             value={formValues.trainingReqNote}
             onChange={handleChange}
           ></Textarea>
@@ -153,7 +153,7 @@ function Form8() {
           <h3>Data Migration</h3>
           <RadioGroup
             onValueChange={(value) => handleRadioChange("dataMigration", value)}
-            defaultValue="free"
+            defaultValue="not-available"
           >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="free" id="free" />
@@ -171,7 +171,7 @@ function Form8() {
 
           <Textarea
             name="dataMigrationNote"
-            placeholder="Request for change Note optional"
+            placeholder="  Note optional"
             value={formValues.dataMigrationNote}
             onChange={handleChange}
           ></Textarea>

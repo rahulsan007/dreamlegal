@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { FiAward } from "react-icons/fi";
 import { FaCircleCheck } from "react-icons/fa6";
+import { IoChevronDown } from "react-icons/io5";
 
 function ProductFeature({ features, productId }: any) {
   const [expanded, setExpanded] = useState<number[]>([]);
@@ -48,10 +49,11 @@ function ProductFeature({ features, productId }: any) {
             </div>
             <div>
               <h6
-                className="mb-2 font-bold text-sm leading-5 cursor-pointer"
+                className="mb-2 flex gap-2  justify-between items-center font-bold text-sm leading-5 cursor-pointer"
                 onClick={() => toggleExpand(index, feature.category)}
               >
-                {feature.category}
+                {feature.category} 
+                <IoChevronDown className=" text-gray-400" />
               </h6>
               {expanded.includes(index) && (
                 <ul className="mb-4 -ml-1 space-y-2">
@@ -59,7 +61,7 @@ function ProductFeature({ features, productId }: any) {
                     (subcategory: any, subIndex: any) => (
                       <li key={subIndex} className="flex items-start text-sm text-gray-700">
                         <span className="mr-1">
-                          <FaCircleCheck className="w-5 h-5 mt-px text-primary1" />
+                          <FaCircleCheck className="w-5 h-5 mt-px text-teal-500" />
                         </span>
                         {subcategory}
                       </li>

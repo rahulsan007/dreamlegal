@@ -9,10 +9,8 @@ async function getData(id: string) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ slug: id }),
-
-    },
-    
-  );
+    cache: "no-store",
+  });
 
   if (!response.ok) {
     // This will activate the closest `error.js` Error Boundary

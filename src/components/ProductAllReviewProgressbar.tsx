@@ -11,6 +11,7 @@ function ProductAllReviewProgressbar({ product }: any) {
     support: 0,
     roi: 0,
     totalReviews: 0,
+    overallRecommendation: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +33,7 @@ function ProductAllReviewProgressbar({ product }: any) {
 
         const data = await response.json();
         console.log("data rating", data);
-        
+
         // Update the state with the fetched data
         setRatings(data);
       } catch (error) {
@@ -58,21 +59,45 @@ function ProductAllReviewProgressbar({ product }: any) {
     return <p>Error: {error}</p>;
   }
 
-  const { overallRating, easeOfLearning, integration, support, roi, totalReviews } = ratings;
+  const {
+    overallRating,
+    easeOfLearning,
+    integration,
+    support,
+    roi,
+    overallRecommendation,
+    totalReviews,
+  } = ratings;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-      <div>
-        <h2 className="text-lg font-bold text-gray-900 pb-2">Overall Rating</h2>
-        <div className="inline-flex gap-4 items-center">
-          <FaStar className="text-[#FDB52A] h-16 w-16" />
-          <p className="text-[#FDB52A] text-[45px]">
-            {overallRating}
-            <span className="text-[35px]">/5</span>
-          </p>
+      <div className="flex flex-col gap-2 font-clarity">
+        <div>
+          <h2 className="text-lg font-bold text-gray-900 pb-2">
+            Overall Rating
+          </h2>
+          <div className="inline-flex gap-4 items-center">
+            <FaStar className="text-[#FDB52A] h-16 w-16" />
+            <p className="text-[#FDB52A] text-[45px]">
+              {overallRating ? overallRating : 0}
+              <span className="text-[35px]">/5</span>
+            </p>
+          </div>
+          <p className="text-slate-500">Based on {totalReviews}+ reviews</p>
         </div>
-        <p className="text-slate-500">Based on {totalReviews}+ reviews</p>
+        <div>
+          <h2 className="text-lg font-bold text-gray-900 pb-2">
+            Overall Recommendation
+          </h2>
+          <div className="inline-flex gap-4 items-center">
+            <p className="text-primary1 text-[45px]">
+              {overallRecommendation ? overallRecommendation : 0} %
+            </p>
+          </div>
+          <p className="text-slate-500">Based on {totalReviews}+ reviews</p>
+        </div>
       </div>
+
       <div className="flex flex-col gap-2 font-clarity">
         <div>
           <div className="flex justify-between items-center">
@@ -100,7 +125,9 @@ function ProductAllReviewProgressbar({ product }: any) {
 
         <div>
           <div className="flex justify-between items-center">
-            <h2 className="text-lg font-bold text-gray-900">Customer support</h2>
+            <h2 className="text-lg font-bold text-gray-900">
+              Customer support
+            </h2>
             <h3 className="text-[#FDB52A]">{roi}/5</h3>
           </div>
           <Progress value={(roi / 5) * 100} className="h-2" />

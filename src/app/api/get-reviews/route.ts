@@ -33,7 +33,9 @@ export async function POST(request: Request) {
     const overallRating = totalReviews ? (
       reviews.reduce((acc, review) => acc + (review.easeOfLearning + review.integration + review.support + review.roi) / 4, 0) / totalReviews
     ) : 0;
-
+    const overallRecommendation = totalReviews ? (
+      reviews.reduce((acc, review) => acc + review.recommend, 0) / totalReviews
+    ) : 0;
     return new Response(
       JSON.stringify({
         success: true,
@@ -43,6 +45,7 @@ export async function POST(request: Request) {
           overallExperience: review.overallExperienc // Assuming you meant `overallExperience`
         })),
         overallRating,
+        overallRecommendation,
         totalReviews,
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }

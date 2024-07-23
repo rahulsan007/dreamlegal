@@ -64,6 +64,7 @@ function ContactForm() {
               id="name"
               value={formData.name}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -78,6 +79,7 @@ function ContactForm() {
               id="email"
               value={formData.email}
               onChange={handleChange}
+              required
             />
           </div>
         </div>
@@ -95,6 +97,7 @@ function ContactForm() {
               id="phone"
               value={formData.phone}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -109,6 +112,7 @@ function ContactForm() {
               id="organization"
               value={formData.organization}
               onChange={handleChange}
+              required
             />
           </div>
         </div>
@@ -126,6 +130,7 @@ function ContactForm() {
               rows={5}
               value={formData.message}
               onChange={handleChange}
+              required
             />
           </div>
         </div>

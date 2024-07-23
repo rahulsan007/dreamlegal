@@ -35,8 +35,9 @@ export async function POST(request: Request) {
             acc.integration += review.integration;
             acc.support += review.support;
             acc.roi += review.roi;
+            acc.recommend += review.recommend;
             return acc;
-        }, { easeOfLearning: 0, integration: 0, support: 0, roi: 0 });
+        }, { easeOfLearning: 0, integration: 0, support: 0, roi: 0 ,recommend: 0});
 
         const numReviews = reviews.length;
 
@@ -45,9 +46,14 @@ export async function POST(request: Request) {
             numReviews * 4 // Since we have 4 parameters
         );
 
+        const maxRecommend = 10;
+        const overallRecommendation = (average(totalRatings.recommend, numReviews) / maxRecommend) * 100; // Convert to percentage
+
+
         const response = {
             overallRating: parseFloat(overallRating.toFixed(2)), // Round to 2 decimal places
             easeOfLearning: average(totalRatings.easeOfLearning, numReviews),
+            overallRecommendation: parseFloat(overallRecommendation.toFixed(2)),
             integration: average(totalRatings.integration, numReviews),
             support: average(totalRatings.support, numReviews),
             roi: average(totalRatings.roi, numReviews),

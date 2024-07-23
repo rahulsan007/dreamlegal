@@ -27,9 +27,7 @@ function ProductInfoTab({ product }: any) {
           </div>
           <div>
             <h6 className="mb-2 font-bold text-lg leading-5">Deployment</h6>
-            <p className="mb-3 text-sm text-slate-500">
-              Deployment options available for different environments.
-            </p>
+            
             <ul className="mb-4 -ml-1 space-y-2">
               {product.deployement.map((option: string, index: number) => (
                 <li key={index} className="flex items-start">
@@ -53,9 +51,7 @@ function ProductInfoTab({ product }: any) {
             <h6 className="mb-2 font-bold text-lg leading-5">
               Focus countries
             </h6>
-            <p className="mb-3 text-sm text-slate-500">
-              Targeted regions for product deployment.
-            </p>
+            
             <ul className="mb-4 -ml-1 space-y-2">
               {product.focusCountries.map(
                 (
@@ -94,9 +90,7 @@ function ProductInfoTab({ product }: any) {
             <h6 className="mb-2 font-bold text-lg leading-5">
               Mobile Accessibility
             </h6>
-            <p className="mb-3 text-sm text-slate-500">
-              Access the product on multiple platforms.
-            </p>
+            
             <ul className="mb-4 -ml-1 space-y-2">
               <li className="flex items-start">
                 <span className="mr-1">
@@ -119,9 +113,7 @@ function ProductInfoTab({ product }: any) {
             <h6 className="mb-2 font-bold text-lg leading-5">
               Average adoption time
             </h6>
-            <p className="mb-3 text-sm text-slate-500">
-              Typical duration to fully adopt the product.
-            </p>
+            
             <ul className="mb-4 -ml-1 space-y-2">
               <li className="flex items-start">
                 <span className="mr-1">
@@ -143,14 +135,12 @@ function ProductInfoTab({ product }: any) {
           </div>
           <div>
             <h6 className="mb-2 font-bold text-lg leading-5">Language</h6>
-            <p className="mb-3 text-sm text-slate-500">
-              Supported languages for the product.
-            </p>
+            
 
           
           </div>
         </div>
-        <ul className=" grid grid-cols-3 gap-8 w-full ">
+        <ul className="mb-4 md:ml-12 grid grid-cols-3 gap-8 w-full ">
               {product.languages.map((language: string, index: number) => (
                 <li key={index} className="flex items-start">
                   <span className="mr-1">

@@ -151,14 +151,17 @@ const ProcessLifecycle = ({ product }: any) => {
               <div
                 key={index}
                 className={`p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2 ${
-                  selectedStages.includes(stage) ? "border-teal-500" : "opacity-90"
+                  selectedStages.includes(stage) ? "border-teal-500" : "border-red-500 opacity-90"
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-bold leading-5 mb-2">{stage}</p>
-                  <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-teal-500 bg-teal-100">
+                <p className={`flex items-center justify-center w-6 h-6 font-bold rounded  ${
+                  selectedStages.includes(stage) ? "text-teal-500 bg-teal-100" : "text-red-500 bg-red-100"
+                } `}>
                     {index + 1}
                   </p>
+                  <p className="text-sm font-bold leading-5 mb-2">{stage}</p>
+                  
                 </div>
               </div>
             ))}
@@ -170,14 +173,17 @@ const ProcessLifecycle = ({ product }: any) => {
               <div
                 key={index + 3}
                 className={`p-5 duration-300 transform bg-white border rounded shadow-sm hover:-translate-y-2 ${
-                  selectedStages.includes(stage) ? "border-teal-500" : "opacity-90"
+                  selectedStages.includes(stage) ? "border-teal-500" : "border-red-500  opacity-90"
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-bold leading-5 mb-2">{stage}</p>
-                  <p className="flex items-center justify-center w-6 h-6 font-bold rounded text-teal-500 bg-teal-100">
+                <p className={`flex items-center justify-center w-6 h-6 font-bold rounded  ${
+                  selectedStages.includes(stage) ? "text-teal-500 bg-teal-100" : "text-red-500 bg-red-100"
+                } `}>
                     {index + 4}
                   </p>
+                  <p className="text-sm font-bold leading-5 mb-2">{stage}</p>
+                  
                 </div>
               </div>
             ))}

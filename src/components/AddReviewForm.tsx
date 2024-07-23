@@ -130,7 +130,7 @@ const CheckboxDemo = ({ product }: any) => {
       if (response.ok) {
         const data = await response.json();
         console.log("Review added successfully:", data);
-        router.push("/product/" + productId);
+        router.push("/product/" + product.slug);
       } else {
         console.error("Failed to add review:", response.statusText);
       }
@@ -547,7 +547,7 @@ const CheckboxDemo = ({ product }: any) => {
                     featureRatings.find(
                       (rating: { category: any }) =>
                         rating.category === feature.category
-                    )?.rating || 2.5
+                    )?.rating || 0
                   }
                   precision={0.5}
                   // ts-ignore
@@ -588,7 +588,7 @@ const CheckboxDemo = ({ product }: any) => {
                             (rating: { category: string }) =>
                               rating.category ===
                               `${lifecycle.category} - ${subcategory}`
-                          )?.rating || 2.5
+                          )?.rating || 0
                         }
                         precision={0.5}
                         onChange={(event, newValue) =>

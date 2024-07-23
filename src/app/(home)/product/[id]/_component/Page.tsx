@@ -58,8 +58,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import PostImplementation from "@/components/PostImplementation";
 
 const countryNames: { [key: string]: string } = {
   US: "United States of America",
@@ -166,7 +167,6 @@ const countryNames: { [key: string]: string } = {
   YT: "Mayotte",
 };
 
-
 function PageComponent({ data }: any) {
   const location = useGeoLocation();
   const countryName = countryNames[location.country] || "Unknown Country";
@@ -231,10 +231,9 @@ function PageComponent({ data }: any) {
     // This can be an API call to check if the product is already bookmarked by the user
   }, []);
   const savePageAsPDF = async () => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.print();
     }
-    
   };
   useEffect(() => {
     const checkBookmark = async () => {
@@ -298,11 +297,14 @@ function PageComponent({ data }: any) {
   console.log(company);
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      alert("Copied to clipboard!");
-    }).catch((error) => {
-      console.error("Failed to copy to clipboard: ", error);
-    });
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        alert("Copied to clipboard!");
+      })
+      .catch((error) => {
+        console.error("Failed to copy to clipboard: ", error);
+      });
   };
 
   return (
@@ -376,7 +378,11 @@ function PageComponent({ data }: any) {
                         <div className="">
                           <Button
                             variant="outline"
-                            onClick={() => copyToClipboard(`https://www.dreamlegal.in/product/${data.product.slug}`)}
+                            onClick={() =>
+                              copyToClipboard(
+                                `https://www.dreamlegal.in/product/${data.product.slug}`
+                              )
+                            }
                           >
                             Copy
                           </Button>
@@ -436,10 +442,12 @@ function PageComponent({ data }: any) {
                     </DialogContent>
                   </Dialog>
 
-                  <div   onClick={savePageAsPDF} className="text-xl text-primary1 p-2 rounded-full border border-primary1">
+                  <div
+                    onClick={savePageAsPDF}
+                    className="text-xl text-primary1 p-2 rounded-full border border-primary1"
+                  >
                     <FiPrinter />
                   </div>
-                  
                 </div>
               </div>
               <div className="flex ">
@@ -488,7 +496,7 @@ function PageComponent({ data }: any) {
               </div>
 
               <div className="flex flex-col md:flex-row justify-between">
-                <div className=" flex flex-col gap-3">
+                <div id="company" className=" flex flex-col gap-3">
                   <div>
                     <p className="text-sm text-gray-900 font-bold">
                       Company Name
@@ -555,7 +563,9 @@ function PageComponent({ data }: any) {
               <div className="w-full h-px bg-slate-200 my-4"></div>
               <div>
                 <div className=" my-8 flex flex-col">
-                  <h2 className="text-2xl font-bold">About the product</h2>
+                  <h2 id="product" className="text-2xl font-bold">
+                    About the product
+                  </h2>
                   <p className="text-sm text-slate-500 my-2">
                     {product.description}
                   </p>
@@ -567,10 +577,16 @@ function PageComponent({ data }: any) {
               <div className="w-full h-px bg-slate-200 my-4"></div>
               {/* Overview */}
 
+              <h2 id="overviews" className="text-2xl font-bold">
+                Overview
+              </h2>
+
               <div className="flex flex-col gap-4">
-                <div>
+                <div className="bg-primary2/40 px-5 py-3 rounded-2xl">
                   <div className="flex  gap-2 items-center">
-                    <h2 className=" text-lg font-bold text-gray-900">USP</h2>
+                    <h2 className=" text-lg font-bold text-gray-900 mb-2">
+                      USP
+                    </h2>
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
@@ -598,8 +614,8 @@ function PageComponent({ data }: any) {
                 <div className=" flex flex-col gap-4 ">
                   <div className="bg-primary2/40 px-5 py-3 rounded-2xl">
                     <div className="flex  gap-2 items-center">
-                      <h2 className=" text-lg font-bold text-gray-900">
-                        Overview
+                      <h2 className=" text-lg font-bold text-gray-900 mb-2">
+                        Company Overview
                       </h2>
                       <TooltipProvider>
                         <Tooltip>
@@ -619,8 +635,8 @@ function PageComponent({ data }: any) {
 
                   <div className="bg-primary2/40 px-5 py-3 rounded-2xl">
                     <div className="flex  gap-2 items-center">
-                      <h2 className=" text-lg font-bold text-gray-900">
-                        Founder Vision
+                      <h2 className=" text-lg font-bold text-gray-900 mb-2">
+                        Upcoming Updates
                       </h2>
                       <TooltipProvider>
                         <Tooltip>
@@ -634,7 +650,7 @@ function PageComponent({ data }: any) {
                       </TooltipProvider>
                     </div>
                     <p className=" text-sm text-slate-500">
-                      {company.founderVision}
+                      {product.upcomingUpdates}
                     </p>
                   </div>
                 </div>
@@ -648,7 +664,10 @@ function PageComponent({ data }: any) {
                 <div className="flex flex-col md:flex-row w-full gap-4">
                   <div className="flex-1">
                     <div className="flex gap-2 items-center">
-                      <h2 className="text-lg font-bold text-gray-900">
+                      <h2
+                        id="customers"
+                        className="text-2xl font-bold text-gray-900 mb-3"
+                      >
                         Customer segments
                       </h2>
                       <TooltipProvider>
@@ -676,17 +695,18 @@ function PageComponent({ data }: any) {
                     </div>
                   </div>
                   <div className="flex-1 mt-4 md:mt-0">
-                    <h2 className="text-sm font-bold text-gray-700">
-                      Distribution
-                    </h2>
                     <div
                       id="chart"
                       style={{ maxWidth: "90%", margin: "0 auto" }}
+                      className="bg-primary2/40 rounded-2xl flex flex-col items-center justify-center"
                     >
                       <ReactApexChart
                         options={{
                           chart: {
                             type: "pie",
+                          },
+                          theme: {
+                            palette: "palette10",
                           },
                           labels: product.userCategory,
                           legend: {
@@ -705,7 +725,7 @@ function PageComponent({ data }: any) {
                               breakpoint: 1024,
                               options: {
                                 chart: {
-                                  width: 200, // Keep width as 400px for desktop
+                                  width: 300, // Keep width as 400px for desktop
                                 },
                               },
                             },
@@ -717,14 +737,17 @@ function PageComponent({ data }: any) {
                         type="pie"
                         width={300}
                       />
+                      <h2 className="text-xs my-2 font-bold italic text-primary1 md:text-center">
+                        Distribution
+                      </h2>
                     </div>
                   </div>
                 </div>
-
-                <div className="flex flex-col md:flex-row w-full gap-4">
+                <div className="w-full h-px bg-slate-200 my-4"></div>
+                <div className="flex flex-col md:flex-row  w-full gap-4">
                   <div className="flex-1">
                     <div className="flex gap-2 items-center">
-                      <h2 className="text-lg font-bold text-gray-900">
+                      <h2 className="text-2xl font-bold text-gray-900 mb-3">
                         Industries
                       </h2>
 
@@ -754,20 +777,20 @@ function PageComponent({ data }: any) {
                     </div>
                   </div>
 
-                  <div className="flex-1 mt-4 md:mt-0">
-                    <h2 className="text-sm font-bold text-gray-700">
-                      Distribution
-                    </h2>
+                  <div className="flex-1  mt-4 md:mt-0">
                     <div
                       id="chart"
                       style={{ maxWidth: "90%", margin: "0 auto" }}
+                      className="bg-primary2/40 rounded-2xl flex flex-col items-center justify-center"
                     >
                       <ReactApexChart
                         options={{
                           chart: {
                             type: "pie",
                           },
-
+                          theme: {
+                            palette: "palette10",
+                          },
                           labels: product.industry,
                           legend: {
                             position: "bottom",
@@ -785,7 +808,7 @@ function PageComponent({ data }: any) {
                               breakpoint: 1024,
                               options: {
                                 chart: {
-                                  width: 200, // Keep width as 400px for desktop
+                                  width: 300, // Keep width as 400px for desktop
                                 },
                               },
                             },
@@ -797,14 +820,17 @@ function PageComponent({ data }: any) {
                         type="pie"
                         width={300}
                       />
+                      <h2 className="text-xs my-2 font-bold italic text-primary1 md:text-center">
+                        Distribution
+                      </h2>
                     </div>
                   </div>
                 </div>
-
+                <div className="w-full h-px bg-slate-200 my-4"></div>
                 <div className="flex flex-col md:flex-row w-full gap-4">
                   <div className="flex-1">
                     <div className="flex gap-2 items-center">
-                      <h2 className="text-lg font-bold text-gray-900">
+                      <h2 className="text-2xl mb-3 font-bold text-gray-900">
                         Practice Area
                       </h2>
 
@@ -836,18 +862,18 @@ function PageComponent({ data }: any) {
                   </div>
 
                   <div className="flex-1 mt-4 md:mt-0">
-                    <h2 className="text-sm font-bold text-gray-700">
-                      Distribution
-                    </h2>
-
                     <div
                       id="chart"
                       style={{ maxWidth: "90%", margin: "0 auto" }}
+                      className="bg-primary2/40 rounded-2xl flex flex-col items-center justify-center"
                     >
                       <ReactApexChart
                         options={{
                           chart: {
                             type: "pie",
+                          },
+                          theme: {
+                            palette: "palette10",
                           },
                           labels: product.practiceAreas,
                           legend: {
@@ -866,7 +892,7 @@ function PageComponent({ data }: any) {
                               breakpoint: 1024,
                               options: {
                                 chart: {
-                                  width: 200, // Keep width as 400px for desktop
+                                  width: 300, // Keep width as 400px for desktop
                                 },
                               },
                             },
@@ -878,6 +904,9 @@ function PageComponent({ data }: any) {
                         type="pie"
                         width={300}
                       />
+                      <h2 className="text-xs my-2 font-bold italic text-primary1 md:text-center">
+                        Distribution
+                      </h2>
                     </div>
                   </div>
                 </div>
@@ -886,7 +915,7 @@ function PageComponent({ data }: any) {
               <div className="w-full h-px bg-slate-200 my-4"></div>
 
               <div className="flex  gap-2 items-center">
-                <h2 className=" text-lg font-bold text-gray-900">
+                <h2 id="lifecycle" className=" text-2xl font-bold text-gray-900">
                   Process Lifecycle
                 </h2>
                 <TooltipProvider>
@@ -907,7 +936,9 @@ function PageComponent({ data }: any) {
               {/* Features */}
 
               <div className="flex  gap-2 items-center">
-                <h2 className=" text-lg font-bold text-gray-900">Features</h2>
+                <h2 id="features" className=" text-2xl font-bold text-gray-900">
+                  Features
+                </h2>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>
@@ -928,7 +959,9 @@ function PageComponent({ data }: any) {
               <div className="w-full h-px bg-slate-200 my-4"></div>
 
               <div className="flex  gap-2 items-center">
-                <h2 className=" text-lg font-bold text-gray-900">Pricing</h2>
+                <h2 id="pricing" className=" text-2xl font-bold text-gray-900">
+                  Pricing
+                </h2>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>
@@ -943,17 +976,17 @@ function PageComponent({ data }: any) {
 
               <div className=" flex flex-col md:flex-row justify-between">
                 <div>
-                  <p className="text-sm text-gray-900 font-bold">Free trail</p>
+                  <p className="text-lg text-gray-900 font-bold">Free trail</p>
                   <p className="text-sm text-slate-500">{product.freeTrial}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-900 font-bold">Time period</p>
+                  <p className="text-lg text-gray-900 font-bold">Time period</p>
                   <p className="text-sm text-slate-500">{product.timePeriod}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-900 font-bold">
+                  <p className="text-lg text-gray-900 font-bold">
                     Free version
                   </p>
                   <p className="text-sm text-slate-500">
@@ -965,7 +998,7 @@ function PageComponent({ data }: any) {
               {product.pricingParams.length > 0 ? (
                 <div>
                   <div className="flex  gap-2 items-center">
-                    <h2 className="  font-bold text-gray-900">
+                    <h2 className=" text-lg  font-bold text-gray-900 mb-3">
                       Pricing parameter
                     </h2>
                     <TooltipProvider>
@@ -1003,7 +1036,7 @@ function PageComponent({ data }: any) {
               <div className="w-full h-px bg-slate-200 my-4"></div>
               {/* Support */}
               <div className="flex  gap-2 items-center">
-                <h2 className=" text-lg font-bold text-gray-900">
+                <h2 id="support" className=" text-2xl font-bold text-gray-900">
                   Support & Services
                 </h2>
                 <TooltipProvider>
@@ -1021,9 +1054,30 @@ function PageComponent({ data }: any) {
               <ProductService product={product} />
 
               <div className="w-full h-px bg-slate-200 my-4"></div>
+              <div className="flex  gap-2 items-center">
+                <h2 id="support" className=" text-2xl font-bold text-gray-900">
+                  Post Implementation
+                </h2>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <MdOutlineInfo className="text-slate-500 text-sm" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Lifecycle of process</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+
+              <PostImplementation product={product} />
+
+              <div className="w-full h-px bg-slate-200 my-4"></div>
 
               <div className="flex  gap-2 items-center">
-                <h2 className=" text-lg font-bold text-gray-900">Reference</h2>
+                <h2 id="reference" className=" text-2xl font-bold text-gray-900">
+                  Reference
+                </h2>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>
@@ -1054,7 +1108,9 @@ function PageComponent({ data }: any) {
               <div className="w-full h-px bg-slate-200 my-4"></div>
 
               <div className="flex  gap-2 items-center">
-                <h2 className=" text-lg font-bold text-gray-900">Reviews</h2>
+                <h2 id="reviews" className=" text-2xl font-bold text-gray-900">
+                  Reviews
+                </h2>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>
