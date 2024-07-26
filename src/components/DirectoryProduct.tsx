@@ -201,7 +201,7 @@ function DirectoryProduct() {
           <h2 className="text-lg font-bold text-gray-900 mb-4">
             Filters
           </h2>
-          <DirectoryFilter selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
+          <DirectoryFilter selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} setSelectedFilters={setSelectedFilters} />
         
         </div>
         <div className="col-span-2 overflow-y-scroll no-scrollbar">
@@ -227,7 +227,7 @@ function DirectoryProduct() {
                     </button>
                   </SheetTrigger>
                   <SheetContent>
-                    <DirectoryFilter selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
+                    <DirectoryFilter selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} setSelectedFilters={setSelectedFilters} />
                   </SheetContent>
                 </Sheet>
               </div>

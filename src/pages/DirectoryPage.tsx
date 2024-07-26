@@ -1,10 +1,13 @@
 import DirectoryProduct from "@/components/DirectoryProduct";
-import React from "react";
+import Loading from "@/components/Loading";
+import React, { Suspense } from "react";
 
 function DirectoryPage() {
   return (
     <div className=" py-8">
-      <DirectoryProduct />
+      <Suspense fallback={<Loading />}>
+        <DirectoryProduct />
+      </Suspense>
     </div>
   );
 }

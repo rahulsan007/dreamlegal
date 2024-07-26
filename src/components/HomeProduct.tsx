@@ -33,44 +33,52 @@ function HomeProduct({ data }: any) {
     fetchProducts();
   }, [data]);
 
-  const category =[
+  const category = [
     {
-      name: "Client Relationship Management",
-      link: "/directory"
+      name: "Document Management and Automation",
+      link: "/directory?category=Document%20Management%20and%20Automation"
     },
     {
-      name: "Governance, Risk and Compliance",
-      link: "/directory"
+      name: "Client Management Software",
+      link: "/directory?category=Client%20Management%20Software"
     },
     {
-      name: "Contract Lifecycle Management",
-      link: "/directory"
+      name: "Governance and Compliance and Risk Management",
+      link: "/directory?category=Governance%20and%20Compliance%20and%20Risk%20Management"
     },
     {
-      name: "E-Signature",
-      link: "/directory"
+      name: "Contract Management Software",
+      link: "/directory?category=Contract%20Management%20Software"
     },
     {
-      name: "Document Management Software",
-      link: "/directory"
+      name: "Digital Signature",
+      link: "/directory?category=Digital%20Signature"
     },
     {
-      name: "E-billing and invoicing",
-      link: "/directory"
+      name: "E-billing and Invoicing",
+      link: "/directory?category=E-billing%20and%20Invoicing"
     },
     {
       name: "E-discovery",
-      link: "/directory"
+      link: "/directory?category=E-discovery"
     },
     {
       name: "Intellectual Property Management",
-      link: "/directory"
+      link: "/directory?category=Intellectual%20Property%20Management"
+    },
+    {
+      name: "Litigation Management and Analytics",
+      link: "/directory?category=Litigation%20Management%20and%20Analytics"
+    },
+    {
+      name: "Legal Workflow Automation",
+      link: "/directory?category=Legal%20Workflow%20Automation"
     },
     {
       name: "Legal Research",
-      link: "/directory"
+      link: "/directory?category=Legal%20Research"
     }
-  ]
+  ];
   return (
     <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 font-clarity">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

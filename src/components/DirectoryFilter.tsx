@@ -1,16 +1,24 @@
 "use client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { IoArrowForward } from "react-icons/io5";
 import { MdOutlineBusinessCenter } from "react-icons/md";
 import { ScrollArea } from "./ui/scroll-area";
+import { useSearchParams } from 'next/navigation'
 
 // Assuming you have this file for styles
-
-function DirectoryFilter({ selectedFilters, handleFilterChange }: any) {
+ 
+function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilters}: any) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQuerycountry, setSearchQueryCountry] = useState("");
   const [searchQueryIndustry, setSearchQueryIndustry] = useState("");
   const [searchQueryPractice, setSearchQueryPractice] = useState("");
+  const searchParams = useSearchParams() || new URLSearchParams();
+
+  const [paramLink, setParamLink] = useState(true)
+  const category = searchParams.get('category')  
+
+
+
 
   const languages = [
     "Arabic",
@@ -373,6 +381,19 @@ function DirectoryFilter({ selectedFilters, handleFilterChange }: any) {
     value: string
   ) => {
     handleFilterChange(filterType, value);
+    console.log(selectedFilters)
+  };
+
+  const handleFilterChangeLink = (filterType: keyof typeof selectedFilters, value: string) => {
+    setSelectedFilters((prevFilters:any) => {
+      const currentValues = prevFilters[filterType];
+      return {
+        ...prevFilters,
+        [filterType]: currentValues.includes(value as never)
+          ? currentValues.filter((v:any) => v !== value as never)
+          : [...currentValues, value as never],
+      };
+    });
   };
 
   const filteredLanguages = languages.filter((language) =>
@@ -391,6 +412,32 @@ function DirectoryFilter({ selectedFilters, handleFilterChange }: any) {
     practiceArea.toLowerCase().includes(searchQueryPractice.toLowerCase())
   );
 
+  useEffect(() => {
+    if (category) {
+      setOpenCategory((prevState) => ({
+        ...prevState,
+        category: true,
+      }));
+      setParamLink(true);
+    }
+  }, [category, setOpenCategory]);
+
+  useEffect(() => {
+    if (paramLink) {
+      const updatedCategory = decodeURIComponent(category!);
+      setSelectedFilters((prevFilters: any) => {
+        const currentValues = prevFilters.categories;
+        return {
+          ...prevFilters,
+          categories: currentValues.includes(updatedCategory)
+            ? currentValues
+            : [...currentValues, updatedCategory],
+        };
+      });
+      setParamLink(false); // Reset paramLink to prevent re-triggering the effect
+    }
+  }, [paramLink, category]);
+  
   return (
     <ScrollArea className="h-screen pb-10 w-full">
       <div className="space-y-2 font-clarity">
