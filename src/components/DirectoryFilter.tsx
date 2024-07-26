@@ -12,13 +12,16 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
   const [searchQuerycountry, setSearchQueryCountry] = useState("");
   const [searchQueryIndustry, setSearchQueryIndustry] = useState("");
   const [searchQueryPractice, setSearchQueryPractice] = useState("");
-  const searchParams = useSearchParams() || new URLSearchParams();
+  const searchParams = useSearchParams()  || "";
+  const [paramLink, setParamLink] = useState(true);
+  const category = typeof searchParams === 'object' ? searchParams.get('category') : null;
+  const [paramSearch, setParamSearch] = useState(false);
 
-  const [paramLink, setParamLink] = useState(true)
-  const category = searchParams.get('category')  
-
-
-
+  useEffect(() => {
+    if (category && category !== '' && category !== null) {
+      setParamSearch(true);
+    }
+  }, [category]);
 
   const languages = [
     "Arabic",
@@ -413,31 +416,39 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
   );
 
   useEffect(() => {
-    if (category) {
-      setOpenCategory((prevState) => ({
+    if (category && category !== "" && category !== null) {
+      // When `category` is present, update filters accordingly
+      setOpenCategory(prevState => ({
         ...prevState,
         category: true,
       }));
-      setParamLink(true);
-    }
-  }, [category, setOpenCategory]);
 
-  useEffect(() => {
-    if (paramLink) {
-      const updatedCategory = decodeURIComponent(category!);
-      setSelectedFilters((prevFilters: any) => {
-        const currentValues = prevFilters.categories;
+      const updatedCategory = decodeURIComponent(category);
+      setSelectedFilters((prevFilters: typeof selectedFilters) => {
+        // Create a new array with unique categories
+        const updatedCategories = [...prevFilters.categories];
+        if (!updatedCategories.includes(updatedCategory)) {
+          updatedCategories.push(updatedCategory);
+        }
         return {
           ...prevFilters,
-          categories: currentValues.includes(updatedCategory)
-            ? currentValues
-            : [...currentValues, updatedCategory],
+          categories: updatedCategories
         };
       });
-      setParamLink(false); // Reset paramLink to prevent re-triggering the effect
+    } else {
+      // When `category` is not present, show all products
+      setOpenCategory(prevState => ({
+        ...prevState,
+        category: false,
+      }));
+
+      setSelectedFilters((prevFilters: typeof selectedFilters) => ({
+        ...prevFilters,
+        categories: [] // Reset filters or set to show all products
+      }));
     }
-  }, [paramLink, category]);
-  
+  }, [category, setSelectedFilters]);
+
   return (
     <ScrollArea className="h-screen pb-10 w-full">
       <div className="space-y-2 font-clarity">
