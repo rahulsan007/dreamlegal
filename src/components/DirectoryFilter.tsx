@@ -3,22 +3,27 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { IoArrowForward } from "react-icons/io5";
 import { MdOutlineBusinessCenter } from "react-icons/md";
 import { ScrollArea } from "./ui/scroll-area";
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from "next/navigation";
 
 // Assuming you have this file for styles
- 
-function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilters}: any) {
+
+function DirectoryFilter({
+  selectedFilters,
+  handleFilterChange,
+  setSelectedFilters,
+}: any) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQuerycountry, setSearchQueryCountry] = useState("");
   const [searchQueryIndustry, setSearchQueryIndustry] = useState("");
   const [searchQueryPractice, setSearchQueryPractice] = useState("");
-  const searchParams = useSearchParams()  || "";
+  const searchParams = useSearchParams() || "";
   const [paramLink, setParamLink] = useState(true);
-  const category = typeof searchParams === 'object' ? searchParams.get('category') : null;
+  const category =
+    typeof searchParams === "object" ? searchParams.get("category") : null;
   const [paramSearch, setParamSearch] = useState(false);
 
   useEffect(() => {
-    if (category && category !== '' && category !== null) {
+    if (category && category !== "" && category !== null) {
       setParamSearch(true);
     }
   }, [category]);
@@ -269,7 +274,6 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
   ];
 
   const Industries = [
-    "Neutral",
     "Accounting firms",
     "Agriculture",
     "Banking and Finance",
@@ -285,6 +289,7 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
     "Manufacturing",
     "Media and Entertainment",
     "Non-Profit Organizations",
+    "Neutral",
     "Pharmaceutical and Life Sciences",
     "Real Estate",
     "Retail and Consumer Goods",
@@ -384,16 +389,19 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
     value: string
   ) => {
     handleFilterChange(filterType, value);
-    console.log(selectedFilters)
+    console.log(selectedFilters);
   };
 
-  const handleFilterChangeLink = (filterType: keyof typeof selectedFilters, value: string) => {
-    setSelectedFilters((prevFilters:any) => {
+  const handleFilterChangeLink = (
+    filterType: keyof typeof selectedFilters,
+    value: string
+  ) => {
+    setSelectedFilters((prevFilters: any) => {
       const currentValues = prevFilters[filterType];
       return {
         ...prevFilters,
         [filterType]: currentValues.includes(value as never)
-          ? currentValues.filter((v:any) => v !== value as never)
+          ? currentValues.filter((v: any) => v !== (value as never))
           : [...currentValues, value as never],
       };
     });
@@ -418,7 +426,7 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
   useEffect(() => {
     if (category && category !== "" && category !== null) {
       // When `category` is present, update filters accordingly
-      setOpenCategory(prevState => ({
+      setOpenCategory((prevState) => ({
         ...prevState,
         category: true,
       }));
@@ -432,19 +440,19 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
         }
         return {
           ...prevFilters,
-          categories: updatedCategories
+          categories: updatedCategories,
         };
       });
     } else {
       // When `category` is not present, show all products
-      setOpenCategory(prevState => ({
+      setOpenCategory((prevState) => ({
         ...prevState,
         category: false,
       }));
 
       setSelectedFilters((prevFilters: typeof selectedFilters) => ({
         ...prevFilters,
-        categories: [] // Reset filters or set to show all products
+        categories: [], // Reset filters or set to show all products
       }));
     }
   }, [category, setSelectedFilters]);
@@ -479,32 +487,6 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
             <ul className="space-y-1 border-t border-gray-200 p-4">
               <li>
                 <label
-                  htmlFor="Document Management and Automation"
-                  className="inline-flex items-center gap-2"
-                >
-                  <input
-                    type="checkbox"
-                    id="Document Management and Automation"
-                    className="size-5 rounded border-gray-300"
-                    checked={selectedFilters.categories.includes(
-                      "Document Management and Automation"
-                    )}
-                    onChange={(e) =>
-                      handleCheckboxChange(
-                        e,
-                        "categories",
-                        "Document Management and Automation"
-                      )
-                    }
-                  />
-                  <span className="text-sm font-medium text-gray-700">
-                    {" "}
-                    Document Management and Automation{" "}
-                  </span>
-                </label>
-              </li>
-              <li>
-                <label
                   htmlFor="Client Management Software"
                   className="inline-flex items-center gap-2"
                 >
@@ -526,32 +508,6 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
                   <span className="text-sm font-medium text-gray-700">
                     {" "}
                     Client Management Software{" "}
-                  </span>
-                </label>
-              </li>
-              <li>
-                <label
-                  htmlFor="Governance and Compliance and Risk Management"
-                  className="inline-flex items-center gap-2"
-                >
-                  <input
-                    type="checkbox"
-                    id="Governance and Compliance and Risk Management"
-                    className="size-5 rounded border-gray-300"
-                    checked={selectedFilters.categories.includes(
-                      "Governance and Compliance and Risk Management"
-                    )}
-                    onChange={(e) =>
-                      handleCheckboxChange(
-                        e,
-                        "categories",
-                        "Governance and Compliance and Risk Management"
-                      )
-                    }
-                  />
-                  <span className="text-sm font-medium text-gray-700">
-                    {" "}
-                    Governance and Compliance and Risk Management{" "}
                   </span>
                 </label>
               </li>
@@ -605,6 +561,32 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
               </li>
               <li>
                 <label
+                  htmlFor="Document Management and Automation"
+                  className="inline-flex items-center gap-2"
+                >
+                  <input
+                    type="checkbox"
+                    id="Document Management and Automation"
+                    className="size-5 rounded border-gray-300"
+                    checked={selectedFilters.categories.includes(
+                      "Document Management and Automation"
+                    )}
+                    onChange={(e) =>
+                      handleCheckboxChange(
+                        e,
+                        "categories",
+                        "Document Management and Automation"
+                      )
+                    }
+                  />
+                  <span className="text-sm font-medium text-gray-700">
+                    {" "}
+                    Document Management and Automation{" "}
+                  </span>
+                </label>
+              </li>
+              <li>
+                <label
                   htmlFor="E-billing and Invoicing"
                   className="inline-flex items-center gap-2"
                 >
@@ -651,6 +633,32 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
               </li>
               <li>
                 <label
+                  htmlFor="Governance and Compliance and Risk Management"
+                  className="inline-flex items-center gap-2"
+                >
+                  <input
+                    type="checkbox"
+                    id="Governance and Compliance and Risk Management"
+                    className="size-5 rounded border-gray-300"
+                    checked={selectedFilters.categories.includes(
+                      "Governance and Compliance and Risk Management"
+                    )}
+                    onChange={(e) =>
+                      handleCheckboxChange(
+                        e,
+                        "categories",
+                        "Governance and Compliance and Risk Management"
+                      )
+                    }
+                  />
+                  <span className="text-sm font-medium text-gray-700">
+                    {" "}
+                    Governance and Compliance and Risk Management{" "}
+                  </span>
+                </label>
+              </li>
+              <li>
+                <label
                   htmlFor="Intellectual Property Management"
                   className="inline-flex items-center gap-2"
                 >
@@ -677,27 +685,23 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
               </li>
               <li>
                 <label
-                  htmlFor="Litigation Management and Analytics"
+                  htmlFor="Legal Research"
                   className="inline-flex items-center gap-2"
                 >
                   <input
                     type="checkbox"
-                    id="Litigation Management and Analytics"
+                    id="Legal Research"
                     className="size-5 rounded border-gray-300"
                     checked={selectedFilters.categories.includes(
-                      "Litigation Management and Analytics"
+                      "Legal Research"
                     )}
                     onChange={(e) =>
-                      handleCheckboxChange(
-                        e,
-                        "categories",
-                        "Litigation Management and Analytics"
-                      )
+                      handleCheckboxChange(e, "categories", "Legal Research")
                     }
                   />
                   <span className="text-sm font-medium text-gray-700">
                     {" "}
-                    Litigation Management and Analytics{" "}
+                    Legal Research{" "}
                   </span>
                 </label>
               </li>
@@ -729,27 +733,30 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
               </li>
               <li>
                 <label
-                  htmlFor="Legal Research"
+                  htmlFor="Litigation Management and Analytics"
                   className="inline-flex items-center gap-2"
                 >
                   <input
                     type="checkbox"
-                    id="Legal Research"
+                    id="Litigation Management and Analytics"
                     className="size-5 rounded border-gray-300"
                     checked={selectedFilters.categories.includes(
-                      "Legal Research"
+                      "Litigation Management and Analytics"
                     )}
                     onChange={(e) =>
-                      handleCheckboxChange(e, "categories", "Legal Research")
+                      handleCheckboxChange(
+                        e,
+                        "categories",
+                        "Litigation Management and Analytics"
+                      )
                     }
                   />
                   <span className="text-sm font-medium text-gray-700">
                     {" "}
-                    Legal Research{" "}
+                    Litigation Management and Analytics{" "}
                   </span>
                 </label>
               </li>
-              {/* Add more categories here */}
             </ul>
           </div>
         </div>
@@ -1264,15 +1271,16 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
           >
             <ul className="space-y-1 border-t border-gray-200 p-4">
               <li>
-                <label htmlFor="fixed" className="inline-flex items-center gap-2">
+                <label
+                  htmlFor="fixed"
+                  className="inline-flex items-center gap-2"
+                >
                   <input
                     type="checkbox"
                     id="fixed"
                     className="size-5 rounded border-gray-300"
                     checked={selectedFilters.price.includes("fixed")}
-                    onChange={(e) =>
-                      handleCheckboxChange(e, "price", "fixed")
-                    }
+                    onChange={(e) => handleCheckboxChange(e, "price", "fixed")}
                   />
                   <span className="text-sm font-medium text-gray-700">
                     {" "}
@@ -1281,15 +1289,16 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
                 </label>
               </li>
               <li>
-                <label htmlFor="custom" className="inline-flex items-center gap-2">
+                <label
+                  htmlFor="custom"
+                  className="inline-flex items-center gap-2"
+                >
                   <input
                     type="checkbox"
                     id="custom"
                     className="size-5 rounded border-gray-300"
                     checked={selectedFilters.price.includes("custom")}
-                    onChange={(e) =>
-                      handleCheckboxChange(e, "price", "custom")
-                    }
+                    onChange={(e) => handleCheckboxChange(e, "price", "custom")}
                   />
                   <span className="text-sm font-medium text-gray-700">
                     {" "}
@@ -1298,15 +1307,16 @@ function DirectoryFilter({ selectedFilters, handleFilterChange ,setSelectedFilte
                 </label>
               </li>
               <li>
-                <label htmlFor="both" className="inline-flex items-center gap-2">
+                <label
+                  htmlFor="both"
+                  className="inline-flex items-center gap-2"
+                >
                   <input
                     type="checkbox"
                     id="both"
                     className="size-5 rounded border-gray-300"
                     checked={selectedFilters.price.includes("both")}
-                    onChange={(e) =>
-                      handleCheckboxChange(e, "price", "both")
-                    }
+                    onChange={(e) => handleCheckboxChange(e, "price", "both")}
                   />
                   <span className="text-sm font-medium text-gray-700">
                     {" "}

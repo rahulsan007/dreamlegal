@@ -1,4 +1,6 @@
 import prisma from "@/lib/prisma";
+import WelcomeEmail from "../../../../email/WelcomeEmail";
+import { sendWelcomeEmail } from "@/app/(auth)/_helpers/sendWelcomEmail";
 
 export async function POST(request: Request) {
   const { email, otp } = await request.json();
@@ -8,6 +10,7 @@ export async function POST(request: Request) {
     where: {
       email,
     },
+
   });
 
   if (!otpRecord) {
@@ -42,7 +45,10 @@ export async function POST(request: Request) {
       email,
     },
   });
-
+ if(user?.name){
+  await sendWelcomeEmail(user.email, user.name);
+}
+  
   return new Response(
     JSON.stringify({
       success: true,

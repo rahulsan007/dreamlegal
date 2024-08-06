@@ -9,7 +9,25 @@ export async function POST(request: Request) {
   });
   if (user) {
     if (password && user.password !== password) {
-      throw new Error("Invalid credentials"); // Throw an error for invalid password
+      return new Response(JSON.stringify({ success: false, msg: "Incorrect password" }), { status: 401 }); // Throw an error for invalid password
+    }
+
+    const companyInformation = await prisma.companyInfo.findFirst({
+    where: {
+      userId: user.id,
+    }
+    })
+    if (companyInformation) {
+      const { password: _, ...userData } = user;
+      return new Response(
+        JSON.stringify({
+          success: true,
+          msg: "User Match",
+          user: userData, // Return the user object without the password
+          verified : true
+        }),
+        { status: 200 }
+      );
     }
     // Exclude the password field from the response
     const { password: _, ...userData } = user;
@@ -18,6 +36,7 @@ export async function POST(request: Request) {
         success: true,
         msg: "User Match",
         user: userData, // Return the user object without the password
+        verified : false
       }),
       { status: 200 }
     );

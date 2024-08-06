@@ -21,6 +21,7 @@ model User {
   image         String?
   password      String?
   type          String          @default("user")
+  skip          Boolean?        @default(false)
   accounts      Account[]
   sessions      Session[]
   // Optional for WebAuthn support
@@ -116,20 +117,20 @@ model Otp {
 model companyInfo {
   id                        String    @id @default(cuid())
   userId                    String
-  companyName               String
+  companyName               String?
   website                   String?
-  yearFounded               String
-  headQuaters               String
-  NameOfFounders            String
-  contact                   String
-  founderVision             String
+  yearFounded               String?
+  headQuaters               String?
+  NameOfFounders            String?
+  contact                   String?
+  founderVision             String?
   regionServed              String?
-  TeamSize                  String
+  TeamSize                  String?
   overview                  String?
   Awards                    String?
-  PointOfContactName        String
-  PointOfContactPhone       String
-  PointOfContactDesignation String
+  PointOfContactName        String?
+  PointOfContactPhone       String?
+  PointOfContactDesignation String?
   user                      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   Product                   Product[]
 }
@@ -263,4 +264,11 @@ model SaveProduct {
   productId String[]
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   Product   Product[]
+}
+
+model Admins {
+  id String   @id @default(cuid())
+  email String @unique
+  password String
+  user     String?
 }

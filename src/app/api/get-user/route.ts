@@ -27,6 +27,28 @@ export async function GET(request: NextRequest) {
       },
     });
 
+    if (profile && (profile.skip === true || profile.skip !== null)) {
+      if (!userProfile) {
+        return new Response(
+          JSON.stringify({
+            success: true,
+            profile: "skipped",
+            account: profile,
+          }),
+          { status: 200 }
+        );
+      } else {
+        return new Response(
+          JSON.stringify({
+            success: true,
+            profile: userProfile,
+            account: profile,
+          }),
+          { status: 200 }
+        );
+      }
+    }
+
     if (!userProfile) {
       return new Response(
         JSON.stringify({

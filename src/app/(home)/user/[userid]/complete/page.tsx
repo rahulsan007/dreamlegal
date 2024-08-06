@@ -102,6 +102,29 @@ function Page() {
         }
         console.log("Form submitted:", formData);
       };
+
+      const handleSkip = async () => {
+        try {
+          const response = await fetch("/api/skip", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId }),
+          });
+    
+          const result = await response.json();
+    
+          if (result.success) {
+            console.log("User skipped successfully:", result.user);
+            router.push(`/user/${userId}`);
+          } else {
+            console.error("Error skipping user:", result.error);
+          }
+        } catch (error) {
+          console.error("Error skipping user:", error);
+        }
+      };
   return (
     <div>
        <>
@@ -354,14 +377,21 @@ function Page() {
                     </div>
 
                     <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
+                   
                       <button
                         type="submit"
-                        className="inline-block shrink-0 rounded-md border bg-primary1 px-12 py-3 text-sm font-medium text-white transition hover:bg-blue-600 hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                        className="inline-block shrink-0 rounded-md border bg-primary1 px-12 py-3 text-sm font-medium text-white transition hover:bg-blue-600  focus:outline-none focus:ring active:text-blue-500"
                       >
                         Save Details
                       </button>
                     </div>
                   </form>
+                  <button
+                        onClick={handleSkip}
+                        className=" text-gray-400 text-sm mt-3"
+                      >
+                        Skip for now
+                      </button>
                 </div>
               </main>
             </div>

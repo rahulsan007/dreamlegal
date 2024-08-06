@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 function VendorSignup() {
   const router = useRouter();
-  const [otpStep, setotpStep] = useState(false);
+  const [otpStep, setOtpStep] = useState(false);
   const [formData, setFormData] = useState({
     name: "company",
     email: "",
@@ -35,7 +35,6 @@ function VendorSignup() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log(formData);
-    // Add your form validation logic here
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
@@ -51,11 +50,9 @@ function VendorSignup() {
       });
 
       if (response.ok) {
-        // Handle successful signup (e.g., redirect to a different page)
         console.log("Account created successfully!");
-        setotpStep(true);
+        setOtpStep(true);
       } else {
-        // Handle error response
         console.error("Failed to create account");
       }
     } catch (error) {
@@ -75,9 +72,8 @@ function VendorSignup() {
         body: JSON.stringify({ email: formData.email, otp }),
       });
       if (response.ok) {
-        // Handle successful OTP verification
         console.log("OTP verified successfully");
-        setotpStep(true);
+        setOtpStep(true);
         const data = await response.json();
         if (data.user && data.user.id) {
           if (typeof window !== "undefined") {
@@ -87,8 +83,27 @@ function VendorSignup() {
         alert("OTP verified successfully");
         router.push("/vendor?verified=true");
       } else {
-        // Handle error response
         console.error("Failed to verify OTP");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
+  const handleResendEmail = async () => {
+    try {
+      const response = await fetch("/api/resend-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: formData.email }),
+      });
+
+      if (response.ok) {
+        alert("Verification email resent successfully!");
+      } else {
+        console.error("Failed to resend email");
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -115,23 +130,28 @@ function VendorSignup() {
             <Button className="w-full bg-primary1 my-4" type="submit">
               Submit
             </Button>
+            <Button
+              className="w-full bg-secondary1 my-4"
+              onClick={handleResendEmail}
+            >
+              Resend Email
+            </Button>
           </form>
         </div>
       ) : (
         <div>
           <form onSubmit={handleSubmit}>
             <h1 className="text-lg font-bold">Create Account</h1>
-            {/* <div>
-              <Label htmlFor="name">Name</Label>
-              <Input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Enter your name"
-              />
-            </div> */}
-
+            <Button
+              onClick={() => signIn("google", { callbackUrl: "/check" })}
+              className="w-full bg-white gap-4 text-black border hover:text-white my-4"
+            >
+              <FcGoogle />
+              Continue with Google
+            </Button>
+            <p className="text-gray-400 text-xs">By Continue with Google, you agree to our Terms of Service and Privacy Policy</p>
+            <p className="text-center text-gray-800">or</p>
+            <hr />
             <div>
               <Label htmlFor="email">Email</Label>
               <Input

@@ -33,6 +33,7 @@ import {
   TelegramShareButton,
   TelegramIcon,
 } from "next-share";
+import { GoShareAndroid } from "react-icons/go";
 
 function FeaturedProduct({
   id,
@@ -225,7 +226,8 @@ function FeaturedProduct({
                       defaultValue={`https://www.dreamlegal.in/product/${product.slug}`}
                       readOnly
                     />
-                     <div className="">
+                  </div>
+                  <div className="">
                     <Button
                       variant="outline"
                       onClick={() =>
@@ -236,7 +238,6 @@ function FeaturedProduct({
                     >
                       Copy
                     </Button>
-                  </div>
                   </div>
                 </div>
                 <div className="mt-4 flex gap-4">
@@ -320,7 +321,7 @@ function FeaturedProduct({
         </div>
       </div>
       <div>
-        <div className="text-xs text-slate-400 mt-4 mb-1">User</div>
+        <div className="text-xs text-slate-400 mt-4 mb-1">Users</div>
         <div className="flex gap-2">
           {userCategoryIcons.map((userCategory: any, index: number) => (
             <div

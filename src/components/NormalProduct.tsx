@@ -147,8 +147,8 @@ function NormalProduct({
     })
     .filter(Boolean); // Filter out null values
 
-    const industries = product.industry;
-    const isOdd = industries.length % 2 !== 0;
+  const industries = product.industry;
+  const isOdd = industries.length % 2 !== 0;
 
   return (
     <div className="w-full px-10 py-7  rounded-xl border  font-clarity bg-gray-50 border-gray-300 shadow-md">
@@ -220,7 +220,8 @@ function NormalProduct({
                       defaultValue={`https://www.dreamlegal.in/product/${product.slug}`}
                       readOnly
                     />
-                    <div className="">
+                  </div>
+                  <div className="">
                     <Button
                       variant="outline"
                       onClick={() =>
@@ -231,7 +232,6 @@ function NormalProduct({
                     >
                       Copy
                     </Button>
-                  </div>
                   </div>
                 </div>
                 <div className="mt-4 flex gap-4">
@@ -315,7 +315,7 @@ function NormalProduct({
         </div>
       </div>
       <div>
-        <div className="text-xs text-slate-400 mt-4 mb-1">User</div>
+        <div className="text-xs text-slate-400 mt-4 mb-1">Users</div>
         <div className="flex gap-2">
           {userCategoryIcons.map((userCategory: any, index: number) => (
             <div

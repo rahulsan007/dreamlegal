@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 function UserSignup() {
-  const [otpStep, setotpStep] = useState(false);
+  const [otpStep, setOtpStep] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,7 +35,6 @@ function UserSignup() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log(formData);
-    // Add your form validation logic here
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
@@ -51,11 +50,9 @@ function UserSignup() {
       });
 
       if (response.ok) {
-        // Handle successful signup (e.g., redirect to a different page)
         console.log("Account created successfully!");
-        setotpStep(true);
+        setOtpStep(true);
       } else {
-        // Handle error response
         console.error("Failed to create account");
       }
     } catch (error) {
@@ -75,19 +72,35 @@ function UserSignup() {
         body: JSON.stringify({ email: formData.email, otp }),
       });
       if (response.ok) {
-        // Handle successful OTP verification
         const data = await response.json();
         console.log("OTP verified successfully");
-        setotpStep(true);
-        
-        
+        setOtpStep(true);
         typeof window !== "undefined" ? localStorage.setItem("userId", data.user.id) : null;
-        typeof window !== "undefined" ? localStorage.setItem("userEmail", data.user.email): null;
+        typeof window !== "undefined" ? localStorage.setItem("userEmail", data.user.email) : null;
         alert("OTP verified successfully");
         router.push(`/user/${data.user.id}/complete`);
       } else {
-        // Handle error response
         console.error("Failed to verify OTP");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
+  const handleResendEmail = async () => {
+    try {
+      const response = await fetch("/api/resend-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: formData.email }),
+      });
+
+      if (response.ok) {
+        alert("Verification email resent successfully!");
+      } else {
+        console.error("Failed to resend email");
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -114,6 +127,13 @@ function UserSignup() {
             <Button className="w-full bg-primary1 my-4" type="submit">
               Submit
             </Button>
+            <span className="text-xs text-gray-400 px-3">Please check your email, and if not received check spam folder</span>
+            <Button
+              className="w-full bg-secondary1 my-4"
+              onClick={handleResendEmail}
+            >
+              Resend OTP
+            </Button>
           </form>
         </div>
       ) : (
@@ -122,7 +142,6 @@ function UserSignup() {
             <h1 className="text-lg font-bold">Create Account</h1>
             <Button
               onClick={() => signIn("google", { callbackUrl: "/check" })}
-             
               className="w-full bg-white gap-4 text-black border hover:text-white my-4"
             >
               <FcGoogle />
@@ -195,8 +214,6 @@ function UserSignup() {
             </Button>
 
             <hr />
-
-           
           </form>
 
           <p className="text-center">

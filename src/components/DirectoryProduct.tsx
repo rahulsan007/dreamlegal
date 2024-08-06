@@ -9,10 +9,9 @@ import Image from "next/image";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 
 const placeholders = [
-  "Lawyer CRM",
-  "Document Management System",
-  "Invoice Generator",
-  "Assessment Platform",
+  "Contract Management",
+  "Case Management",
+  "Compliance Management",
 ];
 
 const categoryKeywords: { [key: string]: string[] } = {

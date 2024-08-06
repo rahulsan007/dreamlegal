@@ -46,7 +46,12 @@ function VendorSignin() {
         }
 
         // Redirect to the home page or any other desired page
-        router.push("/vendor");
+        if(data.verified){
+          router.push("/vendor");
+        } else{
+          router.push("/vendor?verified=true");
+        }
+        
       } else {
         // Handle sign-in error
         console.error("Failed to sign in:", response.statusText);
